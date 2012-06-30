@@ -1,0 +1,32 @@
+﻿@model scrilla.Web.Controllers.ViewModels.AddEditVendorViewModel
+
+@helper AddEdit()
+{
+  var isVisibleStyle = Model.IsError || Model.IsEditMode ? " style=\"display:block;\"" : "";
+  var legend = Model.IsEditMode ? "Edit " + Model.Name : "Add New Vendor";
+  var submitText = Model.IsEditMode ? "Save Changes" : "Add Vendor";
+  <fieldset@Html.Raw(isVisibleStyle)>
+  <legend>@legend</legend>
+	<p>@Html.LabelFor(x => x.Name)<br />@Html.TextBoxFor(x => x.Name, new { maxlength = 200 })</p>
+  @*<p>@Html.LabelFor(x => x.DefaultCategory)<br /><select id="default-category" class="chzn-select" data-placeholder="Choose a Default Category" ></select></p>*@
+	<p>@Html.LabelFor(x => x.DefaultCategory)<br />@Html.DropDownList("DefaultCategory", Model.AvailableCategories.Select(x => new SelectListItem() { Value = x.Id.ToString(), Text = x.Name, Selected = Model.DefaultCategory == x.Id }), new { @class = "chzn-select" })</p>
+  <p>@Html.CheckBoxFor(x => x.UpdateUncategorizedTransactions) @Html.LabelFor(x => x.UpdateUncategorizedTransactions)</p>
+  <p class="submit">@if (Model.IsEditMode) { @Ajax.ActionLink("Delete", MVC.Account.DeleteVendor(Model.VendorId), new AjaxOptions() { HttpMethod = "POST", OnSuccess = "vendorDeleted" }, new { title = "Delete " + Model.Name, @class= "delete" }) } <input type="submit" value="@submitText" /></p>
+  <p>@Html.ValidationSummary()</p>
+  </fieldset>
+}
+
+@if (Model.IsEditMode)
+{
+  using (Html.BeginForm(MVC.Account.EditVendorPost()))
+  {
+    @AddEdit();
+  }
+}
+else
+{
+  using (Html.BeginForm(MVC.Account.AddVendorPost()))
+  {
+    @AddEdit();
+  }
+}

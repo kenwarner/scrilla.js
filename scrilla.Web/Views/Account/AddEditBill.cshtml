@@ -1,0 +1,41 @@
+﻿@model scrilla.Web.Controllers.ViewModels.AddEditBillViewModel
+
+@helper AddEdit()
+{
+  var isVisibleStyle = Model.IsError || Model.IsEditMode ? " style=\"display:block;\"" : "";
+  var includeSecondaryDateStyle = Model.IncludeSecondaryDates ? "" : " style=\"display:none;\"";
+  var legend = Model.IsEditMode ? "Edit " + Model.Name : "Add New Bill";
+  var submitText = Model.IsEditMode ? "Save Changes" : "Add Bill";
+  <fieldset@Html.Raw(isVisibleStyle)>
+  <legend>@legend</legend>
+  <p>@Html.LabelFor(x => x.Name)<br />@Html.TextBoxFor(x => x.Name, new { maxlength = 200 }) </p>
+	<p>@Html.LabelFor(x => x.Amount)<br />@Html.EditorFor(x => x.Amount, new { size = 8, maxlength = 10 }) </p>
+	<p>@Html.LabelFor(x => x.StartDate)<br />@Html.EditorFor(x => x.StartDate, new { @class = "dp", size = 8 }) </p>
+	<p>@Html.LabelFor(x => x.EndDate)<br />@Html.EditorFor(x => x.EndDate, new { @class = "dp", size = 8 }) </p>
+	<p class="secondary-dates" @Html.Raw(includeSecondaryDateStyle)>@Html.LabelFor(x => x.SecondaryStartDate)<br />@Html.EditorFor(x => x.SecondaryStartDate, new { @class = "dp", size = 8 }) </p>
+	<p class="secondary-dates" @Html.Raw(includeSecondaryDateStyle)>@Html.LabelFor(x => x.SecondaryEndDate)<br />@Html.EditorFor(x => x.SecondaryEndDate, new { @class = "dp", size = 8 }) </p>
+	<p>@Html.LabelFor(x => x.BillGroupId)<br />@Html.DropDownList("billGroupId", Model.AvailableBillGroups.Select(x => new SelectListItem() { Value = x.Id.ToString(), Text = x.Name }), new { @class = "chzn-select" })</p>
+	<p>@Html.LabelFor(x => x.CategoryId)<br />@Html.DropDownList("categoryId", Model.AvailableCategories.Select(x => new SelectListItem() { Value = x.Id.ToString(), Text = x.Name }), new { @class = "chzn-select" })</p>
+	<p>@Html.LabelFor(x => x.VendorId)<br />@Html.DropDownList("vendorId", Model.AvailableVendors.Select(x => new SelectListItem() { Value = x.Id.ToString(), Text = x.Name }), new { @class = "chzn-select" })</p>
+	<p>@Html.LabelFor(x => x.Frequency)<br />@Html.DropDownList("frequency", Model.AvailableRecurrences, new { @class = "chzn-select" })</p>
+	<p>@Html.CheckBoxFor(x => x.IncludeSecondaryDates) @Html.LabelFor(x => x.IncludeSecondaryDates)</p>
+	<p>@Html.CheckBoxFor(x => x.UpdateExisting) @Html.LabelFor(x => x.UpdateExisting)</p>
+	<p class="submit">@if (Model.IsEditMode) { @Ajax.ActionLink("Delete", MVC.Account.DeleteBill(Model.BillId), new AjaxOptions() { HttpMethod = "POST", OnSuccess = "billDeleted" }, new { title = "Delete " + Model.Name, @class= "delete" }) } <input type="submit" value="@submitText" /></p>
+	<p>@Html.ValidationSummary()</p>
+  </fieldset>
+}
+
+@if (Model.IsEditMode)
+{
+  using (Html.BeginForm(MVC.Account.EditBillPost()))
+  {
+    @AddEdit();
+  }
+}
+else
+{
+  using (Html.BeginForm(MVC.Account.AddBillPost()))
+  {
+    @AddEdit();
+  }
+}

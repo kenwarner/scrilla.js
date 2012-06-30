@@ -1,0 +1,13 @@
+﻿@model scrilla.Web.Controllers.ViewModels.CategoryViewModel
+
+@{
+    ViewBag.Title = "Category : " + Model.Category.Name;
+}
+
+<style>.month-nav { display:none; }</style>
+
+<h2>Category: @Html.ActionLink(Model.Category.Name, MVC.Account.Transactions(null, null, Model.Category.Id.ToString()))</h2>
+
+@{ Html.RenderAction(MVC.Account.EditCategory(Model.Category.Id)); }
+
+@{ Html.RenderAction(MVC.Account.Transactions(categoryId: Model.Category.Id.ToString(), from: new DateTime(2008, 1, 1).ToUrlDate(), to: new DateTime(2013, 1, 1).AddDays(-1).ToUrlDate())); }

@@ -1,0 +1,237 @@
+body {
+  font-family: "Segoe UI";
+  color: black; }
+
+nav {
+  padding: 10px 0px;
+  width: 100%;
+  background-color: #bbbbbb; }
+  nav ul {
+    list-style-type: none;
+    display: inline;
+    margin: 0px 5px; }
+    nav ul li {
+      display: inline;
+      font-size: 1.4em;
+      font-weight: bold;
+      margin: 0px 5px; }
+      nav ul li a {
+        color: #333333; }
+      nav ul li a:hover {
+        color: #666666; }
+
+#main {
+  margin: 30px; }
+
+i {
+  font-style: italic; }
+
+h2 {
+  font-weight: bold;
+  font-size: 1.4em;
+  margin: 5px 2px; }
+  h2 a {
+    cursor: pointer; }
+  h2 a.filter {
+    display: none;
+    color: #666666; }
+  h2 a.filter:hover {
+    color: #999999; }
+
+h2:hover a.filter {
+  display: inline; }
+
+h3 {
+  font-size: 1.2em;
+  margin: 10px 2px; }
+
+h4 {
+  font-size: 1.1em;
+  font-style: italic;
+  margin: 10px 10px 20px 10px; }
+
+a {
+  color: black;
+  text-decoration: none; }
+
+a:hover {
+  color: #666666; }
+
+label {
+  margin: 2px; }
+
+li {
+  padding: 3px 0px; }
+
+fieldset {
+  border: 1px solid #dddddd;
+  display: none;
+  padding: 10px;
+  margin-bottom: 15px;
+  width: 350px; }
+  fieldset select {
+    width: 300px; }
+  fieldset p.submit {
+    text-align: right;
+    margin-top: 10px; }
+
+.meta {
+  font-size: .9em;
+  opacity: .7; }
+
+a.delete {
+  font-size: .8em;
+  text-decoration: underline;
+  opacity: .7; }
+
+table {
+  border-right-width: 0px;
+  border-collapse: collapse;
+  margin: 20px 0px; }
+  table td, table th {
+    padding: 5px 10px;
+    border: solid 1px #e8eef4;
+    white-space: nowrap; }
+  table th {
+    color: #333333;
+    font-weight: bold; }
+  table tr.months th {
+    min-width: 90px; }
+  table tr.month-sep {
+    border-top: solid 2px #999999; }
+  table tr.rec {
+    background-color: #cccccc; }
+  table tr.due:not(.rec) {
+    color: red; }
+  table tr.old.rec {
+    display: none; }
+  table tr.future {
+    display: none; }
+  table tr.nodata {
+    display: none; }
+  table tr.category-total {
+    display: none; }
+  table td.col-sep {
+    border-left: solid 2px #999999; }
+  table td.balance, table th.balance {
+    border-right: solid 2px #999999; }
+  table td select {
+    width: 100%; }
+  table td.category {
+    min-width: 150px; }
+  table td.vendor {
+    min-width: 380px; }
+  table td.nonbudget {
+    background-color: #eeeeee; }
+  table td.zero:not(.editing):not(.nonbudget) {
+    opacity: .2; }
+  table td.zero:not(.editing):not(.nonbudget):hover {
+    opacity: .8; }
+  table td.neg {
+    color: #F00; }
+  table td.pos {
+    color: #0F0; }
+  table td.mod {
+    color: #C08; }
+  table td.multiple a {
+    color: #C08; }
+  table td.budget, table td.bill-amount {
+    padding-top: 1px;
+    padding-bottom: 1px;
+    text-align: left;
+    min-width: 85px; }
+  table td.budget input, table td.bill-amount input {
+    font-family: "Segoe UI";
+    font-size: 16px;
+    padding: 0px;
+    margin: 0px; }
+  table td.bills {
+    background-color: #eeeeee; }
+  table td.extra {
+    background-color: #cccccc; }
+  table td.extra.bills {
+    background-color: #999999; }
+  table tr.predicted td {
+    border-bottom-width: 0px; }
+  table tr.bill-prediction {
+    font-size: .8em; }
+  table tr.bill-prediction td {
+    border-top-width: 0px; }
+  table span.edit-mode {
+    display: none; }
+  table tr.editing td.timestamp, table tr.editing td.vendor, table tr.editing td.category {
+    padding: 1px 3px 0px 3px; }
+  table tr.editing td span.edit-mode {
+    display: inline; }
+  table tr.editing td span:not(.edit-mode) {
+    display: none; }
+  table tr.editing td.edit {
+    background-color: #666666; }
+  table td.editing span.edit-mode {
+    display: inline; }
+  table td.editing span:not(.edit-mode) {
+    display: none; }
+  table td.edit {
+    background-color: white;
+    min-width: 20px;
+    height: 18px;
+    text-align: center;
+    padding: 5px 2px; }
+    table td.edit span.edit-mode {
+      display: inline; }
+    table td.edit input {
+      margin: 2px; }
+    table td.edit a.edit-button {
+      display: none;
+      cursor: pointer;
+      vertical-align: top;
+      color: #666666; }
+    table td.edit a.edit-button:hover {
+      color: #999999; }
+  table tr:hover td.edit a.edit-button {
+    display: inline; }
+  table tr:hover td.edit span.edit-mode {
+    display: none; }
+  table tr.editing:hover td.edit a.edit-button {
+    display: none; }
+  table tr.editing:hover td.edit span.edit-mode {
+    display: inline; }
+
+table.summary {
+  font-size: 1.2em;
+  font-weight: bold;
+  margin-top: 15px;
+  border-width: 0px; }
+  table.summary td {
+    border-width: 0px; }
+
+table.month-nav {
+  font-size: .9em; }
+  table.month-nav td {
+    padding: 3px 17px; }
+  table.month-nav td.selected, table.month-nav td:hover {
+    background-color: #dddddd; }
+  table.month-nav td:hover {
+    background-color: #cccccc; }
+  table.month-nav td.year {
+    font-weight: bold; }
+
+.total {
+  color: #333333;
+  font-weight: bold; }
+
+.inactive {
+  display: none; }
+
+.chzn-container {
+  margin-top: 4px; }
+
+.validation-summary-errors {
+  font-size: .8em;
+  color: red; }
+
+#month-nav-link {
+  font-size: .9em;
+  position: absolute;
+  bottom: -3px;
+  right: 2px; }

@@ -1,0 +1,127 @@
+﻿@model scrilla.Web.Controllers.ViewModels.BillTransactionsViewModel
+
+@{
+  var h3 = "Bills Due";
+  var from = Model.From.ToString("MMMM yyyy");
+  var to = Model.To.ToString("MMMM yyyy");
+  if (Model.From != DateTime.MinValue && Model.To != DateTime.MaxValue)
+  {
+    if (to == from)
+    {
+      h3 += " in " + from;
+    }
+    else
+    {
+      h3 += " from " + from + " to " + to;
+    }
+  }
+  else if (Model.From != DateTime.MinValue)
+  {
+    h3 += " after " + from;
+  }
+  else if (Model.To != DateTime.MaxValue)
+  {
+    h3 += " through " + to;
+  }
+  
+}
+
+<h3>@h3</h3>
+@if (Model.BillTransactions.Count() == 0)
+{
+  <h4>No bills found.</h4>
+}
+else
+{
+  var now = DateTime.Now;
+  var old = now.AddMonths(-2);
+  var future = now.AddMonths(2);
+  var oldCount = Model.BillTransactions.Count(x => x.Timestamp < old);
+  var oldLink = oldCount == 0 ? "" : " (" + oldCount + ")";
+  var futureCount = Model.BillTransactions.Count(x => x.Timestamp > future);
+  var futureLink = futureCount == 0 ? "" : " (" + futureCount + ")";
+  
+@: Show More: <a href="javascript:///" onclick="$('.bill-transactions tr.old').removeClass('old');">Older<span class="meta">@oldLink</span></a> | <a href="javascript:///" onclick="$('.bill-transactions tr.future').removeClass('future');">Newer<span class="meta">@futureLink</span></a>
+<table class="bill-transactions editable">
+<thead><tr><th></th><th>Name</th><th>Category</th><th>Vendor</th><th>Amount</th><th>Scheduled</th><th>Frequency</th></tr></thead>
+@{
+  var curmonth = DateTime.Now.Month;
+  foreach (var bill in Model.BillTransactions.OrderBy(x => x.Timestamp))
+  {
+    var categoryId = bill.CategoryId.HasValue ? bill.CategoryId.Value.ToString() : "none";
+    var categoryName = bill.CategoryId.HasValue ? bill.Category.CategoryGroup.Name + " : " + bill.Category.Name : "Uncategorized";
+    var vendorId = bill.VendorId.HasValue ? bill.VendorId.Value.ToString() : "none";
+    var vendorName = bill.VendorId.HasValue ? bill.Vendor.Name : "No Vendor";
+    var classHtml = " class=\"bill-" + bill.BillId;
+    classHtml += (bill.IsPaid ? " rec" : "");
+    classHtml += (bill.Timestamp < now ? " due" : "");
+    classHtml += (bill.Timestamp < old ? " old" : "");
+    classHtml += (bill.Timestamp > future ? " future" : "");
+    classHtml += (bill.Timestamp.Month != curmonth ? " month-sep" : "");
+	classHtml += (!bill.IsPaid && bill.TransactionPredictions.Any() ? " predicted" : "");
+    classHtml += "\"";
+    curmonth = bill.Timestamp.Month;
+    object checkedAttr = new { type = "checkbox", @checked = "checked" };
+    object uncheckedAttr = new { type = "checkbox" };
+    var attr = bill.IsPaid ? checkedAttr : uncheckedAttr;
+    var amountClass = " class=\"bill-amount" + (bill.Amount == bill.OriginalAmount ? "" : " mod") + "\"";
+    var amountTitle = (bill.Amount == bill.OriginalAmount ? "" : "title=\"Bill originally listed at " + bill.OriginalAmount.ToCurrency() + "\"");
+    var timestampClass = " class=\"timestamp" + (bill.Timestamp == bill.OriginalTimestamp ? "" : " mod") + "\"";
+    var timestampDiff = (int)bill.Timestamp.Subtract(DateTime.Now).TotalDays;
+    var timestampTitle = " title=\"";
+    timestampTitle += (timestampDiff < 0 ? -timestampDiff + " days ago" : "in " + timestampDiff + " days");
+    timestampTitle += (bill.Timestamp == bill.OriginalTimestamp ? "" : ". Bill originally scheduled for " + bill.OriginalTimestamp.ToUrlDate());
+    timestampTitle += "\"";
+
+	scrilla.Data.Domain.Transaction match = null;
+	var matchVendorName = "";
+	if (bill.Transactions.Any())
+	{
+		match = bill.Transactions.First();
+		matchVendorName = match.VendorId.HasValue ? match.Vendor.Name : "";
+	}
+	  
+    <tr id="bill-trx-@bill.Id" data-bill-trx-id="@bill.Id" @Html.Raw(classHtml)>
+    <td title="Mark bill as Paid">@Ajax.InputActionLink(MVC.Account.EditBillTransactionPaidStatus(bill.Id, !bill.IsPaid), new AjaxOptions() { HttpMethod = "POST", OnSuccess = String.Format("billPaid({0})", bill.Id) }, attr)</td>
+    <td>@Html.ActionLink(bill.Bill.Name, MVC.Account.Bill(bill.BillId))</td>
+    <td>@Html.ActionLink(categoryName, MVC.Account.Transactions(null, null, categoryId))</td>
+    <td>
+		@Html.ActionLink(vendorName, MVC.Account.Transactions(null, vendorId))
+		@if (match != null && !vendorName.Equals(matchVendorName)) { <span style="font-size:.8em;">(@matchVendorName)</span> }
+	</td>
+    <td@Html.Raw(amountClass)@Html.Raw(amountTitle)>
+      <span>@bill.Amount.ToCurrency()</span>
+      <span class="edit-mode">@Html.TextBox("bill-trx-amount-" + bill.Id, bill.Amount.ToCurrency(), new { size = 6, maxlength = 10 })</span>
+	  @if (match != null) { <span style="font-size:.8em;">(@match.Amount.ToCurrency())</span> }
+    </td>
+    <td@Html.Raw(timestampClass)@Html.Raw(timestampTitle)>
+      <span>@bill.Timestamp.ToUrlDate()</span>
+      <span class="edit-mode">@Html.TextBox("bill-trx-datetime-" + bill.Id, bill.Timestamp.ToUrlDate(), new { @class = "dp", size = 8 })</span>
+	  @if (match != null) { <span style="font-size:.8em;">(@match.Timestamp.ToUrlDate())</span> }
+    </td>
+    <td>@scrilla.Data.Domain.Bill.AvailableFrequencies[bill.Bill.RecurrenceFrequency]</td>
+	</tr>
+	
+	if (bill.TransactionPredictions.Any())
+	{
+		var prediction = bill.TransactionPredictions.First();
+		var predictionClass = " class=\"bill-prediction";
+		predictionClass += (bill.IsPaid ? " rec" : "");
+		predictionClass += (bill.Timestamp < now ? " due" : "");
+		predictionClass += (bill.Timestamp < old ? " old" : "");
+		predictionClass += (bill.Timestamp > future ? " future" : "");
+		predictionClass += "\"";
+		var confidenceStyle = prediction.Item2 < .8 ? " style=\"color:red;\"" : " style=\"color:green;\"";
+		<tr@Html.Raw(predictionClass)>
+		<td></td><td></td>
+		<td style="text-align:right">Is this it? <span@Html.Raw(confidenceStyle)>(@Math.Round(prediction.Item2, 2))</span> @Ajax.ActionLink("Yes", MVC.Account.EditBillTransactionPaidStatus(bill.Id, true, prediction.Item1.Id), new AjaxOptions() { HttpMethod = "POST", OnSuccess = String.Format("billPaid({0})", bill.Id) })</td>
+		<td>@(prediction.Item1.VendorId.HasValue ? prediction.Item1.Vendor.Name : "")</td>
+		<td>@prediction.Item1.Amount.ToCurrency()</td>
+		<td>@prediction.Item1.Timestamp.ToUrlDate()</td>
+		<td></td>
+		</tr>
+	}
+  }
+}
+</table>
+}

@@ -1,0 +1,31 @@
+﻿@model scrilla.Web.Controllers.ViewModels.AddEditCategoryViewModel
+
+@helper AddEdit()
+{  
+  var isVisibleStyle = Model.IsError || Model.IsEditMode ? " style=\"display:block;\"" : "";
+  var legend = Model.IsEditMode ? "Edit " + Model.Name : "Add New Category";
+  var submitText = Model.IsEditMode ? "Save Changes" : "Add Category";
+  <fieldset@Html.Raw(isVisibleStyle)>
+  <legend>@legend</legend>
+	<p>@Html.LabelFor(x => x.Name)<br />@Html.TextBoxFor(x => x.Name, new { maxlength = 200 })</p>
+	<p>@Html.LabelFor(x => x.CategoryGroup)<br />@Html.DropDownList("CategoryGroup", Model.AvailableCategoryGroups.Select(x => new SelectListItem() { Value = x.Id.ToString(), Text = x.Name, Selected = Model.CategoryGroup == x.Id }), new { @class = "chzn-select" })</p>
+  <p class="submit">@if (Model.IsEditMode) { @Ajax.ActionLink("Delete", MVC.Account.DeleteCategory(Model.CategoryId), new AjaxOptions() { HttpMethod = "POST", OnSuccess = "categoryDeleted" }, new { title = "Delete " + Model.Name, @class= "delete" }) } <input type="submit" value="@submitText" /></p>
+  <p>@Html.ValidationSummary()</p>
+  </fieldset>
+}
+  
+  
+@if (Model.IsEditMode)
+{
+  using (Html.BeginForm(MVC.Account.EditCategoryPost()))
+  {
+    @AddEdit();
+  }
+}
+else
+{
+  using (Html.BeginForm(MVC.Account.AddCategoryPost()))
+  {
+    @AddEdit();
+  }
+}

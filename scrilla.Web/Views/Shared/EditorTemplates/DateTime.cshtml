@@ -1,0 +1,10 @@
+﻿@model DateTime?
+
+@if (Model.HasValue)
+{ 
+	@Html.TextBox("", Model.Value.ToUrlDate(), new { @class = "dp", size = 7 })
+}
+else
+{ 
+	@Html.TextBox("", null, new { @class = "dp", size = 7 })
+}

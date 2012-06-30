@@ -1,0 +1,326 @@
+﻿@model scrilla.Web.Controllers.ViewModels.BudgetViewModel
+
+@{
+  int? accountId = Model.Account == null ? (int?)null : (int?)Model.Account.Id;
+  var isMultiMonth = Model.FromMonth.AddMonths(1) < Model.ToMonth;
+  Model.ShowBudgetOnly = isMultiMonth;
+
+  if (Model.FromMonth == Model.ToMonth)
+  {
+	  ViewBag.Title = "Budget for " + Model.From.ToString("MMMM yyyy");
+  }
+  else if (Model.FromMonth.Month == 1 && Model.ToMonth.Month == 12 && Model.ToMonth.Year == Model.FromMonth.Year)
+  {
+	  ViewBag.Title = "Budget for " + Model.From.ToString("yyyy");
+  }
+  else
+  {
+	  ViewBag.Title = "Budget from " + Model.From.ToString("MMMM yyyy") + " to " + Model.To.ToString("MMMM yyyy");
+  }
+}
+
+<script>
+  @Html.Raw("var monthNavUrl = 'Budget';")
+</script>
+
+<h2>@ViewBag.Title</h2>
+<p>@Html.DropDownList("accountId", Model.AvailableAccounts.Select(x => new SelectListItem() { Value = x.Id.ToString(), Text = (x.AccountGroup == null ? "" : (x.AccountGroup.Name + " : ")) + x.Name, Selected = (x.Id == accountId) }), new { id = "budget-account", @class = "chzn-select" })</p>
+
+@{
+  DateTime maxMonth = new DateTime(2012, 12, 1);
+  <div style="display:inline-block;position:relative;">
+  <table class="month-nav">
+  @for (DateTime date = new DateTime(2008, 1, 1); date <= maxMonth; date = date.AddMonths(1))
+  {
+    var tdClass = (date >= Model.FromMonth && date <= Model.ToMonth) ? " class=\"selected\"" : "";
+    if (date.Month == 1)
+    {
+      @Html.Raw("<tr>");
+      <td class="year">@Html.ActionLink(date.Year.ToString(), MVC.Account.Budget(accountId: accountId, from: date.ToUrlDate(), to: date.AddYears(1).AddDays(-1).ToUrlDate()))</td>
+    }
+    <td@Html.Raw(tdClass) data-from="@date.ToUrlDate()" data-to="@date.AddMonths(1).AddDays(-1).ToUrlDate()">@Html.ActionLink(date.ToString("MMM"), MVC.Account.Budget(accountId: accountId, month: date.ToUrlDate()), new { title = date.ToString("MMMM yyy") })</td>
+    if (date.Month == 12)
+    { 
+      @Html.Raw("</tr>");
+    }
+  }
+  </table>
+  <a id="month-nav-link"></a>
+  </div>
+}
+
+<div style="margin-bottom:-15px;"><a href="javascript:///" onclick="$('tr.nodata, tr.category-total').toggle();" style="font-size:.8em;">Show All</a></div>
+<table>
+<thead>
+@{
+  //show month headers?
+  if (isMultiMonth && !Model.ShowBudgetOnly)
+  {
+    <tr class="months"><th></th>
+    @for (DateTime cur = Model.ToMonth; cur >= Model.FromMonth; cur = cur.AddMonths(-1))
+    {
+      var colspan = Model.ShowBudgetOnly ? 1 : 5;
+      <th colspan="@colspan">@Html.ActionLink(cur.ToString("MMMM"), MVC.Account.Budget(accountId: accountId, month: cur.ToUrlDate()))</th>
+    }
+    </tr>
+  }
+
+  <tr class="months"><th>Category</th>
+  @for (DateTime cur = Model.ToMonth; cur >= Model.FromMonth; cur = cur.AddMonths(-1))
+  {
+    // show budget/actual/proj/diff headers
+    if (Model.ShowBudgetOnly)
+    {
+      <th>@Html.ActionLink(cur.ToString("MMMM"), MVC.Account.Budget(accountId: accountId, month: cur.ToUrlDate()))</th>
+    }
+    else
+    {
+      <th>Budget</th><th>Actual</th><th>Projected</th><th class="col-sep" title="Projected vs Actual">vs Actual</th><th title="Projected vs Budget">vs Budget</th>
+    }
+  }
+
+  @if (Model.ShowBudgetOnly)
+  { 
+    <th>Total</th>
+  }
+  </tr>
+}
+</thead>
+<tbody>
+
+@{
+  var categoryGroups = Model.BudgetCategoryAmounts
+    .GroupBy(x => x.Category.CategoryGroupId, (a, b) => new { BudgetCategoryAmounts = b })
+    .OrderBy(x => x.BudgetCategoryAmounts.FirstOrDefault().Category.CategoryGroup.DisplayOrder);
+
+  foreach (var categoryGroup in categoryGroups)
+  {
+    var budgetCategories = categoryGroup.BudgetCategoryAmounts
+      .GroupBy(x => x.Category.Id, (a, b) => new { CategoryMonths = b })
+      .OrderBy(x => x.CategoryMonths.FirstOrDefault().Category.Name);
+
+    foreach (var budgetCategory in budgetCategories)
+    {
+      var trClass = Model.ShowBudgetOnly ?
+        (budgetCategory.CategoryMonths.Any(x => x.BillsBudgetAmount != 0M || x.ExtraBudgetAmount != 0M) ? "" : "nodata") :
+        (budgetCategory.CategoryMonths.Any(x => x.BillsBudgetAmount != 0M || x.ExtraBudgetAmount != 0M || x.ProjectedAmount != 0M || x.ActualAmount != 0M) ? "" : "nodata");
+      trClass = String.IsNullOrEmpty(trClass) ? "" : " class=\"" + trClass + "\"";
+      var category = budgetCategory.CategoryMonths.FirstOrDefault().Category; // TODO Id = 0
+      <tr@Html.Raw(trClass) data-category-id="@category.Id"><td>@Html.ActionLink(category.CategoryGroup.Name + " : " + category.Name, MVC.Account.Category(category.Id))</td> 
+      @for (DateTime cur = Model.ToMonth; cur >= Model.FromMonth; cur = cur.AddMonths(-1))
+      {
+        var budget = budgetCategory.CategoryMonths.SingleOrDefault(x => x.Month == cur);
+        var tdClass = " class=\"budget";
+        tdClass += budget.ExtraBudgetAmount == 0M && budget.BillsBudgetAmount == 0M ? " zero" : "";
+        tdClass += budget.ExtraBudgetAmount == 0M ? "" : " extra";
+        tdClass += budget.BillsBudgetAmount == 0M ? "" : " bills";
+        tdClass += "\"";
+        var tdTitle = "";
+        if (budget.Bills.Count() > 0)
+        {
+          tdTitle += String.Join("\n", budget.Bills.Select(x => x.Amount.ToCurrency() + " " + x.Bill.Name));
+		  if (budget.Bills.Count() > 1)
+		  {
+			  tdTitle += (budget.Bills.Count() > 1 ? "\n= " + budget.BillsBudgetAmount.ToCurrency() : "");
+		  }
+        }
+        if (budget.ExtraBudgetAmount != 0)
+        {
+          tdTitle += (String.IsNullOrEmpty(tdTitle) ? "" : "\n") + budget.ExtraBudgetAmount.ToCurrency();
+        }
+        if (!String.IsNullOrEmpty(tdTitle) && (budget.Bills.Count() > 0 && budget.ExtraBudgetAmount != 0M))
+        {
+          tdTitle += "\n= " + budget.TotalBudgetAmount.ToCurrency();
+        }
+        tdTitle = String.IsNullOrEmpty(tdTitle) ? "" : " title=\"" + tdTitle + "\"";
+        
+        <td@Html.Raw(tdClass)@Html.Raw(tdTitle) data-month="@cur.ToUrlDate()">
+        <span>@budget.TotalBudgetAmount.ToCurrency()</span>
+        @if (budget.Category.Id != 0)
+        {
+          <span class="edit-mode">@Html.TextBox("amount", budget.ExtraBudgetAmount.ToCurrency(), new { size = 6 })</span> 
+        }
+        </td>
+
+        if (!Model.ShowBudgetOnly)
+        {
+          var tdActualClass = " class=\"" + (budget.ActualAmount == 0M ? "zero" : "") + (budget.NonBudgetAmount != 0M ? " nonbudget" : "") + "\"";
+          var tdActualTitle = budget.NonBudgetAmount != 0M ? "title=\"Non-budgeted amount: " + budget.NonBudgetAmount.ToCurrency() + "\nBudgeted amount: " + (budget.ActualAmount - budget.NonBudgetAmount).ToCurrency() + "\"" : "";
+          var tdProjectedClass = " class=\"" + (budget.ProjectedAmount == 0M ? "zero" : "") + "\"";
+          var diffBudgetAmount = budget.ProjectedAmount - budget.TotalBudgetAmount;
+          var tdDiffBudgetClass = " class=\"" + (diffBudgetAmount == 0M ? "zero" : "") + "\"";
+          var diffActualAmount = budget.ProjectedAmount - budget.ActualAmount + budget.NonBudgetAmount;
+          var tdDiffActualClass = " class=\"col-sep " + (diffActualAmount == 0M ? "zero" : "") + "\"";
+          <td@Html.Raw(tdActualClass)@Html.Raw(tdActualTitle)>@Html.ActionLink((budget.ActualAmount - budget.NonBudgetAmount).ToCurrency(), MVC.Account.Transactions(null, null, category.Id == 0 ? "none" : category.Id.ToString(), cur.ToUrlDate(), cur.AddMonths(1).AddDays(-1).ToUrlDate()))</td>
+          <td@Html.Raw(tdProjectedClass)>@budget.ProjectedAmount.ToCurrency()</td>
+          <td@Html.Raw(tdDiffActualClass)>@diffActualAmount.ToCurrency()</td>
+          <td@Html.Raw(tdDiffBudgetClass)>@diffBudgetAmount.ToCurrency()</td>
+        }
+      }
+
+      @if (Model.ShowBudgetOnly)
+      {
+        <td class="total">@budgetCategory.CategoryMonths.Sum(x => x.TotalBudgetAmount).ToCurrency()</td>
+      }
+
+      </tr>
+    }
+
+    // category totals
+    <tr class="category-total total"><td>@categoryGroup.BudgetCategoryAmounts.FirstOrDefault().Category.CategoryGroup.Name</td>
+    @for (DateTime cur = Model.ToMonth; cur >= Model.FromMonth; cur = cur.AddMonths(-1))
+    {
+      var monthBudgets = categoryGroup.BudgetCategoryAmounts.Where(x => x.Month == cur);
+      var bills = monthBudgets.SelectMany(x => x.Bills);
+      var sumBills = bills.Sum(x => x.Amount);
+      var sumExtra = monthBudgets.Sum(x => x.ExtraBudgetAmount);
+      var sumTotal = monthBudgets.Sum(x => x.TotalBudgetAmount);
+
+      var tdTitle = "";
+      if (bills.Count() > 0)
+      {
+        tdTitle += String.Join("\n", bills.Select(x => x.Amount.ToCurrency() + " " + x.Bill.Name));
+        tdTitle += (bills.Count() > 1 ? "\n= " + sumBills.ToCurrency() : "");
+      }
+      if (sumExtra != 0)
+      {
+        tdTitle += (String.IsNullOrEmpty(tdTitle) ? "" : "\n") + sumExtra.ToCurrency();
+      }
+      if (!String.IsNullOrEmpty(tdTitle) && (bills.Count() > 1 || (bills.Count() > 0 && sumExtra != 0M)))
+      {
+        tdTitle += "\n=" + sumTotal.ToCurrency();
+      }
+      tdTitle = String.IsNullOrEmpty(tdTitle) ? "" : " title=\"" + tdTitle + "\"";
+      
+      <td@Html.Raw(tdTitle)>@sumTotal.ToCurrency()</td>
+      if (!Model.ShowBudgetOnly)
+      {
+        var sumNonBudgetAmount = monthBudgets.Any(x => x.NonBudgetAmount != 0M) ? monthBudgets.Sum(x => x.NonBudgetAmount) : 0M;
+        var sumActual = monthBudgets.Sum(x => x.ActualAmount);
+        var sumBudgetedActual = sumActual - sumNonBudgetAmount;
+        var tdActualClass = sumNonBudgetAmount == 0M ? "" : " class=\nonbudget\"";
+        var tdActualTitle = sumNonBudgetAmount == 0M ? "" : "title=\"Non-budgeted amount: " + sumNonBudgetAmount.ToCurrency() + "\nBudgeted amount: " + (sumActual - sumNonBudgetAmount).ToCurrency() + "\"";
+        var sumProjected = monthBudgets.Sum(x => x.ProjectedAmount);
+        <td@Html.Raw(tdActualClass)@Html.Raw(tdActualTitle)>@sumBudgetedActual.ToCurrency()</td>
+        <td>@sumProjected.ToCurrency()</td>
+        <td class="col-sep">@((sumProjected - sumBudgetedActual).ToCurrency())</td>
+        <td>@((sumProjected - sumTotal).ToCurrency())</td>
+      }
+    }
+
+    @if (Model.ShowBudgetOnly)
+    {
+      <td class="total">@categoryGroup.BudgetCategoryAmounts.Sum(x => x.TotalBudgetAmount).ToCurrency()</td>
+    }
+    </tr>
+  }
+
+  // category group totals
+  var firstCategoryGroup = true;
+  foreach (var categoryGroup in categoryGroups)
+  {
+    var trClass = " class=\"total" + (firstCategoryGroup ? " month-sep" : "") + "\"";
+    firstCategoryGroup = false;
+    <tr@Html.Raw(trClass)><td>@categoryGroup.BudgetCategoryAmounts.FirstOrDefault().Category.CategoryGroup.Name</td>
+    @for (DateTime cur = Model.ToMonth; cur >= Model.FromMonth; cur = cur.AddMonths(-1))
+    {
+      var monthBudgets = categoryGroup.BudgetCategoryAmounts.Where(x => x.Month == cur);
+      var sumBudget = monthBudgets.Sum(x => x.TotalBudgetAmount);
+      <td>@sumBudget.ToCurrency()</td>
+
+      if (!Model.ShowBudgetOnly)
+      {
+        var sumNonBudgetAmount = monthBudgets.Any(x => x.NonBudgetAmount != 0M) ? monthBudgets.Sum(x => x.NonBudgetAmount) : 0M;
+        var sumActual = monthBudgets.Sum(x => x.ActualAmount);
+        var sumBudgetedActual = sumActual - sumNonBudgetAmount;
+        var tdActualClass = sumNonBudgetAmount == 0M ? "" : " class=\nonbudget\"";
+        var tdActualTitle = sumNonBudgetAmount == 0M ? "" : "title=\"Non-budgeted amount: " + sumNonBudgetAmount.ToCurrency() + "\nBudgeted amount: " + (sumActual - sumNonBudgetAmount).ToCurrency() + "\"";
+        var sumProjected = monthBudgets.Sum(x => x.ProjectedAmount);
+        <td@Html.Raw(tdActualClass)@Html.Raw(tdActualTitle)>@sumBudgetedActual.ToCurrency()</td>
+        <td>@sumProjected.ToCurrency()</td>
+        <td class="col-sep">@((sumProjected - sumBudgetedActual).ToCurrency())</td>
+        <td>@((sumProjected - sumBudget).ToCurrency())</td>
+      }
+    }
+
+    @if (Model.ShowBudgetOnly)
+    {
+      <td class="total">@categoryGroup.BudgetCategoryAmounts.Sum(x => x.TotalBudgetAmount).ToCurrency()</td>
+    }
+    
+    </tr>
+  }
+
+    // grand totals  
+  <tr class="total month-sep">
+  <td>
+  @if (Model.ShowBudgetOnly)
+  { <text>Budget:</text> }
+  else
+  { <text>Total:</text> }
+  </td>
+  @for (DateTime cur = Model.ToMonth; cur >= Model.FromMonth; cur = cur.AddMonths(-1))
+  {
+    var monthBudgets = Model.BudgetCategoryAmounts.Where(x => x.Month == cur);
+    var sumBudget = monthBudgets.Sum(x => x.TotalBudgetAmount);
+    <td>@sumBudget.ToCurrency()</td>
+
+    if (!Model.ShowBudgetOnly)
+    {
+      var sumNonBudgetAmount = monthBudgets.Any(x => x.NonBudgetAmount != 0M) ? monthBudgets.Sum(x => x.NonBudgetAmount) : 0M;
+      var sumActual = monthBudgets.Sum(x => x.ActualAmount);
+      var sumBudgetedActual = sumActual - sumNonBudgetAmount;
+      var tdActualClass = sumNonBudgetAmount == 0M ? "" : " class=\nonbudget\"";
+      var tdActualTitle = sumNonBudgetAmount == 0M ? "" : "title=\"Non-budgeted amount: " + sumNonBudgetAmount.ToCurrency() + "\nBudgeted amount: " + (sumActual - sumNonBudgetAmount).ToCurrency() + "\"";
+      var sumProjected = monthBudgets.Sum(x => x.ProjectedAmount);
+      <td@Html.Raw(tdActualClass)@Html.Raw(tdActualTitle)>@sumBudgetedActual.ToCurrency()</td>
+      <td>@sumProjected.ToCurrency()</td>
+      <td class="col-sep">@((sumProjected - sumBudgetedActual).ToCurrency())</td>
+      <td>@((sumProjected - sumBudget).ToCurrency())</td>
+    }
+  }
+
+  @if (Model.ShowBudgetOnly)
+  {
+    <td class="total">@Model.BudgetCategoryAmounts.Sum(x => x.TotalBudgetAmount).ToCurrency()</td>
+  }
+  </tr>
+  
+  // vs Actual, Projected for BudgetOnly
+  if (Model.ShowBudgetOnly)
+  {
+    // Actual
+    <tr class="total"><td>Actual:</td>
+    @for (DateTime cur = Model.ToMonth; cur >= Model.FromMonth; cur = cur.AddMonths(-1))
+    {
+      var monthBudgets = Model.BudgetCategoryAmounts.Where(x => x.Month == cur);
+      var sumNonBudgetAmount = monthBudgets.Any(x => x.NonBudgetAmount != 0M) ? monthBudgets.Sum(x => x.NonBudgetAmount) : 0M;
+      var sumActual = monthBudgets.Sum(x => x.ActualAmount);
+      var sumBudgetedActual = sumActual - sumNonBudgetAmount;
+      var tdActualClass = sumNonBudgetAmount == 0M ? "" : " class=\nonbudget\"";
+      var tdActualTitle = sumNonBudgetAmount == 0M ? "" : "title=\"Non-budgeted amount: " + sumNonBudgetAmount.ToCurrency() + "\nBudgeted amount: " + (sumActual - sumNonBudgetAmount).ToCurrency() + "\"";
+      <td@Html.Raw(tdActualClass)@Html.Raw(tdActualTitle)>@Html.ActionLink(sumBudgetedActual.ToCurrency(), MVC.Account.Transactions(accountId, from: cur.ToUrlDate(), to: cur.AddMonths(1).AddDays(-1).ToUrlDate()))</td>
+	}
+    <td class="total">@Model.BudgetCategoryAmounts.Sum(x => x.ActualAmount - x.NonBudgetAmount).ToCurrency()</td>
+    </tr>
+    
+    // Projected
+    <tr class="total"><td>Projected:</td>
+    @for (DateTime cur = Model.ToMonth; cur >= Model.FromMonth; cur = cur.AddMonths(-1))
+    {
+      var monthBudgets = Model.BudgetCategoryAmounts.Where(x => x.Month == cur);
+      var sumProjected = monthBudgets.Sum(x => x.ProjectedAmount);
+      <td>@sumProjected.ToCurrency()</td>
+    }
+    <td class="total">@Model.BudgetCategoryAmounts.Sum(x => x.ProjectedAmount).ToCurrency()</td>
+    </tr>
+  }
+}
+
+</tbody>
+</table>
+
+@if (!isMultiMonth)
+{
+  Html.RenderAction(MVC.Account.BillTransactions((int?)null, Model.From.ToUrlDate(), Model.To.ToUrlDate()));
+}

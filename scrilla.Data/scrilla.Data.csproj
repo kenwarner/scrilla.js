@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{A286DBC0-E497-4542-A0FA-80177D61FAEF}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>scrilla.Data</RootNamespace>
+    <AssemblyName>scrilla.Data</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Domain\Account.cs" />
+    <Compile Include="Domain\AccountGroup.cs" />
+    <Compile Include="Domain\Bill.cs" />
+    <Compile Include="Domain\BillGroup.cs" />
+    <Compile Include="Domain\BillTransaction.cs" />
+    <Compile Include="Domain\BudgetCategory.cs" />
+    <Compile Include="Domain\Category.cs" />
+    <Compile Include="Domain\CategoryGroup.cs" />
+    <Compile Include="Domain\ImportDescriptionVendorMap.cs" />
+    <Compile Include="Domain\Subtransaction.cs" />
+    <Compile Include="Domain\Transaction.cs" />
+    <Compile Include="Domain\Vendor.cs" />
+    <Compile Include="Repositories\IAccountGroupRepository.cs" />
+    <Compile Include="Repositories\IAccountRepository.cs" />
+    <Compile Include="Repositories\IBillGroupRepository.cs" />
+    <Compile Include="Repositories\IBillRepository.cs" />
+    <Compile Include="Repositories\IBillTransactionRepository.cs" />
+    <Compile Include="Repositories\IBudgetCategoryRepository.cs" />
+    <Compile Include="Repositories\ICategoryGroupRepository.cs" />
+    <Compile Include="Repositories\ICategoryRepository.cs" />
+    <Compile Include="Repositories\IImportDescriptionVendorMapRepository.cs" />
+    <Compile Include="Repositories\IRepository.cs" />
+    <Compile Include="Repositories\ISubtransactionRepository.cs" />
+    <Compile Include="Repositories\ITransactionRepository.cs" />
+		<Compile Include="Repositories\IVendorRepository.cs" />
+		<Compile Include="IUnitOfWork.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+		<Compile Include="..\GlobalAssemblyInfo.cs">
+			<Link>Properties\GlobalAssemblyInfo.cs</Link>
+		</Compile>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

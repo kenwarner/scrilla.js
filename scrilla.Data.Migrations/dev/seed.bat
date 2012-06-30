@@ -1,0 +1,1 @@
+..\..\scrilla.Data.SeedConsole\bin\Debug\scrilla.Data.SeedConsole.exe ..\..\scrilla.Data.SeedConsole\transactions.csv
