@@ -22,269 +22,31 @@ using System.Web.Routing;
 using T4MVC;
 
 [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-public static class MVC {
+public static class MVC
+{
     public static scrilla.Web.Controllers.AccountController Account = new scrilla.Web.Controllers.T4MVC_AccountController();
     public static T4MVC.SharedController Shared = new T4MVC.SharedController();
 }
 
-namespace T4MVC {
+namespace T4MVC
+{
 }
 
-   
-namespace System.Web.Mvc {
+namespace T4MVC
+{
     [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-    public static class T4Extensions {
-        public static MvcHtmlString ActionLink(this HtmlHelper htmlHelper, string linkText, ActionResult result) {
-            return htmlHelper.ActionLink(linkText, result, null, null, null, null);
-        }
-
-        public static MvcHtmlString ActionLink(this HtmlHelper htmlHelper, string linkText, ActionResult result, object htmlAttributes, string protocol = null, string hostName = null, string fragment = null) {
-            return htmlHelper.RouteLink(linkText, null, protocol ?? result.GetT4MVCResult().Protocol, hostName, fragment, result.GetRouteValueDictionary(), HtmlHelper.AnonymousObjectToHtmlAttributes(htmlAttributes));
-        }
-
-        public static MvcHtmlString ActionLink(this HtmlHelper htmlHelper, string linkText, ActionResult result, IDictionary<string, object> htmlAttributes, string protocol = null, string hostName = null, string fragment = null) {
-            return htmlHelper.RouteLink(linkText, null, protocol ?? result.GetT4MVCResult().Protocol, hostName, fragment, result.GetRouteValueDictionary(), htmlAttributes);
-        }
-
-        public static MvcForm BeginForm(this HtmlHelper htmlHelper, ActionResult result) {
-            return htmlHelper.BeginForm(result, FormMethod.Post);
-        }
-
-        public static MvcForm BeginForm(this HtmlHelper htmlHelper, ActionResult result, FormMethod formMethod) {
-            return htmlHelper.BeginForm(result, formMethod, null);
-        }
-
-        public static MvcForm BeginForm(this HtmlHelper htmlHelper, ActionResult result, FormMethod formMethod, object htmlAttributes) {
-            return BeginForm(htmlHelper, result, formMethod, new RouteValueDictionary(htmlAttributes));
-        }
-
-        public static MvcForm BeginForm(this HtmlHelper htmlHelper, ActionResult result, FormMethod formMethod, IDictionary<string, object> htmlAttributes) {
-            var callInfo = result.GetT4MVCResult();
-            return htmlHelper.BeginForm(callInfo.Action, callInfo.Controller, callInfo.RouteValueDictionary, formMethod, htmlAttributes);
-        }
-
-        public static void RenderAction(this HtmlHelper htmlHelper, ActionResult result) {
-            var callInfo = result.GetT4MVCResult();
-            htmlHelper.RenderAction(callInfo.Action, callInfo.Controller, callInfo.RouteValueDictionary);
-        }
-
-        public static MvcHtmlString Action(this HtmlHelper htmlHelper, ActionResult result) {
-            var callInfo = result.GetT4MVCResult();
-            return htmlHelper.Action(callInfo.Action, callInfo.Controller, callInfo.RouteValueDictionary);
-        }
-
-        public static string Action(this UrlHelper urlHelper, ActionResult result) {
-            return urlHelper.Action(result, null, null);
-        }
-
-        public static string Action(this UrlHelper urlHelper, ActionResult result, string protocol = null, string hostName = null) {
-            return urlHelper.RouteUrl(null, result.GetRouteValueDictionary(), protocol ?? result.GetT4MVCResult().Protocol, hostName);
-        }
-
-        public static string ActionAbsolute(this UrlHelper urlHelper, ActionResult result) {
-            return string.Format("{0}{1}",urlHelper.RequestContext.HttpContext.Request.Url.GetLeftPart(UriPartial.Authority),
-                urlHelper.RouteUrl(result.GetRouteValueDictionary()));
-        }
-
-        public static MvcHtmlString ActionLink(this AjaxHelper ajaxHelper, string linkText, ActionResult result, AjaxOptions ajaxOptions) {
-            return ajaxHelper.RouteLink(linkText, result.GetRouteValueDictionary(), ajaxOptions);
-        }
-
-        public static MvcHtmlString ActionLink(this AjaxHelper ajaxHelper, string linkText, ActionResult result, AjaxOptions ajaxOptions, object htmlAttributes) {
-            return ajaxHelper.RouteLink(linkText, result.GetRouteValueDictionary(), ajaxOptions, new RouteValueDictionary(htmlAttributes));
-        }
-
-        public static MvcHtmlString ActionLink(this AjaxHelper ajaxHelper, string linkText, ActionResult result, AjaxOptions ajaxOptions, IDictionary<string, object> htmlAttributes) {
-            return ajaxHelper.RouteLink(linkText, result.GetRouteValueDictionary(), ajaxOptions, htmlAttributes);
-        }
-
-        public static MvcForm BeginForm(this AjaxHelper ajaxHelper, ActionResult result, AjaxOptions ajaxOptions) {
-            return ajaxHelper.BeginForm(result, ajaxOptions, null);
-        }
-
-        public static MvcForm BeginForm(this AjaxHelper ajaxHelper, ActionResult result, AjaxOptions ajaxOptions, object htmlAttributes) {
-            return BeginForm(ajaxHelper, result, ajaxOptions, new RouteValueDictionary(htmlAttributes));
-        }
-
-        public static MvcForm BeginForm(this AjaxHelper ajaxHelper, ActionResult result, AjaxOptions ajaxOptions, IDictionary<string, object> htmlAttributes) {
-            var callInfo = result.GetT4MVCResult();
-            return ajaxHelper.BeginForm(callInfo.Action, callInfo.Controller, callInfo.RouteValueDictionary, ajaxOptions, htmlAttributes);
-        }
-
-        public static Route MapRoute(this RouteCollection routes, string name, string url, ActionResult result) {
-            return MapRoute(routes, name, url, result, null /*namespaces*/);
-        }
-
-        public static Route MapRoute(this RouteCollection routes, string name, string url, ActionResult result, object defaults) {
-            return MapRoute(routes, name, url, result, defaults, null /*constraints*/, null /*namespaces*/);
-        }
-
-        public static Route MapRoute(this RouteCollection routes, string name, string url, ActionResult result, string[] namespaces) {
-            return MapRoute(routes, name, url, result, null /*defaults*/, namespaces);
-        }
-
-        public static Route MapRoute(this RouteCollection routes, string name, string url, ActionResult result, object defaults, object constraints) {
-            return MapRoute(routes, name, url, result, defaults, constraints, null /*namespaces*/);
-        }
-
-        public static Route MapRoute(this RouteCollection routes, string name, string url, ActionResult result, object defaults, string[] namespaces) {
-            return MapRoute(routes, name, url, result, defaults, null /*constraints*/, namespaces);
-        }
-
-        public static Route MapRoute(this RouteCollection routes, string name, string url, ActionResult result, object defaults, object constraints, string[] namespaces) {
-            // Create and add the route
-            var route = CreateRoute(url, result, defaults, constraints, namespaces);
-            routes.Add(name, route);
-            return route;
-        }
-
-        // Note: can't name the AreaRegistrationContext methods 'MapRoute', as that conflicts with the existing methods
-        public static Route MapRouteArea(this AreaRegistrationContext context, string name, string url, ActionResult result) {
-            return MapRouteArea(context, name, url, result, null /*namespaces*/);
-        }
-
-        public static Route MapRouteArea(this AreaRegistrationContext context, string name, string url, ActionResult result, object defaults) {
-            return MapRouteArea(context, name, url, result, defaults, null /*constraints*/, null /*namespaces*/);
-        }
-
-        public static Route MapRouteArea(this AreaRegistrationContext context, string name, string url, ActionResult result, string[] namespaces) {
-            return MapRouteArea(context, name, url, result, null /*defaults*/, namespaces);
-        }
-
-        public static Route MapRouteArea(this AreaRegistrationContext context, string name, string url, ActionResult result, object defaults, object constraints) {
-            return MapRouteArea(context, name, url, result, defaults, constraints, null /*namespaces*/);
-        }
-
-        public static Route MapRouteArea(this AreaRegistrationContext context, string name, string url, ActionResult result, object defaults, string[] namespaces) {
-            return MapRouteArea(context, name, url, result, defaults, null /*constraints*/, namespaces);
-        }
-
-        public static Route MapRouteArea(this AreaRegistrationContext context, string name, string url, ActionResult result, object defaults, object constraints, string[] namespaces) {
-            // Create and add the route
-            if ((namespaces == null) && (context.Namespaces != null)) {
-                 namespaces = context.Namespaces.ToArray();
-            }
-            var route = CreateRoute(url, result, defaults, constraints, namespaces);
-            context.Routes.Add(name, route);
-            route.DataTokens["area"] = context.AreaName;
-            bool useNamespaceFallback = (namespaces == null) || (namespaces.Length == 0);
-            route.DataTokens["UseNamespaceFallback"] = useNamespaceFallback;
-            return route;
-        }
-
-        private static Route CreateRoute(string url, ActionResult result, object defaults, object constraints, string[] namespaces) {
-            // Start by adding the default values from the anonymous object (if any)
-            var routeValues = new RouteValueDictionary(defaults);
-
-            // Then add the Controller/Action names and the parameters from the call
-            foreach (var pair in result.GetRouteValueDictionary()) {
-                routeValues.Add(pair.Key, pair.Value);
-            }
-
-            var routeConstraints = new RouteValueDictionary(constraints);
-
-            // Create and add the route
-            var route = new Route(url, routeValues, routeConstraints, new MvcRouteHandler());
-
-            route.DataTokens = new RouteValueDictionary();
-
-            if (namespaces != null && namespaces.Length > 0) {
-                route.DataTokens["Namespaces"] = namespaces;
-            }
-
-            return route;
-        }
-
-        public static IT4MVCActionResult GetT4MVCResult(this ActionResult result) {
-            var t4MVCResult = result as IT4MVCActionResult;
-            if (t4MVCResult == null) {
-                throw new InvalidOperationException("T4MVC was called incorrectly. You may need to force it to regenerate by right clicking on T4MVC.tt and choosing Run Custom Tool");
-            }
-            return t4MVCResult;
-        }
-
-        public static RouteValueDictionary GetRouteValueDictionary(this ActionResult result) {
-            return result.GetT4MVCResult().RouteValueDictionary;
-        }
-
-        public static ActionResult AddRouteValues(this ActionResult result, object routeValues) {
-            return result.AddRouteValues(new RouteValueDictionary(routeValues));
-        }
-
-        public static ActionResult AddRouteValues(this ActionResult result, RouteValueDictionary routeValues) {
-            RouteValueDictionary currentRouteValues = result.GetRouteValueDictionary();
-
-            // Add all the extra values
-            foreach (var pair in routeValues) {
-                currentRouteValues.Add(pair.Key, pair.Value);
-            }
-
-            return result;
-        }
-
-        public static ActionResult AddRouteValues(this ActionResult result, System.Collections.Specialized.NameValueCollection nameValueCollection) {
-            // Copy all the values from the NameValueCollection into the route dictionary
-            nameValueCollection.CopyTo(result.GetRouteValueDictionary());
-            return result;
-        }
-
-        public static ActionResult AddRouteValue(this ActionResult result, string name, object value) {
-            RouteValueDictionary routeValues = result.GetRouteValueDictionary();
-            routeValues.Add(name, value);
-            return result;
-        }
-        
-        public static void InitMVCT4Result(this IT4MVCActionResult result, string area, string controller, string action, string protocol = null) {
-            result.Controller = controller;
-            result.Action = action;
-            result.Protocol = T4MVCHelpers.IsProduction() ? protocol : null;
-            result.RouteValueDictionary = new RouteValueDictionary();
-            result.RouteValueDictionary.Add("Area", area ?? "");
-            result.RouteValueDictionary.Add("Controller", controller);
-            result.RouteValueDictionary.Add("Action", action);
-        }
-
-        public static bool FileExists(string virtualPath) {
-            if (!HostingEnvironment.IsHosted) return false;
-            string filePath = HostingEnvironment.MapPath(virtualPath);
-            return System.IO.File.Exists(filePath);
-        }
-
-        static DateTime CenturyBegin=new DateTime(2001,1,1);
-        public static string TimestampString(string virtualPath) {
-            if (!HostingEnvironment.IsHosted) return string.Empty;
-            string filePath = HostingEnvironment.MapPath(virtualPath);
-            return Convert.ToString((System.IO.File.GetLastWriteTimeUtc(filePath).Ticks-CenturyBegin.Ticks)/1000000000,16);            
-        }
-    }
-}
-
-
-
-namespace T4MVC {
-    [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-    public class Dummy {
+    public class Dummy
+    {
         private Dummy() { }
         public static Dummy Instance = new Dummy();
     }
 }
 
-
-  
-
-   
-[GeneratedCode("T4MVC", "2.0")]   
-public interface IT4MVCActionResult {   
-    string Action { get; set; }   
-    string Controller { get; set; }   
-    RouteValueDictionary RouteValueDictionary { get; set; } 
-    string Protocol {get; set; }  
-}   
-  
-
 [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-public class T4MVC_ActionResult : System.Web.Mvc.ActionResult, IT4MVCActionResult {
-    public T4MVC_ActionResult(string area, string controller, string action, string protocol = null): base()  {
+internal partial class T4MVC_System_Web_Mvc_ActionResult : System.Web.Mvc.ActionResult, IT4MVCActionResult
+{
+    public T4MVC_System_Web_Mvc_ActionResult(string area, string controller, string action, string protocol = null): base()
+    {
         this.InitMVCT4Result(area, controller, action, protocol);
     }
      
@@ -298,29 +60,47 @@ public class T4MVC_ActionResult : System.Web.Mvc.ActionResult, IT4MVCActionResul
 
 
 
-namespace Links {
+namespace Links
+{
     [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
     public static class styles {
         private const string URLPATH = "~/styles";
         public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
         public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-        public static readonly string jquery_ui_css = Url("jquery-ui.css");
-        public static readonly string jquery_ui_accordion_css = Url("jquery.ui.accordion.css");
-        public static readonly string jquery_ui_all_css = Url("jquery.ui.all.css");
-        public static readonly string jquery_ui_autocomplete_css = Url("jquery.ui.autocomplete.css");
-        public static readonly string jquery_ui_base_css = Url("jquery.ui.base.css");
-        public static readonly string jquery_ui_button_css = Url("jquery.ui.button.css");
-        public static readonly string jquery_ui_core_css = Url("jquery.ui.core.css");
-        public static readonly string jquery_ui_datepicker_css = Url("jquery.ui.datepicker.css");
-        public static readonly string jquery_ui_dialog_css = Url("jquery.ui.dialog.css");
-        public static readonly string jquery_ui_progressbar_css = Url("jquery.ui.progressbar.css");
-        public static readonly string jquery_ui_resizable_css = Url("jquery.ui.resizable.css");
-        public static readonly string jquery_ui_selectable_css = Url("jquery.ui.selectable.css");
-        public static readonly string jquery_ui_slider_css = Url("jquery.ui.slider.css");
-        public static readonly string jquery_ui_tabs_css = Url("jquery.ui.tabs.css");
-        public static readonly string jquery_ui_theme_css = Url("jquery.ui.theme.css");
-        public static readonly string reset_css = Url("reset.css");
-        public static readonly string style_css = Url("style.css");
+        public static readonly string jquery_ui_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery-ui.min.css") ? Url("jquery-ui.min.css") : Url("jquery-ui.css");
+             
+        public static readonly string jquery_ui_accordion_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery.ui.accordion.min.css") ? Url("jquery.ui.accordion.min.css") : Url("jquery.ui.accordion.css");
+             
+        public static readonly string jquery_ui_all_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery.ui.all.min.css") ? Url("jquery.ui.all.min.css") : Url("jquery.ui.all.css");
+             
+        public static readonly string jquery_ui_autocomplete_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery.ui.autocomplete.min.css") ? Url("jquery.ui.autocomplete.min.css") : Url("jquery.ui.autocomplete.css");
+             
+        public static readonly string jquery_ui_base_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery.ui.base.min.css") ? Url("jquery.ui.base.min.css") : Url("jquery.ui.base.css");
+             
+        public static readonly string jquery_ui_button_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery.ui.button.min.css") ? Url("jquery.ui.button.min.css") : Url("jquery.ui.button.css");
+             
+        public static readonly string jquery_ui_core_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery.ui.core.min.css") ? Url("jquery.ui.core.min.css") : Url("jquery.ui.core.css");
+             
+        public static readonly string jquery_ui_datepicker_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery.ui.datepicker.min.css") ? Url("jquery.ui.datepicker.min.css") : Url("jquery.ui.datepicker.css");
+             
+        public static readonly string jquery_ui_dialog_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery.ui.dialog.min.css") ? Url("jquery.ui.dialog.min.css") : Url("jquery.ui.dialog.css");
+             
+        public static readonly string jquery_ui_progressbar_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery.ui.progressbar.min.css") ? Url("jquery.ui.progressbar.min.css") : Url("jquery.ui.progressbar.css");
+             
+        public static readonly string jquery_ui_resizable_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery.ui.resizable.min.css") ? Url("jquery.ui.resizable.min.css") : Url("jquery.ui.resizable.css");
+             
+        public static readonly string jquery_ui_selectable_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery.ui.selectable.min.css") ? Url("jquery.ui.selectable.min.css") : Url("jquery.ui.selectable.css");
+             
+        public static readonly string jquery_ui_slider_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery.ui.slider.min.css") ? Url("jquery.ui.slider.min.css") : Url("jquery.ui.slider.css");
+             
+        public static readonly string jquery_ui_tabs_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery.ui.tabs.min.css") ? Url("jquery.ui.tabs.min.css") : Url("jquery.ui.tabs.css");
+             
+        public static readonly string jquery_ui_theme_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery.ui.theme.min.css") ? Url("jquery.ui.theme.min.css") : Url("jquery.ui.theme.css");
+             
+        public static readonly string reset_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/reset.min.css") ? Url("reset.min.css") : Url("reset.css");
+             
+        public static readonly string style_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/style.min.css") ? Url("style.min.css") : Url("style.css");
+             
         public static readonly string style_scss = Url("style.scss");
     }
 
@@ -363,9 +143,18 @@ namespace Links {
                       
     }
 
+    [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+    public static partial class Bundles
+    {
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public static partial class Scripts {}
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public static partial class Styles {}
+    }
 }
 
-public static class T4MVCHelpers {
+[GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+internal static class T4MVCHelpers {
     // You can change the ProcessVirtualPath method to modify the path that gets returned to the client.
     // e.g. you can prepend a domain, or append a query string:
     //      return "http://localhost" + path + "?foo=bar";
@@ -380,6 +169,8 @@ public static class T4MVCHelpers {
     // Calling ProcessVirtualPath through delegate to allow it to be replaced for unit testing
     public static Func<string, string> ProcessVirtualPath = ProcessVirtualPathDefault;
 
+    // Calling T4Extension.TimestampString through delegate to allow it to be replaced for unit testing and other purposes
+    public static Func<string, string> TimestampString = System.Web.Mvc.T4Extensions.TimestampString;
 
     // Logic to determine if the app is running in production or dev environment
     public static bool IsProduction() { 

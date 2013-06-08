@@ -98,7 +98,7 @@
       @Html.Raw("<tr>");
       <td class="year">@Html.ActionLink(date.Year.ToString(), MVC.Account.Transactions(urlAccountId, urlVendorId, urlCategoryId, date.ToUrlDate(), date.AddYears(1).AddDays(-1).ToUrlDate()))</td>
     }
-    <td@Html.Raw(tdClass) data-from="@date.ToUrlDate()" data-to="@date.AddMonths(1).AddDays(-1).ToUrlDate()">@Html.ActionLink(date.ToString("MMM"), MVC.Account.Transactions(urlAccountId, urlVendorId, urlCategoryId, date.ToUrlDate(), date.AddMonths(1).AddDays(-1).ToUrlDate()), new { title = date.ToString("MMMM yyy") })</td>
+    <td@{Html.Raw(tdClass);} data-from="@date.ToUrlDate()" data-to="@date.AddMonths(1).AddDays(-1).ToUrlDate()">@Html.ActionLink(date.ToString("MMM"), MVC.Account.Transactions(urlAccountId, urlVendorId, urlCategoryId, date.ToUrlDate(), date.AddMonths(1).AddDays(-1).ToUrlDate()), new { title = date.ToString("MMMM yyy") })</td>
     if (date.Month == 12)
     { 
       @Html.Raw("</tr>");
@@ -147,7 +147,7 @@ else
       object uncheckedAttr = new { type = "checkbox" };
       var attr = t.IsReconciled ? checkedAttr : uncheckedAttr;
 
-      <tr@Html.Raw(trId + trClass + trData)>
+      <tr@{Html.Raw(trId + trClass + trData);}>
       <td class="edit"><a class="edit-button">&#9998;</a><span class="edit-mode">@Ajax.InputActionLink(MVC.Account.Reconcile(t.Id, !t.IsReconciled), new AjaxOptions() { HttpMethod = "POST", OnSuccess = String.Format("reconcile({0})", t.Id) }, attr)</span></td>
       <td @Html.Raw(timestampClass + timestampTitle)>
         <span>@t.OriginalTimestamp.ToUrlDate()</span> @*don't forget about edit-mode*@
@@ -165,10 +165,10 @@ else
         <span>@if (!String.IsNullOrEmpty(categoryName)) { @Html.ActionLink(categoryName, MVC.Account.Transactions(urlAccountId, urlVendorId, categoryId, urlFrom, urlTo)); }</span>
         <span class="edit-mode"><select data-placeholder="Choose a Category"></select></span>
       </td>
-      <td@Html.Raw(amtposneg)>@t.Amount.ToCurrency()</td>
+      <td@{Html.Raw(amtposneg);}>@t.Amount.ToCurrency()</td>
       @if (Model.ShowBalance)
       {
-      <td@Html.Raw(balposneg)>@t.Balance.ToCurrency()</td>
+      <td@{Html.Raw(balposneg);}>@t.Balance.ToCurrency()</td>
       }
       </tr><text>
 </text>

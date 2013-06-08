@@ -6,7 +6,7 @@
   var includeSecondaryDateStyle = Model.IncludeSecondaryDates ? "" : " style=\"display:none;\"";
   var legend = Model.IsEditMode ? "Edit " + Model.Name : "Add New Bill";
   var submitText = Model.IsEditMode ? "Save Changes" : "Add Bill";
-  <fieldset@Html.Raw(isVisibleStyle)>
+  <fieldset@{Html.Raw(isVisibleStyle);}>
   <legend>@legend</legend>
   <p>@Html.LabelFor(x => x.Name)<br />@Html.TextBoxFor(x => x.Name, new { maxlength = 200 }) </p>
 	<p>@Html.LabelFor(x => x.Amount)<br />@Html.EditorFor(x => x.Amount, new { size = 8, maxlength = 10 }) </p>

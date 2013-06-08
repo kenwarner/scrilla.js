@@ -37,7 +37,7 @@ else
         var classHtml = " class=\"bill-" + bill.Id + "\"";
 		var unpaidCount = bill.BillTransactions.Count(x => !x.IsPaid && x.Timestamp < unpaidCutoff);
 		var unpaidCountHtml = unpaidCount > 0 ? " (" + unpaidCount + ")" : "";
-        <tr@Html.Raw(classHtml)>
+        <tr@{Html.Raw(classHtml);}>
         <td>@Html.ActionLink(bill.Name, MVC.Account.Bill(bill.Id))@Html.Raw(unpaidCountHtml)</td>
         <td>@Html.ActionLink(categoryName, MVC.Account.Transactions(null, null, categoryId))</td>
         <td>@Html.ActionLink(vendorName, MVC.Account.Transactions(null, vendorId))</td>

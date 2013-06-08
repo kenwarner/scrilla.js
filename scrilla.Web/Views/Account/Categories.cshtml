@@ -41,7 +41,7 @@
       @Html.Raw("<tr>");
       <td class="year">@Html.ActionLink(date.Year.ToString(), MVC.Account.Categories(accountId, date.ToUrlDate(), date.AddYears(1).AddDays(-1).ToUrlDate()))</td>
     }
-    <td@Html.Raw(tdClass) data-from="@date.ToUrlDate()" data-to="@date.AddMonths(1).AddDays(-1).ToUrlDate()">@Html.ActionLink(date.ToString("MMM"), MVC.Account.Categories(accountId, date.ToUrlDate(), date.AddMonths(1).AddDays(-1).ToUrlDate()), new { title = date.ToString("MMMM yyy") })</td>
+    <td@{Html.Raw(tdClass);} data-from="@date.ToUrlDate()" data-to="@date.AddMonths(1).AddDays(-1).ToUrlDate()">@Html.ActionLink(date.ToString("MMM"), MVC.Account.Categories(accountId, date.ToUrlDate(), date.AddMonths(1).AddDays(-1).ToUrlDate()), new { title = date.ToString("MMMM yyy") })</td>
     if (date.Month == 12)
     { 
       @Html.Raw("</tr>");
@@ -77,7 +77,7 @@
       var hasData = months.Any(x => ct.Totals[x] - ct.NonBudgetTotals[x] != 0M);
       string trClass = hasData ? "" : " class=\"nodata\"";
       string urlCategoryId = ct.Category == null ? null : (ct.Category.Id == 0 ? "none" : ct.Category.Id.ToString());
-      <tr@Html.Raw(trClass)>
+      <tr@{Html.Raw(trClass);}>
       <td>
       @if (ct.Category.Id == 0)
       {
@@ -96,7 +96,7 @@
         var budgetAmount = amount - nonBudgetAmount;
         var tdClass = " class=\"" + (budgetAmount == 0M ? "zero" : (budgetAmount > 0M ? "pos" : "neg")) + (nonBudgetAmount == 0M ? "" : " nonbudget") + "\"";
         var tdTitle = nonBudgetAmount != 0M ? "title=\"Non-budgeted amount: " + nonBudgetAmount.ToCurrency() + "\nBudgeted amount: " + budgetAmount.ToCurrency() + "\"" : "";
-        <td@Html.Raw(tdClass)@Html.Raw(tdTitle)>@Html.ActionLink(budgetAmount.ToCurrency(), MVC.Account.Transactions(null, null, urlCategoryId, cur.ToUrlDate(), cur.AddMonths(1).AddDays(-1).ToUrlDate()))</td>
+        <td@{Html.Raw(tdClass);}@{Html.Raw(tdTitle);}>@Html.ActionLink(budgetAmount.ToCurrency(), MVC.Account.Transactions(null, null, urlCategoryId, cur.ToUrlDate(), cur.AddMonths(1).AddDays(-1).ToUrlDate()))</td>
       }
       @if(!isSingleMonth){<td class="total">@((ct.Totals.Sum(x => x.Value) - ct.NonBudgetTotals.Sum(x => x.Value)).ToCurrency())</td>}
       </tr>
@@ -118,7 +118,7 @@
   {
     var trClass = " class=\"total" + (firstCategoryGroup ? " month-sep" : "") + "\"";
     firstCategoryGroup = false;
-    <tr@Html.Raw(trClass)><td>@categoryGroup.CategoryTotals.FirstOrDefault().Category.CategoryGroup.Name</td>
+    <tr@{Html.Raw(trClass);}><td>@categoryGroup.CategoryTotals.FirstOrDefault().Category.CategoryGroup.Name</td>
     @for (DateTime cur = Model.ToMonth; cur >= Model.FromMonth; cur = cur.AddMonths(-1))
     {
       var monthTotal = categoryGroup.CategoryTotals.Sum(x => x.Totals[cur] - x.NonBudgetTotals[cur]);
@@ -130,7 +130,7 @@
 
   // grand totals  
   var trClass2 = " class=\"total" + (!accountId.HasValue ? " month-sep" : "") + "\"";
-  <tr@Html.Raw(trClass2)><td>Total:</td>
+  <tr@{Html.Raw(trClass2);}><td>Total:</td>
   @for (DateTime cur = Model.ToMonth; cur >= Model.FromMonth; cur = cur.AddMonths(-1))
   {
     <td>@Model.CategoryTotals.Sum(x => x.Totals[cur] - x.NonBudgetTotals[cur]).ToCurrency()</td>
@@ -141,7 +141,7 @@
   if (accountId.HasValue)
   {
     var trClass = " class=\"total month-sep\"";
-    <tr@Html.Raw(trClass)>
+    <tr@{Html.Raw(trClass);}>
     <td>Initial Balance:</td>
     @for (DateTime cur = Model.ToMonth; cur >= Model.FromMonth; cur = cur.AddMonths(-1))
     {
@@ -165,7 +165,7 @@
       var diff = expected - final;
       var diffTitle = (diff == 0) ? String.Empty : " title=\"Expected: " + expected.ToCurrency() + " Diff: " + diff.ToCurrency() + "\"";
       var diffClass = (diff > 0) ? " class=\"pos\"" : ((diff < 0) ? " class=\"neg\"" : String.Empty);
-      <td@Html.Raw(diffClass)@Html.Raw(diffTitle)>@final.ToCurrency()</td>
+      <td@{Html.Raw(diffClass);}@{Html.Raw(diffTitle);}>@final.ToCurrency()</td>
     }
     @if(!isSingleMonth){<td>@((totalInitialBalance + Model.CategoryTotals.Sum(x => x.Totals.Sum(y => y.Value) - x.NonBudgetTotals.Sum(y => y.Value))).ToCurrency())</td>}
     </tr>  

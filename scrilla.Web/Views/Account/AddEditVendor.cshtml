@@ -5,7 +5,7 @@
   var isVisibleStyle = Model.IsError || Model.IsEditMode ? " style=\"display:block;\"" : "";
   var legend = Model.IsEditMode ? "Edit " + Model.Name : "Add New Vendor";
   var submitText = Model.IsEditMode ? "Save Changes" : "Add Vendor";
-  <fieldset@Html.Raw(isVisibleStyle)>
+  <fieldset@{Html.Raw(isVisibleStyle);}>
   <legend>@legend</legend>
 	<p>@Html.LabelFor(x => x.Name)<br />@Html.TextBoxFor(x => x.Name, new { maxlength = 200 })</p>
   @*<p>@Html.LabelFor(x => x.DefaultCategory)<br /><select id="default-category" class="chzn-select" data-placeholder="Choose a Default Category" ></select></p>*@

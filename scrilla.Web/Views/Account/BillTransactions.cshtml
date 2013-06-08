@@ -58,7 +58,7 @@ else
     classHtml += (bill.Timestamp < old ? " old" : "");
     classHtml += (bill.Timestamp > future ? " future" : "");
     classHtml += (bill.Timestamp.Month != curmonth ? " month-sep" : "");
-	classHtml += (!bill.IsPaid && bill.TransactionPredictions.Any() ? " predicted" : "");
+		classHtml += (!bill.IsPaid && bill.TransactionPredictions.Any() ? " predicted" : "");
     classHtml += "\"";
     curmonth = bill.Timestamp.Month;
     object checkedAttr = new { type = "checkbox", @checked = "checked" };
@@ -89,12 +89,12 @@ else
 		@Html.ActionLink(vendorName, MVC.Account.Transactions(null, vendorId))
 		@if (match != null && !vendorName.Equals(matchVendorName)) { <span style="font-size:.8em;">(@matchVendorName)</span> }
 	</td>
-    <td@Html.Raw(amountClass)@Html.Raw(amountTitle)>
+    <td@{Html.Raw(amountClass);}@{Html.Raw(amountTitle);}>
       <span>@bill.Amount.ToCurrency()</span>
       <span class="edit-mode">@Html.TextBox("bill-trx-amount-" + bill.Id, bill.Amount.ToCurrency(), new { size = 6, maxlength = 10 })</span>
 	  @if (match != null) { <span style="font-size:.8em;">(@match.Amount.ToCurrency())</span> }
     </td>
-    <td@Html.Raw(timestampClass)@Html.Raw(timestampTitle)>
+    <td@{Html.Raw(timestampClass);}@{Html.Raw(timestampTitle);}>
       <span>@bill.Timestamp.ToUrlDate()</span>
       <span class="edit-mode">@Html.TextBox("bill-trx-datetime-" + bill.Id, bill.Timestamp.ToUrlDate(), new { @class = "dp", size = 8 })</span>
 	  @if (match != null) { <span style="font-size:.8em;">(@match.Timestamp.ToUrlDate())</span> }
@@ -112,9 +112,9 @@ else
 		predictionClass += (bill.Timestamp > future ? " future" : "");
 		predictionClass += "\"";
 		var confidenceStyle = prediction.Item2 < .8 ? " style=\"color:red;\"" : " style=\"color:green;\"";
-		<tr@Html.Raw(predictionClass)>
+		<tr@{Html.Raw(predictionClass);}>
 		<td></td><td></td>
-		<td style="text-align:right">Is this it? <span@Html.Raw(confidenceStyle)>(@Math.Round(prediction.Item2, 2))</span> @Ajax.ActionLink("Yes", MVC.Account.EditBillTransactionPaidStatus(bill.Id, true, prediction.Item1.Id), new AjaxOptions() { HttpMethod = "POST", OnSuccess = String.Format("billPaid({0})", bill.Id) })</td>
+		<td style="text-align:right">Is this it? <span@{Html.Raw(confidenceStyle);}>(@Math.Round(prediction.Item2, 2))</span> @Ajax.ActionLink("Yes", MVC.Account.EditBillTransactionPaidStatus(bill.Id, true, prediction.Item1.Id), new AjaxOptions() { HttpMethod = "POST", OnSuccess = String.Format("billPaid({0})", bill.Id) })</td>
 		<td>@(prediction.Item1.VendorId.HasValue ? prediction.Item1.Vendor.Name : "")</td>
 		<td>@prediction.Item1.Amount.ToCurrency()</td>
 		<td>@prediction.Item1.Timestamp.ToUrlDate()</td>

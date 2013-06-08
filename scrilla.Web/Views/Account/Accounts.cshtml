@@ -22,7 +22,7 @@
       @Html.Raw("<tr>");
       <td class="year">@Html.ActionLink(date.Year.ToString(), MVC.Account.Accounts(date.ToUrlDate(), date.AddYears(1).AddDays(-1).ToUrlDate()))</td>
     }
-    <td@Html.Raw(tdClass) data-from="@date.ToUrlDate()" data-to="@date.AddMonths(1).AddDays(-1).ToUrlDate()">@Html.ActionLink(date.ToString("MMM"), MVC.Account.Accounts(date.ToUrlDate(), date.AddMonths(1).AddDays(-1).ToUrlDate()), new { title = date.ToString("MMMM yyy") })</td>
+    <td@{Html.Raw(tdClass);} data-from="@date.ToUrlDate()" data-to="@date.AddMonths(1).AddDays(-1).ToUrlDate()">@Html.ActionLink(date.ToString("MMM"), MVC.Account.Accounts(date.ToUrlDate(), date.AddMonths(1).AddDays(-1).ToUrlDate()), new { title = date.ToString("MMMM yyy") })</td>
     if (date.Month == 12)
     { 
       @Html.Raw("</tr>");
@@ -55,7 +55,7 @@
     {
       var amount = ab.Balances[cur];
       var tdClass = " class=\"" + (amount == 0M ? "zero" : (amount > 0M ? "pos" : "neg")) + "\"";
-      <td@Html.Raw(tdClass)>@Html.ActionLink(amount.ToCurrency(), MVC.Account.Transactions(ab.Account.Id, null, null, cur.ToUrlDate(), cur.AddMonths(1).AddDays(-1).ToUrlDate()))</td>
+      <td@{Html.Raw(tdClass);}>@Html.ActionLink(amount.ToCurrency(), MVC.Account.Transactions(ab.Account.Id, null, null, cur.ToUrlDate(), cur.AddMonths(1).AddDays(-1).ToUrlDate()))</td>
     }
     </tr>
   }
