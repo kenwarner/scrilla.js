@@ -1,8 +1,8 @@
 REM Set the following user name and password
-set appName=scrilla.Web
-set appPoolName=scrilla.Web
-set appDirectory=D:\projects\scrilla\scrilla.Web
-set appUrl=http://scrilla:80
+set appName=scrilla.js.Web
+set appPoolName=scrilla.js.Web
+set appDirectory=D:\projects\scrilla.js\scrilla.js.Web
+set appUrl=http://scrilla.js:80
 REM make sure to add an entry for scrilla to the HOSTS file
 
 REM create directory
