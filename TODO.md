@@ -18,6 +18,6 @@
 * rename Transaction -> AccountTransaction
 * All service methods should do proper error checking
 * All controller actions that call service methods should do error processing
-* figure out how to handle difference between http://scrilla.localhost/Budget and
-*  http://scrilla.localhost/Categories?from=2010-09-01&to=2011-09-30 (hint: /Budget only sums for the primary account)
+* figure out how to handle difference between http://scrilla.js/Budget and
+*  http://scrilla.js/Categories?from=2010-09-01&to=2011-09-30 (hint: /Budget only sums for the primary account)
 * change .not() to :not()
