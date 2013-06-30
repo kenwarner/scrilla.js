@@ -1,16 +1,16 @@
 USE [master]
 GO
 
-IF  EXISTS (SELECT name FROM sys.databases WHERE name = N'scrilla')
+IF  EXISTS (SELECT name FROM sys.databases WHERE name = N'scrilla.js')
 BEGIN
 
-	EXEC msdb.dbo.sp_delete_database_backuphistory @database_name = N'scrilla'
+	EXEC msdb.dbo.sp_delete_database_backuphistory @database_name = N'scrilla.js'
 
-	ALTER DATABASE [scrilla] SET  SINGLE_USER WITH ROLLBACK IMMEDIATE
+	ALTER DATABASE [scrilla.js] SET  SINGLE_USER WITH ROLLBACK IMMEDIATE
 
 	USE [master]
 
-	DROP DATABASE [scrilla]
+	DROP DATABASE [scrilla.js]
 
 END
 GO
