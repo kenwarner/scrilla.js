@@ -63,20 +63,6 @@
     <Compile Include="Domain\Subtransaction.cs" />
     <Compile Include="Domain\Transaction.cs" />
     <Compile Include="Domain\Vendor.cs" />
-    <Compile Include="Repositories\IAccountGroupRepository.cs" />
-    <Compile Include="Repositories\IAccountRepository.cs" />
-    <Compile Include="Repositories\IBillGroupRepository.cs" />
-    <Compile Include="Repositories\IBillRepository.cs" />
-    <Compile Include="Repositories\IBillTransactionRepository.cs" />
-    <Compile Include="Repositories\IBudgetCategoryRepository.cs" />
-    <Compile Include="Repositories\ICategoryGroupRepository.cs" />
-    <Compile Include="Repositories\ICategoryRepository.cs" />
-    <Compile Include="Repositories\IImportDescriptionVendorMapRepository.cs" />
-    <Compile Include="Repositories\IRepository.cs" />
-    <Compile Include="Repositories\ISubtransactionRepository.cs" />
-    <Compile Include="Repositories\ITransactionRepository.cs" />
-    <Compile Include="Repositories\IVendorRepository.cs" />
-    <Compile Include="IUnitOfWork.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="..\GlobalAssemblyInfo.cs">
       <Link>Properties\GlobalAssemblyInfo.cs</Link>
