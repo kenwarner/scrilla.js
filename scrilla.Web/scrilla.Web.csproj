@@ -288,10 +288,6 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\scrilla.Data.EF\scrilla.Data.EF.csproj">
-      <Project>{7912B075-C020-4FF2-BB18-A4AB4FFB7DC4}</Project>
-      <Name>scrilla.Data.EF</Name>
-    </ProjectReference>
     <ProjectReference Include="..\scrilla.Data\scrilla.Data.csproj">
       <Project>{A286DBC0-E497-4542-A0FA-80177D61FAEF}</Project>
       <Name>scrilla.Data</Name>

@@ -12,7 +12,7 @@ namespace scrilla.Web.App_Start
     using Ninject.Web.Common;
 	using scrilla.Data.EF;
 	using scrilla.Data;
-	using scrilla.Data.Repositories;
+	
 	using scrilla.Services;
 	using scrilla.Data.EF.Repositories;
 
@@ -58,19 +58,6 @@ namespace scrilla.Web.App_Start
         /// <param name="kernel">The kernel.</param>
         private static void RegisterServices(IKernel kernel)
         {
-			kernel.Bind<IDatabaseFactory>().To<DatabaseFactory>().InRequestScope();
-			kernel.Bind<IUnitOfWork>().To<UnitOfWork>().InRequestScope();
-			kernel.Bind<IAccountRepository>().To<AccountRepository>();
-			kernel.Bind<IAccountGroupRepository>().To<AccountGroupRepository>();
-			kernel.Bind<ITransactionRepository>().To<TransactionRepository>();
-			kernel.Bind<ICategoryRepository>().To<CategoryRepository>();
-			kernel.Bind<ICategoryGroupRepository>().To<CategoryGroupRepository>();
-			kernel.Bind<IBudgetCategoryRepository>().To<BudgetCategoryRepository>();
-			kernel.Bind<IVendorRepository>().To<VendorRepository>();
-			kernel.Bind<IBillRepository>().To<BillRepository>();
-			kernel.Bind<IBillGroupRepository>().To<BillGroupRepository>();
-			kernel.Bind<IBillTransactionRepository>().To<BillTransactionRepository>();
-			kernel.Bind<IImportDescriptionVendorMapRepository>().To<ImportDescriptionVendorMapRepository>();
 			kernel.Bind<IAccountService>().To<AccountService>();
 			kernel.Bind<ITransactionImporter>().To<TransactionImporter>();
         }        

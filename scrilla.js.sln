@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 2013
+VisualStudioVersion = 12.0.20617.1 PREVIEW
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{E33B411F-8543-48F6-8F05-212D98DDE9FD}"
 	ProjectSection(SolutionItems) = preProject
 		.nuget\NuGet.exe = .nuget\NuGet.exe
@@ -19,13 +21,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "scrilla.Web", "scrilla.Web\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "scrilla.Data", "scrilla.Data\scrilla.Data.csproj", "{A286DBC0-E497-4542-A0FA-80177D61FAEF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "scrilla.Data.EF", "scrilla.Data.EF\scrilla.Data.EF.csproj", "{7912B075-C020-4FF2-BB18-A4AB4FFB7DC4}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "scrilla.Data.Migrations", "scrilla.Data.Migrations\scrilla.Data.Migrations.csproj", "{B1DEEC71-2FFB-4FEC-9904-86A53C71BEC5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "scrilla.Data.SeedConsole", "scrilla.Data.SeedConsole\scrilla.Data.SeedConsole.csproj", "{8ACCDD72-2223-4DCC-A58D-9078D8A90738}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "scrilla.Services", "scrilla.Services\scrilla.Services.csproj", "{34156E2E-A2CE-418D-8AEC-E4E6A92FB215}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "scrilla.js.Web", "scrilla.js.Web\scrilla.js.Web.csproj", "{8D2D88A6-2FB5-4198-A96E-BE5885E505A9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -47,12 +49,6 @@ Global
 		{A286DBC0-E497-4542-A0FA-80177D61FAEF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A286DBC0-E497-4542-A0FA-80177D61FAEF}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A286DBC0-E497-4542-A0FA-80177D61FAEF}.Release|x86.ActiveCfg = Release|Any CPU
-		{7912B075-C020-4FF2-BB18-A4AB4FFB7DC4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7912B075-C020-4FF2-BB18-A4AB4FFB7DC4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7912B075-C020-4FF2-BB18-A4AB4FFB7DC4}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{7912B075-C020-4FF2-BB18-A4AB4FFB7DC4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7912B075-C020-4FF2-BB18-A4AB4FFB7DC4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7912B075-C020-4FF2-BB18-A4AB4FFB7DC4}.Release|x86.ActiveCfg = Release|Any CPU
 		{B1DEEC71-2FFB-4FEC-9904-86A53C71BEC5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B1DEEC71-2FFB-4FEC-9904-86A53C71BEC5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B1DEEC71-2FFB-4FEC-9904-86A53C71BEC5}.Debug|x86.ActiveCfg = Debug|Any CPU
@@ -73,6 +69,12 @@ Global
 		{34156E2E-A2CE-418D-8AEC-E4E6A92FB215}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{34156E2E-A2CE-418D-8AEC-E4E6A92FB215}.Release|Any CPU.Build.0 = Release|Any CPU
 		{34156E2E-A2CE-418D-8AEC-E4E6A92FB215}.Release|x86.ActiveCfg = Release|Any CPU
+		{8D2D88A6-2FB5-4198-A96E-BE5885E505A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8D2D88A6-2FB5-4198-A96E-BE5885E505A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8D2D88A6-2FB5-4198-A96E-BE5885E505A9}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{8D2D88A6-2FB5-4198-A96E-BE5885E505A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8D2D88A6-2FB5-4198-A96E-BE5885E505A9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8D2D88A6-2FB5-4198-A96E-BE5885E505A9}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

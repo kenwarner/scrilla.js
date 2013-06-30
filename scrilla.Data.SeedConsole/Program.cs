@@ -5,7 +5,7 @@ using System.Text;
 using scrilla.Data.EF;
 using scrilla.Services;
 using scrilla.Data.EF.Repositories;
-using scrilla.Data.Repositories;
+
 using System.Data.SqlClient;
 using System.Configuration;
 using Dapper;
@@ -26,21 +26,8 @@ namespace scrilla.Data.SeedConsole
 	{
 		public void Initialize(string filename)
 		{
-			IDatabaseFactory databaseFactory = new DatabaseFactory();
-			IUnitOfWork unitOfWork = new UnitOfWork(databaseFactory);
-			IAccountRepository accountRepository = new AccountRepository(databaseFactory);
-			ITransactionRepository transactionRepository = new TransactionRepository(databaseFactory);
-			ICategoryRepository categoryRepository = new CategoryRepository(databaseFactory);
-			IVendorRepository vendorRepository = new VendorRepository(databaseFactory);
-			ICategoryGroupRepository categoryGroupRepository = new CategoryGroupRepository(databaseFactory);
-			IBillRepository billRepository = new BillRepository(databaseFactory);
-			IBillTransactionRepository billTransactionRepository = new BillTransactionRepository(databaseFactory);
-			IBillGroupRepository billGroupRepository = new BillGroupRepository(databaseFactory);
-			IBudgetCategoryRepository budgetCategoryRepository = new BudgetCategoryRepository(databaseFactory);
-			IAccountGroupRepository accountGroupRepository = new AccountGroupRepository(databaseFactory);
-			IImportDescriptionVendorMapRepository importDescriptionVendorMapRepository = new ImportDescriptionVendorMapRepository(databaseFactory);
-			IAccountService accountService = new AccountService(unitOfWork, accountRepository, transactionRepository, categoryRepository, vendorRepository, billRepository, billTransactionRepository, billGroupRepository, categoryGroupRepository, budgetCategoryRepository, importDescriptionVendorMapRepository);
-			TransactionImporter importer = new TransactionImporter(unitOfWork, accountService, accountRepository, transactionRepository, vendorRepository, categoryGroupRepository, accountGroupRepository, importDescriptionVendorMapRepository);
+			IAccountService accountService = new AccountService();
+			TransactionImporter importer = new TransactionImporter();
 
 			importer.Import(filename);
 		}

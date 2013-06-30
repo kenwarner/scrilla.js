@@ -6,7 +6,7 @@ using System.IO;
 using CsvHelper;
 using CsvHelper.Configuration;
 using scrilla.Data;
-using scrilla.Data.Repositories;
+
 using scrilla.Data.Domain;
 
 namespace scrilla.Services
@@ -18,28 +18,14 @@ namespace scrilla.Services
 
 	public class TransactionImporter : ITransactionImporter
 	{
-		private IUnitOfWork _unitOfWork;
 		private IAccountService _accountService;
-		private IAccountRepository _accountRepository;
-		private ITransactionRepository _transactionRepository;
-		private IVendorRepository _vendorRepository;
-		private ICategoryGroupRepository _categoryGroupRepository;
-		private IAccountGroupRepository _accountGroupRepository;
-		private IImportDescriptionVendorMapRepository _importDescriptionVendorMapRepository;
 
 		private IEnumerable<ImportRecord> _transactions;
 		private List<Transaction> _newTransactions = new List<Transaction>();
 
-		public TransactionImporter(IUnitOfWork unitOfWork, IAccountService accountService, IAccountRepository accountRepository, ITransactionRepository transactionRepository, IVendorRepository vendorRepository, ICategoryGroupRepository categoryGroupRepository, IAccountGroupRepository accountGroupRepository, IImportDescriptionVendorMapRepository importDescriptionVendorMapRepository)
+		public TransactionImporter(IAccountService accountService)
 		{
-			_unitOfWork = unitOfWork;
 			_accountService = accountService;
-			_accountRepository = accountRepository;
-			_transactionRepository = transactionRepository;
-			_vendorRepository = vendorRepository;
-			_categoryGroupRepository = categoryGroupRepository;
-			_accountGroupRepository = accountGroupRepository;
-			_importDescriptionVendorMapRepository = importDescriptionVendorMapRepository;
 		}
 
 		public void Import(string fileName)

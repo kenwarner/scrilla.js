@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using scrilla.Data;
-using scrilla.Data.Repositories;
+
 using scrilla.Data.Domain;
 using System.Diagnostics;
 
@@ -11,31 +11,8 @@ namespace scrilla.Services
 {
 	public class AccountService : IAccountService
 	{
-		private IUnitOfWork _unitOfWork;
-		private IAccountRepository _accountRepository;
-		private ITransactionRepository _transactionRepository;
-		private ICategoryRepository _categoryRepository;
-		private IVendorRepository _vendorRepository;
-		private IBillRepository _billRepository;
-		private IBillTransactionRepository _billTransactionRepository;
-		private IBillGroupRepository _billGroupRepository;
-		private ICategoryGroupRepository _categoryGroupRepository;
-		private IBudgetCategoryRepository _budgetCategoryRepository;
-		private IImportDescriptionVendorMapRepository _importDescriptionVendorMapRepository;
-
-		public AccountService(IUnitOfWork unitOfWork, IAccountRepository accountRepository, ITransactionRepository transactionRepository, ICategoryRepository categoryRepository, IVendorRepository vendorRepository, IBillRepository billRepository, IBillTransactionRepository billTransactionRepository, IBillGroupRepository billGroupRepository, ICategoryGroupRepository categoryGroupRepository, IBudgetCategoryRepository budgetCategoryRepository, IImportDescriptionVendorMapRepository importDescriptionVendorMapRepository)
+		public AccountService()
 		{
-			_unitOfWork = unitOfWork;
-			_accountRepository = accountRepository;
-			_transactionRepository = transactionRepository;
-			_categoryRepository = categoryRepository;
-			_vendorRepository = vendorRepository;
-			_billRepository = billRepository;
-			_billTransactionRepository = billTransactionRepository;
-			_billGroupRepository = billGroupRepository;
-			_categoryGroupRepository = categoryGroupRepository;
-			_budgetCategoryRepository = budgetCategoryRepository;
-			_importDescriptionVendorMapRepository = importDescriptionVendorMapRepository;
 		}
 
 		public ServiceResult<Account> GetAccount(int accountId)
