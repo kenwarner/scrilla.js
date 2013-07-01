@@ -45,112 +45,116 @@ namespace scrilla.Services
 
 		private void UpdateAccountBalances()
 		{
-			var transactions = _accountService.GetAllTransactions().Result;
-			foreach (var trx in transactions)
-			{
-				trx.Amount = trx.Subtransactions.Sum(x => x.Amount);
-			}
-			_unitOfWork.Commit();
+			throw new NotImplementedException();
 
-			var accounts = _accountService.GetAllAccounts().Result;
-			foreach (var account in accounts)
-			{
-				account.Balance = account.InitialBalance + account.Transactions.Sum(x => x.Amount);
-			}
+			//var transactions = _accountService.GetAllTransactions().Result;
+			//foreach (var trx in transactions)
+			//{
+			//	trx.Amount = trx.Subtransactions.Sum(x => x.Amount);
+			//}
+			//_unitOfWork.Commit();
 
-			_unitOfWork.Commit();
+			//var accounts = _accountService.GetAllAccounts().Result;
+			//foreach (var account in accounts)
+			//{
+			//	account.Balance = account.InitialBalance + account.Transactions.Sum(x => x.Amount);
+			//}
+
+			//_unitOfWork.Commit();
 		}
 
 		private void UpdateTransactions()
 		{
-			// add transactions
-			var now = DateTime.Now;
-			var accounts = _accountRepository.GetAll().ToList();
-			var vendors = _vendorRepository.GetAll().ToList();
-			var mappedVendors = _importDescriptionVendorMapRepository.GetAll().ToList();
-			var transactions = _transactionRepository.GetAll().ToList();
-			var importedTransactions = new List<Transaction>();
-			var maxTransactionDate = transactions.Any() ? transactions.Max(x => x.OriginalTimestamp) : DateTime.MinValue;
+			throw new NotImplementedException();
 
-			foreach (ImportRecord row in _transactions.Where(x => x.Date >= maxTransactionDate).OrderBy(x => x.Date))
-			{
-				// is amount credit or debit?
-				var amount = row.Amount * (row.TransactionType.Equals("debit") ? -1.0M : 1.0M);
+			//// add transactions
+			//var now = DateTime.Now;
+			//var accounts = _accountRepository.GetAll().ToList();
+			//var vendors = _vendorRepository.GetAll().ToList();
+			//var mappedVendors = _importDescriptionVendorMapRepository.GetAll().ToList();
+			//var transactions = _transactionRepository.GetAll().ToList();
+			//var importedTransactions = new List<Transaction>();
+			//var maxTransactionDate = transactions.Any() ? transactions.Max(x => x.OriginalTimestamp) : DateTime.MinValue;
 
-				// has this transaction already been imported?
-				var existingTransaction = transactions.FirstOrDefault(x => x.Amount == amount && x.OriginalTimestamp == row.Date && x.Subtransactions.Any(y => y.Notes.Equals(row.OriginalDescription, StringComparison.CurrentCultureIgnoreCase)));
-				if (existingTransaction != null)
-				{
-					Console.WriteLine("FOUND {0} {1} : {2}", row.Date.ToShortDateString(), amount, row.OriginalDescription);
+			//foreach (ImportRecord row in _transactions.Where(x => x.Date >= maxTransactionDate).OrderBy(x => x.Date))
+			//{
+			//	// is amount credit or debit?
+			//	var amount = row.Amount * (row.TransactionType.Equals("debit") ? -1.0M : 1.0M);
 
-					importedTransactions.Add(existingTransaction);
-					continue;
-				}
+			//	// has this transaction already been imported?
+			//	var existingTransaction = transactions.FirstOrDefault(x => x.Amount == amount && x.OriginalTimestamp == row.Date && x.Subtransactions.Any(y => y.Notes.Equals(row.OriginalDescription, StringComparison.CurrentCultureIgnoreCase)));
+			//	if (existingTransaction != null)
+			//	{
+			//		Console.WriteLine("FOUND {0} {1} : {2}", row.Date.ToShortDateString(), amount, row.OriginalDescription);
 
-				Console.WriteLine("create {0} {1} : {2}", row.Date.ToShortDateString(), amount, row.OriginalDescription);
+			//		importedTransactions.Add(existingTransaction);
+			//		continue;
+			//	}
 
-				// find the account in the local cache
-				var account = accounts.SingleOrDefault(x => x.AccountNameMaps.Any(y => y.Name.Equals(row.AccountName, StringComparison.CurrentCultureIgnoreCase)));
+			//	Console.WriteLine("create {0} {1} : {2}", row.Date.ToShortDateString(), amount, row.OriginalDescription);
 
-				// if we didn't find one, make one
-				if (account == null)
-				{
-					account = new Account()
-					{
-						Name = row.AccountName,
-						AccountGroup = accounts.Any() ? accounts.FirstOrDefault().AccountGroup : new AccountGroup() { Name = row.AccountName },
-						BalanceTimestamp = now
-					};
-					account.AccountNameMaps = new List<AccountNameMap>() { new AccountNameMap() { Account = account, Name = row.AccountName } };
+			//	// find the account in the local cache
+			//	var account = accounts.SingleOrDefault(x => x.AccountNameMaps.Any(y => y.Name.Equals(row.AccountName, StringComparison.CurrentCultureIgnoreCase)));
 
-					_accountRepository.Add(account);
-					_unitOfWork.Commit();
-					accounts.Add(account);
-				}
+			//	// if we didn't find one, make one
+			//	if (account == null)
+			//	{
+			//		account = new Account()
+			//		{
+			//			Name = row.AccountName,
+			//			AccountGroup = accounts.Any() ? accounts.FirstOrDefault().AccountGroup : new AccountGroup() { Name = row.AccountName },
+			//			BalanceTimestamp = now
+			//		};
+			//		account.AccountNameMaps = new List<AccountNameMap>() { new AccountNameMap() { Account = account, Name = row.AccountName } };
 
-				account.BalanceTimestamp = now;
+			//		_accountRepository.Add(account);
+			//		_unitOfWork.Commit();
+			//		accounts.Add(account);
+			//	}
 
-				// find the vendor in the local cache
-				var vendor = vendors.SingleOrDefault(x => x.Name.Equals(row.Description, StringComparison.CurrentCultureIgnoreCase));
+			//	account.BalanceTimestamp = now;
 
-				// find the vendor in the description map
-				var mappedVendor = mappedVendors.Where(x => x.Description.Equals(row.Description, StringComparison.CurrentCultureIgnoreCase));
-				if (mappedVendor.Any())
-				{
-					vendor = mappedVendor.FirstOrDefault().Vendor;
-				}
+			//	// find the vendor in the local cache
+			//	var vendor = vendors.SingleOrDefault(x => x.Name.Equals(row.Description, StringComparison.CurrentCultureIgnoreCase));
 
-				// if we didn't find one, make one
-				if (vendor == null)
-				{
-					vendor = new Vendor() { Name = row.Description };
-					_vendorRepository.Add(vendor);
-					_unitOfWork.Commit();
-					vendors.Add(vendor);
-				}
+			//	// find the vendor in the description map
+			//	var mappedVendor = mappedVendors.Where(x => x.Description.Equals(row.Description, StringComparison.CurrentCultureIgnoreCase));
+			//	if (mappedVendor.Any())
+			//	{
+			//		vendor = mappedVendor.FirstOrDefault().Vendor;
+			//	}
 
-				Transaction transaction = new Transaction()
-				{
-					Timestamp = row.Date,
-					OriginalTimestamp = row.Date,
-					Amount = amount,
-					Vendor = vendor,
-				};
+			//	// if we didn't find one, make one
+			//	if (vendor == null)
+			//	{
+			//		vendor = new Vendor() { Name = row.Description };
+			//		_vendorRepository.Add(vendor);
+			//		_unitOfWork.Commit();
+			//		vendors.Add(vendor);
+			//	}
 
-				Subtransaction subtransaction = new Subtransaction()
-				{
-					Amount = amount,
-					Memo = row.Description,
-					Notes = row.OriginalDescription,
-					CategoryId = account.DefaultCategoryId,
-					IsTransfer = row.Description.StartsWith("Transfer from") || row.Description.StartsWith("Transfer to")
-				};
+			//	Transaction transaction = new Transaction()
+			//	{
+			//		Timestamp = row.Date,
+			//		OriginalTimestamp = row.Date,
+			//		Amount = amount,
+			//		Vendor = vendor,
+			//	};
 
-				transaction.Subtransactions.Add(subtransaction);
-				account.Transactions.Add(transaction);
-				_newTransactions.Add(transaction);
-				_unitOfWork.Commit();
-			}
+			//	Subtransaction subtransaction = new Subtransaction()
+			//	{
+			//		Amount = amount,
+			//		Memo = row.Description,
+			//		Notes = row.OriginalDescription,
+			//		CategoryId = account.DefaultCategoryId,
+			//		IsTransfer = row.Description.StartsWith("Transfer from") || row.Description.StartsWith("Transfer to")
+			//	};
+
+			//	transaction.Subtransactions.Add(subtransaction);
+			//	account.Transactions.Add(transaction);
+			//	_newTransactions.Add(transaction);
+			//	_unitOfWork.Commit();
+			//}
 		}
 	}
 
