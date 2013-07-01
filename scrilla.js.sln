@@ -27,6 +27,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "scrilla.Services", "scrilla
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "scrilla.js.Web", "scrilla.js.Web\scrilla.js.Web.csproj", "{8D2D88A6-2FB5-4198-A96E-BE5885E505A9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "scrilla.Data.Dapper", "scrilla.Data.Dapper\scrilla.Data.Dapper.csproj", "{14237860-E43C-4294-9235-81C6C4173773}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -67,6 +69,12 @@ Global
 		{8D2D88A6-2FB5-4198-A96E-BE5885E505A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8D2D88A6-2FB5-4198-A96E-BE5885E505A9}.Release|Any CPU.Build.0 = Release|Any CPU
 		{8D2D88A6-2FB5-4198-A96E-BE5885E505A9}.Release|x86.ActiveCfg = Release|Any CPU
+		{14237860-E43C-4294-9235-81C6C4173773}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{14237860-E43C-4294-9235-81C6C4173773}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{14237860-E43C-4294-9235-81C6C4173773}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{14237860-E43C-4294-9235-81C6C4173773}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{14237860-E43C-4294-9235-81C6C4173773}.Release|Any CPU.Build.0 = Release|Any CPU
+		{14237860-E43C-4294-9235-81C6C4173773}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
