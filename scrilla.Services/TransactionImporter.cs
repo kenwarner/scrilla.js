@@ -7,8 +7,6 @@ using CsvHelper;
 using CsvHelper.Configuration;
 using scrilla.Data;
 
-using scrilla.Data.Domain;
-
 namespace scrilla.Services
 {
 	public interface ITransactionImporter
