@@ -51,18 +51,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Domain\Account.cs" />
-    <Compile Include="Domain\AccountGroup.cs" />
-    <Compile Include="Domain\Bill.cs" />
-    <Compile Include="Domain\BillGroup.cs" />
-    <Compile Include="Domain\BillTransaction.cs" />
-    <Compile Include="Domain\BudgetCategory.cs" />
-    <Compile Include="Domain\Category.cs" />
-    <Compile Include="Domain\CategoryGroup.cs" />
-    <Compile Include="Domain\ImportDescriptionVendorMap.cs" />
-    <Compile Include="Domain\Subtransaction.cs" />
-    <Compile Include="Domain\Transaction.cs" />
-    <Compile Include="Domain\Vendor.cs" />
+    <Compile Include="Account.cs" />
+    <Compile Include="AccountGroup.cs" />
+    <Compile Include="Bill.cs" />
+    <Compile Include="BillGroup.cs" />
+    <Compile Include="BillTransaction.cs" />
+    <Compile Include="BudgetCategory.cs" />
+    <Compile Include="Category.cs" />
+    <Compile Include="CategoryGroup.cs" />
+    <Compile Include="ImportDescriptionVendorMap.cs" />
+    <Compile Include="Subtransaction.cs" />
+    <Compile Include="Transaction.cs" />
+    <Compile Include="Vendor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="..\GlobalAssemblyInfo.cs">
       <Link>Properties\GlobalAssemblyInfo.cs</Link>

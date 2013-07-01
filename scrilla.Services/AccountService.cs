@@ -2,10 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using scrilla.Data;
-
-using scrilla.Data.Domain;
 using System.Diagnostics;
+using scrilla.Data;
 
 namespace scrilla.Services
 {
