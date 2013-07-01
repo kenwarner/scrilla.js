@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -14,34 +13,38 @@ namespace scrilla.js.Web.Controllers
 	[Authorize]
 	public class TodoListController : ApiController
 	{
-		private TodoItemContext db = new TodoItemContext();
+		//private TodoItemContext db = new TodoItemContext();
 
 		// GET api/TodoList
 		public IEnumerable<TodoListDto> GetTodoLists()
 		{
-			return db.TodoLists.Include("Todos")
-				.Where(u => u.UserId == User.Identity.Name)
-				.OrderByDescending(u => u.TodoListId)
-				.AsEnumerable()
-				.Select(todoList => new TodoListDto(todoList));
+			return null;
+
+			//return db.TodoLists.Include("Todos")
+			//	.Where(u => u.UserId == User.Identity.Name)
+			//	.OrderByDescending(u => u.TodoListId)
+			//	.AsEnumerable()
+			//	.Select(todoList => new TodoListDto(todoList));
 		}
 
 		// GET api/TodoList/5
 		public TodoListDto GetTodoList(int id)
 		{
-			TodoList todoList = db.TodoLists.Find(id);
-			if (todoList == null)
-			{
-				throw new HttpResponseException(Request.CreateResponse(HttpStatusCode.NotFound));
-			}
+			return null;
 
-			if (todoList.UserId != User.Identity.Name)
-			{
-				// Trying to modify a record that does not belong to the user
-				throw new HttpResponseException(Request.CreateResponse(HttpStatusCode.Unauthorized));
-			}
+			//TodoList todoList = db.TodoLists.Find(id);
+			//if (todoList == null)
+			//{
+			//	throw new HttpResponseException(Request.CreateResponse(HttpStatusCode.NotFound));
+			//}
 
-			return new TodoListDto(todoList);
+			//if (todoList.UserId != User.Identity.Name)
+			//{
+			//	// Trying to modify a record that does not belong to the user
+			//	throw new HttpResponseException(Request.CreateResponse(HttpStatusCode.Unauthorized));
+			//}
+
+			//return new TodoListDto(todoList);
 		}
 
 		// PUT api/TodoList/5
@@ -59,22 +62,22 @@ namespace scrilla.js.Web.Controllers
 			}
 
 			TodoList todoList = todoListDto.ToEntity();
-			if (db.Entry(todoList).Entity.UserId != User.Identity.Name)
-			{
-				// Trying to modify a record that does not belong to the user
-				return Request.CreateResponse(HttpStatusCode.Unauthorized);
-			}
+			//if (db.Entry(todoList).Entity.UserId != User.Identity.Name)
+			//{
+			//	// Trying to modify a record that does not belong to the user
+			//	return Request.CreateResponse(HttpStatusCode.Unauthorized);
+			//}
 
-			db.Entry(todoList).State = EntityState.Modified;
+			//db.Entry(todoList).State = EntityState.Modified;
 
-			try
-			{
-				db.SaveChanges();
-			}
-			catch (DbUpdateConcurrencyException)
-			{
-				return Request.CreateResponse(HttpStatusCode.InternalServerError);
-			}
+			//try
+			//{
+			//	db.SaveChanges();
+			//}
+			//catch (DbUpdateConcurrencyException)
+			//{
+			//	return Request.CreateResponse(HttpStatusCode.InternalServerError);
+			//}
 
 			return Request.CreateResponse(HttpStatusCode.OK);
 		}
@@ -90,8 +93,8 @@ namespace scrilla.js.Web.Controllers
 
 			todoListDto.UserId = User.Identity.Name;
 			TodoList todoList = todoListDto.ToEntity();
-			db.TodoLists.Add(todoList);
-			db.SaveChanges();
+			//db.TodoLists.Add(todoList);
+			//db.SaveChanges();
 			todoListDto.TodoListId = todoList.TodoListId;
 
 			HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.Created, todoListDto);
@@ -103,36 +106,36 @@ namespace scrilla.js.Web.Controllers
 		[ValidateHttpAntiForgeryToken]
 		public HttpResponseMessage DeleteTodoList(int id)
 		{
-			TodoList todoList = db.TodoLists.Find(id);
-			if (todoList == null)
-			{
-				return Request.CreateResponse(HttpStatusCode.NotFound);
-			}
+			//TodoList todoList = db.TodoLists.Find(id);
+			//if (todoList == null)
+			//{
+			//	return Request.CreateResponse(HttpStatusCode.NotFound);
+			//}
 
-			if (db.Entry(todoList).Entity.UserId != User.Identity.Name)
-			{
-				// Trying to delete a record that does not belong to the user
-				return Request.CreateResponse(HttpStatusCode.Unauthorized);
-			}
+			//if (db.Entry(todoList).Entity.UserId != User.Identity.Name)
+			//{
+			//	// Trying to delete a record that does not belong to the user
+			//	return Request.CreateResponse(HttpStatusCode.Unauthorized);
+			//}
 
-			TodoListDto todoListDto = new TodoListDto(todoList);
-			db.TodoLists.Remove(todoList);
+			//TodoListDto todoListDto = new TodoListDto(todoList);
+			//db.TodoLists.Remove(todoList);
 
-			try
-			{
-				db.SaveChanges();
-			}
-			catch (DbUpdateConcurrencyException)
-			{
-				return Request.CreateResponse(HttpStatusCode.InternalServerError);
-			}
+			//try
+			//{
+			//	db.SaveChanges();
+			//}
+			//catch (DbUpdateConcurrencyException)
+			//{
+			//	return Request.CreateResponse(HttpStatusCode.InternalServerError);
+			//}
 
-			return Request.CreateResponse(HttpStatusCode.OK, todoListDto);
+			return Request.CreateResponse(HttpStatusCode.OK);
 		}
 
 		protected override void Dispose(bool disposing)
 		{
-			db.Dispose();
+			//db.Dispose();
 			base.Dispose(disposing);
 		}
 	}
