@@ -1,2 +1,2 @@
 cls
-"..\..\packages\FluentMigrator.1.0.1.0\tools\Migrate.exe" /connection "Server=localhost;Database=scrilla.js;Trusted_Connection=true" /provider sqlserver2008 /assembly ..\bin\Debug\scrilla.Data.Migrations.dll /task rollback /verbose true
+"..\..\packages\FluentMigrator.1.1.1.0\tools\Migrate.exe" /connection "Server=localhost;Database=scrilla.js;Trusted_Connection=true" /provider sqlserver2008 /assembly ..\bin\Debug\scrilla.Data.Migrations.dll /task rollback /verbose true
