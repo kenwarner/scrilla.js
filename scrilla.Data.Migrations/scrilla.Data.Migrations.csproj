@@ -73,6 +73,7 @@
     <Compile Include="_001\_010_ImportDescriptionVendorMap.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="tests\scratch.bat" />
     <None Include="dev\createdb.bat" />
     <None Include="dev\dropdb.bat" />
     <None Include="dev\migrate.bat" />
@@ -82,6 +83,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="tests\createDb.sql" />
+    <Content Include="tests\dropDb.sql" />
     <Content Include="dev\createDb.sql" />
     <Content Include="dev\dropDb.sql" />
   </ItemGroup>

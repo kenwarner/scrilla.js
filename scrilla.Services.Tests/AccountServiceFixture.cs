@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlClient;
 using System.Data.SqlTypes;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,7 +14,7 @@ using Xunit;
 
 namespace scrilla.Services.Tests
 {
-    public class AccountServiceFixture
+	public class AccountServiceFixture
 	{
 		#region Setup
 
@@ -21,8 +22,21 @@ namespace scrilla.Services.Tests
 
 		public AccountServiceFixture()
 		{
+			CreateTestDatabase();
+
 			var connectionString = ConfigurationManager.ConnectionStrings[0].ConnectionString;
 			_sqlConnection = new SqlConnection(connectionString);
+		}
+
+		private void CreateTestDatabase()
+		{
+			var startInfo = new ProcessStartInfo()
+			{
+				WorkingDirectory = @"..\..\..\scrilla.Data.Migrations\tests\",
+				FileName = "scratch.bat",
+				WindowStyle = ProcessWindowStyle.Hidden
+			};
+			Process.Start(startInfo).WaitForExit();
 		}
 
 		~AccountServiceFixture()
