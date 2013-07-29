@@ -11,6 +11,5 @@ namespace scrilla.Data
 		public int CategoryId { get; set; }
 		public DateTime Month { get; set; }
 		public decimal Amount { get; set; }
-		public virtual Category Category { get; set; }
 	}
 }

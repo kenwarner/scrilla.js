@@ -15,8 +15,5 @@ namespace scrilla.Data
 		public string Notes { get; set; }  // Personal Notes
 		public bool IsTransfer { get; set; }
 		public bool IsExcludedFromBudget { get; set; }
-
-		public virtual Transaction Transaction { get; set; }
-		public virtual Category Category { get; set; }
 	}
 }
