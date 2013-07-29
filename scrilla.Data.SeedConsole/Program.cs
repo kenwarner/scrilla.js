@@ -2,9 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using scrilla.Data.EF;
 using scrilla.Services;
-using scrilla.Data.EF.Repositories;
 
 using System.Data.SqlClient;
 using System.Configuration;
@@ -26,10 +24,11 @@ namespace scrilla.Data.SeedConsole
 	{
 		public void Initialize(string filename)
 		{
-			IAccountService accountService = new AccountService();
-			TransactionImporter importer = new TransactionImporter();
+			throw new NotImplementedException();
+			//IAccountService accountService = new AccountService(();
+			//TransactionImporter importer = new TransactionImporter();
 
-			importer.Import(filename);
+			//importer.Import(filename);
 		}
 	}
 }
