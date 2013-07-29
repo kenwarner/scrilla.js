@@ -33,12 +33,19 @@ namespace scrilla.Services
 
 			using (var stream = new StreamReader(fileName))
 			{
-				var reader = new CsvHelper.CsvReader(stream);
+				var reader = new CsvHelper.CsvReader(stream, CreateCsvConfiguration());
 				_transactions = reader.GetRecords<ImportRecord>().OrderBy(x => x.Date).ThenByDescending(x => x.Amount).ToList();
 			}
 
 			UpdateTransactions();
 			UpdateAccountBalances();
+		}
+
+		private CsvConfiguration CreateCsvConfiguration()
+		{
+			var config = new CsvConfiguration();
+			config.RegisterClassMap<ImportRecordMap>();
+			return config;
 		}
 
 		private void UpdateAccountBalances()
@@ -160,15 +167,22 @@ namespace scrilla.Services
 	{
 		public DateTime Date { get; set; }
 		public string Description { get; set; }
-		[CsvField(Name = "Original Description")]
 		public string OriginalDescription { get; set; }
 		public decimal Amount { get; set; }
-		[CsvField(Name = "Transaction Type")]
 		public string TransactionType { get; set; }
 		public string Category { get; set; }
-		[CsvField(Name = "Account Name")]
 		public string AccountName { get; set; }
 		public string Labels { get; set; }
 		public string Notes { get; set; }
+	}
+
+	class ImportRecordMap : CsvClassMap<ImportRecord>
+	{
+		public override void CreateMap()
+		{
+			Map(m => m.OriginalDescription).Name("Original Description");
+			Map(m => m.TransactionType).Name("Transaction Type");
+			Map(m => m.AccountName).Name("Account Name");
+		}
 	}
 }
