@@ -4,161 +4,128 @@ using System.Linq;
 using System.Text;
 using System.Diagnostics;
 using scrilla.Data;
+using DapperExtensions;
 
 namespace scrilla.Services
 {
 	public class AccountService : IAccountService
 	{
-		public AccountService()
+		private readonly IDatabase _db;
+
+		public AccountService(IDatabase database)
 		{
+			_db = database;
+		}
+
+		#region GetById
+
+		private ServiceResult<T> GetEntity<T>(int id) where T : class
+		{
+			var result = new ServiceResult<T>();
+
+			result.Result = _db.Get<T>(id);
+			if (result.Result == null)
+			{
+				result.AddError(ErrorType.NotFound, "{0} {1} not found", (typeof(T)).Name, id);
+			}
+
+			return result;
 		}
 
 		public ServiceResult<Account> GetAccount(int accountId)
 		{
-			throw new NotImplementedException();
+			return GetEntity<Account>(accountId);
+		}
 
-			var result = new ServiceResult<Account>();
-
-			//result.Result = _accountRepository.GetById(accountId);
-			//if (result.Result == null)
-			//{
-			//	result.AddError(ErrorType.NotFound, "Account {0} not found", accountId);
-			//}
-
-			return result;
+		public ServiceResult<AccountGroup> GetAccountGroup(int accountGroupId)
+		{
+			return GetEntity<AccountGroup>(accountGroupId);
 		}
 
 		public ServiceResult<Category> GetCategory(int categoryId)
 		{
-			throw new NotImplementedException();
-
-			var result = new ServiceResult<Category>();
-
-			//result.Result = _categoryRepository.GetById(categoryId);
-			//if (result.Result == null)
-			//{
-			//	result.AddError(ErrorType.NotFound, "Category {0} not found", categoryId);
-			//}
-
-			return result;
+			return GetEntity<Category>(categoryId);
 		}
 
 		public ServiceResult<Vendor> GetVendor(int vendorId)
 		{
-			throw new NotImplementedException();
-
-			var result = new ServiceResult<Vendor>();
-
-			//result.Result = _vendorRepository.GetById(vendorId);
-			//if (result.Result == null)
-			//{
-			//	result.AddError(ErrorType.NotFound, "Vendor {0} not found", vendorId);
-			//}
-
-			return result;
+			return GetEntity<Vendor>(vendorId);
 		}
 
 		public ServiceResult<Bill> GetBill(int billId)
 		{
-			throw new NotImplementedException();
+			return GetEntity<Bill>(billId);
+		}
 
-			var result = new ServiceResult<Bill>();
+		public ServiceResult<CategoryGroup> GetCategoryGroup(int categoryGroupId)
+		{
+			return GetEntity<CategoryGroup>(categoryGroupId);
+		}
 
-			//result.Result = _billRepository.GetById(billId);
-			//if (result.Result == null)
-			//{
-			//	result.AddError(ErrorType.NotFound, "Bill {0} not found", billId);
-			//}
+		#endregion
 
+		#region GetAll
+
+		private ServiceResult<IEnumerable<T>> GetAllEntity<T>() where T : class
+		{
+			var result = new ServiceResult<IEnumerable<T>>();
+			result.Result = _db.GetList<T>();
 			return result;
 		}
 
-
 		public ServiceResult<IEnumerable<Account>> GetAllAccounts()
 		{
-			throw new NotImplementedException();
-
-			var result = new ServiceResult<IEnumerable<Account>>();
-
-			//result.Result = _accountRepository.GetAll().ToList();
-
-			return result;
+			return GetAllEntity<Account>();
 		}
 
 		public ServiceResult<IEnumerable<Category>> GetAllCategories()
 		{
-			throw new NotImplementedException();
-
-			var result = new ServiceResult<IEnumerable<Category>>();
-
-			//result.Result = _categoryRepository.GetAll().ToList();
-
-			return result;
+			return GetAllEntity<Category>();
 		}
 
 		public ServiceResult<IEnumerable<CategoryGroup>> GetAllCategoryGroups()
 		{
-			throw new NotImplementedException();
-
-			var result = new ServiceResult<IEnumerable<CategoryGroup>>();
-
-			//result.Result = _categoryGroupRepository.GetAll().ToList();
-
-			return result;
+			return GetAllEntity<CategoryGroup>();
 		}
 
 		public ServiceResult<IEnumerable<Vendor>> GetAllVendors()
 		{
-			throw new NotImplementedException();
-
-			var result = new ServiceResult<IEnumerable<Vendor>>();
-
-			//result.Result = _vendorRepository.GetAll().ToList();
-
-			return result;
+			return GetAllEntity<Vendor>();
 		}
 
 		public ServiceResult<IEnumerable<Bill>> GetAllBills()
 		{
-			throw new NotImplementedException();
-
-			var result = new ServiceResult<IEnumerable<Bill>>();
-
-			//result.Result = _billRepository.GetAll().ToList();
-
-			return result;
+			return GetAllEntity<Bill>();
 		}
 
 		public ServiceResult<IEnumerable<BillGroup>> GetAllBillGroups()
 		{
-			throw new NotImplementedException();
-
-			var result = new ServiceResult<IEnumerable<BillGroup>>();
-
-			//result.Result = _billGroupRepository.GetAll().ToList();
-
-			return result;
+			return GetAllEntity<BillGroup>();
 		}
-
 
 		public ServiceResult<IEnumerable<Transaction>> GetAllTransactions(DateTime? from = null, DateTime? to = null)
 		{
-			throw new NotImplementedException();
-
 			var result = new ServiceResult<IEnumerable<Transaction>>();
-			//var transactions = _transactionRepository.GetAll();
 
-			//if (from.HasValue) transactions = transactions.Where(x => x.Timestamp >= from.Value);
-			//if (to.HasValue) transactions = transactions.Where(x => x.Timestamp <= to.Value);
+			var predicates = new List<IPredicate>();
 
-			//result.Result = transactions.ToList();
+			if (from.HasValue)
+				predicates.Add(Predicates.Field<Transaction>(x => x.Timestamp, Operator.Ge, from.Value));
+
+			if (to.HasValue)
+				predicates.Add(Predicates.Field<Transaction>(x => x.Timestamp, Operator.Le, to.Value));
+				
+			object predicate = !predicates.Any() ?
+				null : (predicates.Count == 1 ? 
+					predicates.First() : 
+					new PredicateGroup { Operator = GroupOperator.And, Predicates = predicates });
+
+			result.Result = _db.GetList<Transaction>(predicate);
 			return result;
 		}
 
 		public ServiceResult<IEnumerable<Transaction>> GetTransactions(int accountId, int? categoryId, DateTime? from = null, DateTime? to = null)
 		{
-			throw new NotImplementedException();
-
 			var result = new ServiceResult<IEnumerable<Transaction>>();
 
 			//if (categoryId.HasValue && categoryId.Value == 0)
@@ -171,7 +138,26 @@ namespace scrilla.Services
 			//if (from.HasValue) transactions = transactions.Where(x => x.Timestamp >= from.Value);
 			//if (to.HasValue) transactions = transactions.Where(x => x.Timestamp <= to.Value);
 
-			//result.Result = transactions.ToList();
+			var predicates = new List<IPredicate>();
+			predicates.Add(Predicates.Field<Transaction>(x => x.AccountId, Operator.Eq, accountId));
+
+			if (from.HasValue)
+				predicates.Add(Predicates.Field<Transaction>(x => x.Timestamp, Operator.Ge, from.Value));
+
+			if (to.HasValue)
+				predicates.Add(Predicates.Field<Transaction>(x => x.Timestamp, Operator.Le, to.Value));
+
+			// TODO we need a better way to send back categoryId = 0
+			//if (!categoryId.HasValue)
+			//	predicates.Add(new ComparePredicate())
+
+			object predicate = !predicates.Any() ?
+				null : (predicates.Count == 1 ?
+					predicates.First() :
+					new PredicateGroup { Operator = GroupOperator.And, Predicates = predicates });
+
+			throw new NotImplementedException();
+			//result.Result = _db.GetList<Transaction>(predicate,);
 			return result;
 		}
 
@@ -268,32 +254,97 @@ namespace scrilla.Services
 			return result;
 		}
 
+		#endregion
 
-		public ServiceResult<Category> AddCategory(string name, int categoryGroupId)
+		#region Add
+
+		public ServiceResult<Account> AddAccount(string name, decimal initialBalance = 0.0M, int? defaultCategoryId = null, int? accountGroupId = null)
 		{
-			throw new NotImplementedException();
+			var result = new ServiceResult<Account>();
 
+			// does AccountGroup exist?
+			if (accountGroupId.HasValue)
+			{
+				var accountGroupResult = GetAccountGroup(accountGroupId.Value);
+				if (accountGroupResult.HasErrors)
+				{
+					result.AddErrors(accountGroupResult.ErrorMessages);
+					return result;
+				}
+			}
+
+			// does default Category exist?
+			if (defaultCategoryId.HasValue)
+			{
+				var categoryResult = GetCategory(defaultCategoryId.Value);
+				if (categoryResult.HasErrors)
+				{
+					result.AddErrors(categoryResult.ErrorMessages);
+					return result;
+				}
+			}
+
+			// create Account
+			var account = new Account()
+			{
+				Name = name,
+				InitialBalance = initialBalance,
+				DefaultCategoryId = defaultCategoryId,
+				Balance = initialBalance,
+				BalanceTimestamp = DateTime.Now,
+				AccountGroupId = accountGroupId
+			};
+
+			_db.Insert<Account>(account);
+
+			result.Result = account;
+			return result;
+		}
+
+		public ServiceResult<AccountGroup> AddAccountGroup(string name, int displayOrder = 0, bool isActive = true)
+		{
+			var result = new ServiceResult<AccountGroup>();
+
+			// create AccountGroup
+			var accountGroup = new AccountGroup()
+			{
+				Name = name,
+				DisplayOrder = displayOrder,
+				IsActive = isActive
+			};
+
+			_db.Insert<AccountGroup>(accountGroup);
+
+			result.Result = accountGroup;
+			return result;
+		}
+
+
+		public ServiceResult<Category> AddCategory(string name, int? categoryGroupId = null)
+		{
 			var result = new ServiceResult<Category>();
 
-			//var existingCategoryGroup = _categoryGroupRepository.GetById(categoryGroupId);
-			//if (existingCategoryGroup == null)
-			//{
-			//	result.AddError(ErrorType.NotFound, "Category Group {0} not found", categoryGroupId);
-			//	return result;
-			//}
+			// does Category Group exist?
+			if (categoryGroupId.HasValue)
+			{
+				var categoryGroupResult = GetCategoryGroup(categoryGroupId.Value);
+				if (categoryGroupResult.HasErrors)
+				{
+					result.AddErrors(categoryGroupResult.ErrorMessages);
+					return result;
+				}
+			}
 
-			//var existingCategory = _categoryRepository.Get(x => x.Name.Equals(name, StringComparison.CurrentCultureIgnoreCase));
-			//if (existingCategory != null)
-			//{
-			//	result.Result = existingCategory;
-			//	return result;
-			//}
+			// create Category
+			var category = new Category()
+			{
+				Name = name,
+				CategoryGroupId = categoryGroupId,
+			};
 
-			//var newCategory = new Category() { Name = name, CategoryGroupId = categoryGroupId };
-			//_categoryRepository.Add(newCategory);
-			//_unitOfWork.Commit();
+			_db.Insert<Category>(category);
 
-			//result.Result = newCategory;
+			result.Result = category;
 			return result;
 		}
 
@@ -330,6 +381,8 @@ namespace scrilla.Services
 			//result.Result = newVendor;
 			return result;
 		}
+
+		#endregion
 
 		public ServiceResult<Category> UpdateCategory(int categoryId, string name)
 		{
@@ -1026,11 +1079,58 @@ namespace scrilla.Services
 		}
 
 
+		#region Delete
+
+		public ServiceResult<bool> DeleteAccount(int accountId)
+		{
+			// TODO we need to delete all the transactions and everything else
+
+			var result = new ServiceResult<bool>();
+
+			var deletionResult = _db.Delete<Account>(Predicates.Field<Account>(x => x.Id, Operator.Eq, accountId));
+			if (!deletionResult)
+			{
+				result.AddError(ErrorType.NotFound, "Account {0} not found", accountId);
+				return result;
+			}
+
+			result.Result = deletionResult;
+
+			return result;
+		}
+
+		public ServiceResult<bool> DeleteAccountGroup(int accountGroupId)
+		{
+			// TODO we need to delete all the transactions and everything else
+
+			var result = new ServiceResult<bool>();
+
+			var deletionResult = _db.Delete<AccountGroup>(Predicates.Field<AccountGroup>(x => x.Id, Operator.Eq, accountGroupId));
+			if (!deletionResult)
+			{
+				result.AddError(ErrorType.NotFound, "AccountGroup {0} not found", accountGroupId);
+				return result;
+			}
+
+			result.Result = deletionResult;
+
+			return result;
+		}
+
 		public ServiceResult<bool> DeleteCategory(int categoryId)
 		{
-			throw new NotImplementedException();
-			
 			var result = new ServiceResult<bool>();
+
+			var deletionResult = _db.Delete<Category>(Predicates.Field<Category>(x => x.Id, Operator.Eq, categoryId));
+			if (!deletionResult)
+			{
+				result.AddError(ErrorType.NotFound, "Category {0} not found", categoryId);
+				return result;
+			}
+
+			result.Result = deletionResult;
+
+			return result;
 
 			//var category = _categoryRepository.GetById(categoryId);
 			//if (category == null)
@@ -1052,10 +1152,11 @@ namespace scrilla.Services
 
 			//_categoryRepository.Delete(category);
 			//_unitOfWork.Commit();
-
-			return result;
 		}
 
+		#endregion
+
+	
 		public ServiceResult<bool> DeleteVendor(int vendorId)
 		{
 			throw new NotImplementedException();
