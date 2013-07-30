@@ -71,6 +71,8 @@
     <Compile Include="_001\_008_BudgetCategory.cs" />
     <Compile Include="_001\_009_AccountNameMap.cs" />
     <Compile Include="_001\_010_ImportDescriptionVendorMap.cs" />
+    <Compile Include="_002\_011_AccountMakeAccountGroupNullable.cs" />
+    <Compile Include="_002\_012_CategoryMakeCategoryGroupNullable.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="tests\scratch.bat" />

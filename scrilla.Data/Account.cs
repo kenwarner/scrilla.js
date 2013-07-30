@@ -8,7 +8,7 @@ namespace scrilla.Data
 	public class Account
 	{
 		public int Id { get; set; }
-		public int AccountGroupId { get; set; }
+		public int? AccountGroupId { get; set; }
 		public int? DefaultCategoryId { get; set; }
 		public string Name { get; set; }
 		public decimal InitialBalance { get; set; }
