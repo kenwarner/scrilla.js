@@ -15,51 +15,8 @@ using Xunit;
 
 namespace scrilla.Services.Tests
 {
-	public class AccountServiceFixture
+	public class DelectAccountTests : BaseFixture
 	{
-		#region Setup
-
-		private Fixture _fixture;
-		protected SqlConnection _sqlConnection;
-
-		public AccountServiceFixture()
-		{
-			CreateTestDatabase();
-
-			var connectionString = ConfigurationManager.ConnectionStrings["TestsConnectionString"].ConnectionString;
-			_sqlConnection = new SqlConnection(connectionString);
-			_sqlConnection.Open();
-
-			_fixture = new Fixture();
-			_fixture.Inject<IDatabase>(new Db(_sqlConnection));
-		}
-
-		private void CreateTestDatabase()
-		{
-			var startInfo = new ProcessStartInfo()
-			{
-				WorkingDirectory = @"..\..\..\scrilla.Data.Migrations\tests\",
-				FileName = "scratch.bat",
-				WindowStyle = ProcessWindowStyle.Hidden
-			};
-			Process.Start(startInfo).WaitForExit();
-		}
-
-		~AccountServiceFixture()
-		{
-			if (_sqlConnection != null)
-			{
-				if (_sqlConnection.State != System.Data.ConnectionState.Closed)
-					_sqlConnection.Close();
-
-				_sqlConnection.Dispose();
-			}
-		}
-
-		#endregion
-
-		#region DeleteAccountTests
-
 		[Fact]
 		public void DeleteAccount_ExistingAccount()
 		{
@@ -90,10 +47,10 @@ namespace scrilla.Services.Tests
 			Assert.True(result.HasErrors);
 		}
 
-		#endregion
+	}
 
-		#region AddAccountTests
-
+	public class AddAccountTests : BaseFixture
+	{
 		[Fact]
 		public void AddAccount_NullDefaultCategory_And_NullAccountGroup()
 		{
@@ -188,36 +145,31 @@ namespace scrilla.Services.Tests
 			Assert.True(result.HasErrors);
 			Assert.True(result.ErrorMessages.Any(x => x.Key == ErrorType.NotFound));
 		}
+	}
 
-		#endregion
-
-		#region GetAllTransactionsTests
-
+	public class GetAllAccountsTests : BaseFixture
+	{
 		[Fact]
-		public void GetAccount()
+		public void GetAllAccounts()
 		{
 			var sut = _fixture.Create<AccountService>();
+
 			var accountsResult = sut.GetAllAccounts();
 			Assert.False(accountsResult.HasErrors);
 			Assert.Empty(accountsResult.Result);
 
-			//sut.AddAccount();
+			var name = "test account";
+			var balance = 1.23M;
+			var addAccountResult = sut.AddAccount(name, balance);
+			Assert.False(addAccountResult.HasErrors);
+
 			accountsResult = sut.GetAllAccounts();
 			Assert.False(accountsResult.HasErrors);
 			Assert.Equal(1, accountsResult.Result.Count());
 
-			//var target = new AccountService(new Db(_sqlConnection));
-			//var result = target.GetAllTransactions(new DateTime(2012, 1, 1));
-			//Assert.True(result.Result.Count() == 628);
-
-			//result = target.GetAllTransactions();
-			//Assert.True(result.Result.Count() == 5208);
-
-			//result = target.GetAllTransactions(SqlDateTime.MinValue.Value, new DateTime(2012, 1, 1));
-			//Assert.True(result.Result.Count() == 4580);
+			// cleanup
+			sut.DeleteAccount(addAccountResult.Result.Id);
 		}
-
-		#endregion
-
 	}
+
 }

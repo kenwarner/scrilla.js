@@ -319,7 +319,6 @@ namespace scrilla.Services
 			return result;
 		}
 
-
 		public ServiceResult<Category> AddCategory(string name, int? categoryGroupId = null)
 		{
 			var result = new ServiceResult<Category>();
@@ -383,6 +382,114 @@ namespace scrilla.Services
 		}
 
 		#endregion
+
+		#region Delete
+
+		public ServiceResult<bool> DeleteAccount(int accountId)
+		{
+			// TODO handle cascading deletes
+			var result = new ServiceResult<bool>();
+
+			var deletionResult = _db.Delete<Account>(Predicates.Field<Account>(x => x.Id, Operator.Eq, accountId));
+			if (!deletionResult)
+			{
+				result.AddError(ErrorType.NotFound, "Account {0} not found", accountId);
+				return result;
+			}
+
+			result.Result = deletionResult;
+
+			return result;
+		}
+
+		public ServiceResult<bool> DeleteAccountGroup(int accountGroupId)
+		{
+			// TODO handle cascading deletes
+			var result = new ServiceResult<bool>();
+
+			var deletionResult = _db.Delete<AccountGroup>(Predicates.Field<AccountGroup>(x => x.Id, Operator.Eq, accountGroupId));
+			if (!deletionResult)
+			{
+				result.AddError(ErrorType.NotFound, "AccountGroup {0} not found", accountGroupId);
+				return result;
+			}
+
+			result.Result = deletionResult;
+
+			return result;
+		}
+
+		public ServiceResult<bool> DeleteCategory(int categoryId)
+		{
+			// TODO handle cascading deletes
+			var result = new ServiceResult<bool>();
+
+			var deletionResult = _db.Delete<Category>(Predicates.Field<Category>(x => x.Id, Operator.Eq, categoryId));
+			if (!deletionResult)
+			{
+				result.AddError(ErrorType.NotFound, "Category {0} not found", categoryId);
+				return result;
+			}
+
+			result.Result = deletionResult;
+
+			return result;
+		}
+
+		public ServiceResult<bool> DeleteVendor(int vendorId)
+		{
+			// TODO handle cascading deletes
+			var result = new ServiceResult<bool>();
+
+			var deletionResult = _db.Delete<Vendor>(Predicates.Field<Vendor>(x => x.Id, Operator.Eq, vendorId));
+			if (!deletionResult)
+			{
+				result.AddError(ErrorType.NotFound, "Vendor {0} not found", vendorId);
+				return result;
+			}
+
+			result.Result = deletionResult;
+
+			return result;
+		}
+
+		public ServiceResult<bool> DeleteVendorMap(int vendorMapId)
+		{
+			// TODO handle cascading deletes
+			var result = new ServiceResult<bool>();
+
+			var deletionResult = _db.Delete<ImportDescriptionVendorMap>(Predicates.Field<ImportDescriptionVendorMap>(x => x.Id, Operator.Eq, vendorMapId));
+			if (!deletionResult)
+			{
+				result.AddError(ErrorType.NotFound, "Vendor Mapping {0} not found", vendorMapId);
+				return result;
+			}
+
+			result.Result = deletionResult;
+
+			return result;
+		}
+
+		public ServiceResult<bool> DeleteBill(int billId)
+		{
+			// TODO handle cascading deletes
+			var result = new ServiceResult<bool>();
+
+			var deletionResult = _db.Delete<Bill>(Predicates.Field<Bill>(x => x.Id, Operator.Eq, billId));
+			if (!deletionResult)
+			{
+				result.AddError(ErrorType.NotFound, "Bill {0} not found", billId);
+				return result;
+			}
+
+			result.Result = deletionResult;
+
+			return result;
+		}
+
+		#endregion
+
+
 
 		public ServiceResult<Category> UpdateCategory(int categoryId, string name)
 		{
@@ -1079,150 +1186,6 @@ namespace scrilla.Services
 		}
 
 
-		#region Delete
-
-		public ServiceResult<bool> DeleteAccount(int accountId)
-		{
-			// TODO we need to delete all the transactions and everything else
-
-			var result = new ServiceResult<bool>();
-
-			var deletionResult = _db.Delete<Account>(Predicates.Field<Account>(x => x.Id, Operator.Eq, accountId));
-			if (!deletionResult)
-			{
-				result.AddError(ErrorType.NotFound, "Account {0} not found", accountId);
-				return result;
-			}
-
-			result.Result = deletionResult;
-
-			return result;
-		}
-
-		public ServiceResult<bool> DeleteAccountGroup(int accountGroupId)
-		{
-			// TODO we need to delete all the transactions and everything else
-
-			var result = new ServiceResult<bool>();
-
-			var deletionResult = _db.Delete<AccountGroup>(Predicates.Field<AccountGroup>(x => x.Id, Operator.Eq, accountGroupId));
-			if (!deletionResult)
-			{
-				result.AddError(ErrorType.NotFound, "AccountGroup {0} not found", accountGroupId);
-				return result;
-			}
-
-			result.Result = deletionResult;
-
-			return result;
-		}
-
-		public ServiceResult<bool> DeleteCategory(int categoryId)
-		{
-			var result = new ServiceResult<bool>();
-
-			var deletionResult = _db.Delete<Category>(Predicates.Field<Category>(x => x.Id, Operator.Eq, categoryId));
-			if (!deletionResult)
-			{
-				result.AddError(ErrorType.NotFound, "Category {0} not found", categoryId);
-				return result;
-			}
-
-			result.Result = deletionResult;
-
-			return result;
-
-			//var category = _categoryRepository.GetById(categoryId);
-			//if (category == null)
-			//{
-			//	result.Result = false;
-			//	result.AddError(ErrorType.NotFound, "Category {0} not found", categoryId);
-			//	return result;
-			//}
-
-			//foreach (var trx in category.Subtransactions)
-			//{
-			//	trx.CategoryId = null;
-			//}
-
-			//foreach (var vendor in category.VendorDefaults)
-			//{
-			//	vendor.DefaultCategory = null;
-			//}
-
-			//_categoryRepository.Delete(category);
-			//_unitOfWork.Commit();
-		}
-
-		#endregion
-
-	
-		public ServiceResult<bool> DeleteVendor(int vendorId)
-		{
-			throw new NotImplementedException();
-
-			var result = new ServiceResult<bool>();
-
-			//var vendor = _vendorRepository.GetById(vendorId);
-			//if (vendor == null)
-			//{
-			//	result.Result = false;
-			//	result.AddError(ErrorType.NotFound, "Vendor {0} not found", vendorId);
-			//	return result;
-			//}
-
-			//foreach (var trx in vendor.Transactions)
-			//{
-			//	trx.Vendor = null;
-			//}
-
-			//_importDescriptionVendorMapRepository.Delete(x => x.VendorId == vendorId);
-			//_vendorRepository.Delete(vendor);
-			//_unitOfWork.Commit();
-
-			return result;
-		}
-
-		public ServiceResult<bool> DeleteVendorMap(int vendorMapId)
-		{
-			throw new NotImplementedException();
-
-			var result = new ServiceResult<bool>();
-
-			//var vendorMap = _importDescriptionVendorMapRepository.GetById(vendorMapId);
-			//if (vendorMap == null)
-			//{
-			//	result.Result = false;
-			//	result.AddError(ErrorType.NotFound, "Vendor Mapping {0} not found", vendorMapId);
-			//	return result;
-			//}
-
-			//_importDescriptionVendorMapRepository.Delete(vendorMap);
-			//_unitOfWork.Commit();
-
-			return result;
-		}
-
-		public ServiceResult<bool> DeleteBill(int billId)
-		{
-			throw new NotImplementedException();
-
-			var result = new ServiceResult<bool>();
-
-			//var bill = _billRepository.GetById(billId);
-			//if (bill == null)
-			//{
-			//	result.Result = false;
-			//	result.AddError(ErrorType.NotFound, "Bill {0} not found", billId);
-			//	return result;
-			//}
-
-			//_billTransactionRepository.Delete(x => x.BillId == billId);
-			//_billRepository.Delete(bill);
-			//_unitOfWork.Commit();
-
-			return result;
-		}
 	}
 
 	/// <summary>
