@@ -15,39 +15,126 @@ using Xunit;
 
 namespace scrilla.Services.Tests
 {
-	public class DelectAccountTests : BaseFixture
+	#region GetById Tests
+
+	public class GetAccountTests : BaseFixture
+	{
+
+	}
+
+	public class GetAccountGroupTests : BaseFixture
+	{
+
+	}
+
+	public class GetCategoryTests : BaseFixture
+	{
+
+	}
+
+	public class GetVendorTests : BaseFixture
+	{
+
+	}
+
+	public class GetBillTests : BaseFixture
+	{
+
+	}
+
+	#endregion
+
+	#region GetAll Tests
+
+	public class GetAllAccountsTests : BaseFixture
 	{
 		[Fact]
-		public void DeleteAccount_ExistingAccount()
+		public void GetAllAccounts()
 		{
 			var sut = _fixture.Create<AccountService>();
+
+			var accountsResult = sut.GetAllAccounts();
+			Assert.False(accountsResult.HasErrors);
+			Assert.Empty(accountsResult.Result);
+
 			var name = "test account";
 			var balance = 1.23M;
+			var addAccountResult = sut.AddAccount(name, balance);
+			Assert.False(addAccountResult.HasErrors);
 
-			// add a test account
-			var addResult = sut.AddAccount(name, balance);
-			Assert.False(addResult.HasErrors);
+			accountsResult = sut.GetAllAccounts();
+			Assert.False(accountsResult.HasErrors);
+			Assert.Equal(1, accountsResult.Result.Count());
 
-			// delete the test account
-			var deletionResult = sut.DeleteAccount(addResult.Result.Id);
-			Assert.False(deletionResult.HasErrors);
-
-			// make sure the test account does not exist
-			var getResult = sut.GetAccount(addResult.Result.Id);
-			Assert.True(getResult.HasErrors);
-			Assert.True(getResult.ErrorMessages.Any(x => x.Key == ErrorType.NotFound));
-		}
-
-		[Fact]
-		public void DeleteAccount_NonExistantAccount()
-		{
-			var sut = _fixture.Create<AccountService>();
-
-			var result = sut.DeleteAccount(-1);
-			Assert.True(result.HasErrors);
+			// cleanup
+			sut.DeleteAccount(addAccountResult.Result.Id);
 		}
 
 	}
+
+	public class GetAllCategoriesTests : BaseFixture
+	{
+
+	}
+
+	public class GetAllCategoryGroups : BaseFixture
+	{
+
+	}
+
+	public class GetAllVendorsTests : BaseFixture
+	{
+
+	}
+
+	public class GetAllBillsTests : BaseFixture
+	{
+
+	}
+
+	public class GetAllBillGroupsTests : BaseFixture
+	{
+
+	}
+
+	public class GetAllTransactionsTests : BaseFixture
+	{
+
+	}
+
+	public class GetTransactionsTests : BaseFixture
+	{
+
+	}
+
+	public class GetTransactionsByAccountTests : BaseFixture
+	{
+
+	}
+
+	public class GetTransactionsByVendorTests : BaseFixture
+	{
+
+	}
+
+	public class GetTransactionsByCategoryTests : BaseFixture
+	{
+
+	}
+
+	public class GetBudgetCategoriesTests : BaseFixture
+	{
+
+	}
+
+	public class GetBillTransactionsTests : BaseFixture
+	{ 
+	
+	}
+
+	#endregion
+
+	#region Add Tests
 
 	public class AddAccountTests : BaseFixture
 	{
@@ -76,7 +163,7 @@ namespace scrilla.Services.Tests
 			var sut = _fixture.Create<AccountService>();
 			var accountName = "test account";
 			var balance = 1.23M;
-			
+
 			// get a default category
 			var categoryName = "test category";
 			var categoryResult = sut.AddCategory(categoryName);
@@ -147,29 +234,82 @@ namespace scrilla.Services.Tests
 		}
 	}
 
-	public class GetAllAccountsTests : BaseFixture
+	public class AddAccountGroupTests : BaseFixture
+	{
+
+	}
+
+	public class AddCategoryTests : BaseFixture
+	{
+
+	}
+
+	public class AddVendorTests : BaseFixture
+	{
+
+	}
+	
+	#endregion
+
+	#region Delete Tests
+
+	public class DeleteAccountTests : BaseFixture
 	{
 		[Fact]
-		public void GetAllAccounts()
+		public void DeleteAccount_ExistingAccount()
+		{
+			var sut = _fixture.Create<AccountService>();
+			var name = "test account";
+			var balance = 1.23M;
+
+			// add a test account
+			var addResult = sut.AddAccount(name, balance);
+			Assert.False(addResult.HasErrors);
+
+			// delete the test account
+			var deletionResult = sut.DeleteAccount(addResult.Result.Id);
+			Assert.False(deletionResult.HasErrors);
+
+			// make sure the test account does not exist
+			var getResult = sut.GetAccount(addResult.Result.Id);
+			Assert.True(getResult.HasErrors);
+			Assert.True(getResult.ErrorMessages.Any(x => x.Key == ErrorType.NotFound));
+		}
+
+		[Fact]
+		public void DeleteAccount_NonExistantAccount()
 		{
 			var sut = _fixture.Create<AccountService>();
 
-			var accountsResult = sut.GetAllAccounts();
-			Assert.False(accountsResult.HasErrors);
-			Assert.Empty(accountsResult.Result);
-
-			var name = "test account";
-			var balance = 1.23M;
-			var addAccountResult = sut.AddAccount(name, balance);
-			Assert.False(addAccountResult.HasErrors);
-
-			accountsResult = sut.GetAllAccounts();
-			Assert.False(accountsResult.HasErrors);
-			Assert.Equal(1, accountsResult.Result.Count());
-
-			// cleanup
-			sut.DeleteAccount(addAccountResult.Result.Id);
+			var result = sut.DeleteAccount(-1);
+			Assert.True(result.HasErrors);
 		}
 	}
 
+	public class DeleteAccountGroupTests : BaseFixture
+	{
+
+	}
+
+	public class DeleteCategoryTests : BaseFixture
+	{
+
+	}
+
+	public class DeleteVendorTests : BaseFixture
+	{
+
+	}
+
+	public class DeleteVendorMapTests : BaseFixture
+	{
+
+	}
+
+	public class DeleteBillTests : BaseFixture
+	{
+
+	}
+
+	#endregion
 }
