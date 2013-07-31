@@ -12,6 +12,7 @@ namespace scrilla.Services
 		ServiceResult<Category> GetCategory(int categoryId);
 		ServiceResult<Vendor> GetVendor(int vendorId);
 		ServiceResult<Bill> GetBill(int billId);
+		ServiceResult<BillGroup> GetBillGroup(int billGroupId);
 		ServiceResult<CategoryGroup> GetCategoryGroup(int categoryGroupId);
 
 		ServiceResult<IEnumerable<Account>> GetAllAccounts();
@@ -32,8 +33,11 @@ namespace scrilla.Services
 		ServiceResult<Account> AddAccount(string name, decimal initialBalance = 0.0M, int? defaultCategoryId = null, int? accountGroupId = null);
 		ServiceResult<AccountGroup> AddAccountGroup(string name, int displayOrder = 0, bool isActive = true);
 		ServiceResult<Category> AddCategory(string name, int? categoryGroupId = null);
+		ServiceResult<CategoryGroup> AddCategoryGroup(string name, int displayOrder = 0);
 		ServiceResult<Vendor> AddVendor(string name, int? defaultCategoryId = null);
-		ServiceResult<Bill> AddBill(string name, decimal amount, int billGroupId, int? categoryId, int? vendorId, DateTime startDate, DateTime endDate, int frequency, DateTime? secondaryStartDate, DateTime? secondaryEndDate);
+		ServiceResult<Bill> AddBill(string name, decimal amount, int? billGroupId, int? categoryId, int? vendorId, DateTime startDate, DateTime endDate, BillFrequency frequency, DateTime? secondaryStartDate, DateTime? secondaryEndDate);
+		ServiceResult<BillGroup> AddBillGroup(string name, int displayOrder, bool isActive);
+
 
 		// TODO need a categoryGroupId param on UpdateCategory
 		ServiceResult<Category> UpdateCategory(int categoryId, string name);
@@ -54,9 +58,11 @@ namespace scrilla.Services
 		ServiceResult<bool> DeleteAccount(int accountId);
 		ServiceResult<bool> DeleteAccountGroup(int accountGroupId);
 		ServiceResult<bool> DeleteCategory(int categoryId);
+		ServiceResult<bool> DeleteCategoryGroup(int categoryGroupId);
 		ServiceResult<bool> DeleteVendor(int vendorId);
 		ServiceResult<bool> DeleteVendorMap(int vendorMapId);
 		ServiceResult<bool> DeleteBill(int billId);
+		ServiceResult<bool> DeleteBillGroup(int billGroupId);
 	}
 
 	public class BudgetAmountInfo

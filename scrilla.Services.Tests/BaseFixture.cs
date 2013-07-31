@@ -9,6 +9,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Xunit;
 
 namespace scrilla.Services.Tests
 {
@@ -37,7 +38,9 @@ namespace scrilla.Services.Tests
 				FileName = "scratch.bat",
 				WindowStyle = ProcessWindowStyle.Hidden
 			};
-			Process.Start(startInfo).WaitForExit();
+			var process = Process.Start(startInfo);
+			process.WaitForExit();
+			Assert.Equal(0, process.ExitCode);
 		}
 
 		~BaseFixture()
