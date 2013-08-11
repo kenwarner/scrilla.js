@@ -64,7 +64,12 @@
   <ItemGroup>
     <Compile Include="AccountServiceFixture.cs" />
     <Compile Include="BaseFixture.cs" />
+    <Compile Include="BillServiceFixture.cs" />
+    <Compile Include="BudgetServiceFixture.cs" />
+    <Compile Include="CategoryServiceFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TransactionServiceFixture.cs" />
+    <Compile Include="VendorServiceFixture.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\scrilla.Data.Dapper\scrilla.Data.Dapper.csproj">

@@ -16,20 +16,24 @@ using Xunit;
 
 namespace scrilla.Services.Tests
 {
-	#region GetById Tests
-
 	public class GetAccountTests : BaseFixture
 	{
+		public GetAccountTests()
+		{
+			_fixture.Register<ICategoryService>(() => _fixture.Create<CategoryService>());
+		}
+
 		[Fact]
 		public void GetAccount_ExistingAccount_WithDefaultCategory_And_AccountGroup()
 		{
+			var categoryService = _fixture.Create<CategoryService>();
 			var sut = _fixture.Create<AccountService>();
 			var accountName = "test account";
 			var balance = 1.23M;
 
 			// get a default category
 			var categoryName = "test category";
-			var categoryResult = sut.AddCategory(categoryName);
+			var categoryResult = categoryService.AddCategory(categoryName);
 			Assert.False(categoryResult.HasErrors);
 
 			// get a default account group
@@ -55,7 +59,7 @@ namespace scrilla.Services.Tests
 
 			// cleanup
 			sut.DeleteAccount(addAccountResult.Result.Id);
-			sut.DeleteCategory(categoryResult.Result.Id);
+			categoryService.DeleteCategory(categoryResult.Result.Id);
 			sut.DeleteAccountGroup(accountGroupResult.Result.Id);
 		}
 
@@ -104,6 +108,11 @@ namespace scrilla.Services.Tests
 
 	public class GetAccountGroupTests : BaseFixture
 	{
+		public GetAccountGroupTests()
+		{
+			_fixture.Register<ICategoryService>(() => _fixture.Create<CategoryService>());
+		}
+
 		[Fact]
 		public void GetAccountGroup_ExistingAccountGroup()
 		{
@@ -144,320 +153,14 @@ namespace scrilla.Services.Tests
 		}
 	}
 
-	public class GetCategoryTests : BaseFixture
-	{
-		[Fact]
-		public void GetCategory_ExistingCategory_WithCategoryGroup()
-		{
-			var sut = _fixture.Create<AccountService>();
-			var categoryName = "test category";
-			var categoryGroupName = "test category group";
-
-			// create test category group
-			var addCategoryGroupResult = sut.AddCategoryGroup(categoryGroupName);
-			Assert.False(addCategoryGroupResult.HasErrors);
-			Assert.Equal(categoryGroupName, addCategoryGroupResult.Result.Name);
-
-			// create test category
-			var addCategoryResult = sut.AddCategory(categoryName, addCategoryGroupResult.Result.Id);
-			Assert.False(addCategoryResult.HasErrors);
-			Assert.Equal(categoryName, addCategoryResult.Result.Name);
-			Assert.Equal(addCategoryGroupResult.Result.Id, addCategoryResult.Result.CategoryGroupId);
-
-			// act
-			var result = sut.GetCategory(addCategoryResult.Result.Id);
-			Assert.False(result.HasErrors);
-			Assert.Equal(categoryName, result.Result.Name);
-			Assert.Equal(addCategoryGroupResult.Result.Id, result.Result.CategoryGroupId);
-
-			// cleanup
-			sut.DeleteCategory(addCategoryResult.Result.Id);
-			sut.DeleteCategoryGroup(addCategoryGroupResult.Result.Id);
-		}
-
-		[Fact]
-		public void GetCategory_ExistingCategory_WithNullCategoryGroup()
-		{
-			var sut = _fixture.Create<AccountService>();
-			var categoryName = "test category";
-			int? categoryGroupId = null;
-
-			// create test category
-			var addCategoryResult = sut.AddCategory(categoryName, categoryGroupId);
-			Assert.False(addCategoryResult.HasErrors);
-			Assert.Equal(categoryName, addCategoryResult.Result.Name);
-			Assert.Equal(categoryGroupId, addCategoryResult.Result.CategoryGroupId);
-
-			// act
-			var result = sut.GetCategory(addCategoryResult.Result.Id);
-			Assert.False(result.HasErrors);
-			Assert.Equal(categoryName, result.Result.Name);
-			Assert.Equal(categoryGroupId, result.Result.CategoryGroupId);
-
-			// cleanup
-			sut.DeleteCategory(addCategoryResult.Result.Id);
-		}
-
-		[Fact]
-		public void GetCategory_NonExistantCategory()
-		{
-			var sut = _fixture.Create<AccountService>();
-			var nonExistantAccountGroupId = -1;
-
-			// act
-			var result = sut.GetAccountGroup(nonExistantAccountGroupId);
-
-			Assert.True(result.HasErrors);
-			Assert.True(result.ErrorMessages.Any(x => x.Key == ErrorType.NotFound));
-		}
-	}
-
-	public class GetVendorTests : BaseFixture
-	{
-		[Fact]
-		public void GetVendor_ExistingVendor_WithNullDefaultCategoryId()
-		{
-			var sut = _fixture.Create<AccountService>();
-			var vendorName = "test vendor";
-			int? defaultCategoryId = null;
-
-			// create test vendor
-			var addVendorResult = sut.AddVendor(vendorName, defaultCategoryId);
-			Assert.False(addVendorResult.HasErrors);
-			Assert.Equal(vendorName, addVendorResult.Result.Name);
-			Assert.Equal(defaultCategoryId, addVendorResult.Result.DefaultCategoryId);
-
-			// act
-			var result = sut.GetVendor(addVendorResult.Result.Id);
-			Assert.False(result.HasErrors);
-			Assert.Equal(vendorName, result.Result.Name);
-			Assert.Equal(defaultCategoryId, result.Result.DefaultCategoryId);
-
-			// cleanup
-			sut.DeleteVendor(addVendorResult.Result.Id);
-		}
-
-		[Fact]
-		public void GetVendor_ExistingVendor_WithDefaultCategoryId()
-		{
-			var sut = _fixture.Create<AccountService>();
-			var vendorName = "test vendor";
-			var categoryName = "test category";
-
-			// create test category
-			var addCategoryResult = sut.AddCategory(categoryName);
-			Assert.False(addCategoryResult.HasErrors);
-			Assert.Equal(categoryName, addCategoryResult.Result.Name);
-
-			// create test vendor
-			var addVendorResult = sut.AddVendor(vendorName, addCategoryResult.Result.Id);
-			Assert.False(addVendorResult.HasErrors);
-			Assert.Equal(vendorName, addVendorResult.Result.Name);
-			Assert.Equal(addCategoryResult.Result.Id, addVendorResult.Result.DefaultCategoryId);
-
-			// act
-			var result = sut.GetVendor(addVendorResult.Result.Id);
-			Assert.False(result.HasErrors);
-			Assert.Equal(vendorName, result.Result.Name);
-			Assert.Equal(addCategoryResult.Result.Id, result.Result.DefaultCategoryId);
-
-			// cleanup
-			sut.DeleteVendor(addVendorResult.Result.Id);
-			sut.DeleteCategory(addCategoryResult.Result.Id);
-		}
-
-		[Fact]
-		public void GetVendor_NonExistantVendor()
-		{
-			var sut = _fixture.Create<AccountService>();
-			var nonExistantVendorId = -1;
-
-			// act
-			var result = sut.GetVendor(nonExistantVendorId);
-
-			Assert.True(result.HasErrors);
-			Assert.True(result.ErrorMessages.Any(x => x.Key == ErrorType.NotFound));
-		}
-	}
-
-	public class GetBillTests : BaseFixture
-	{
-		[Fact]
-		public void GetBill_ExistingBill_WithNullBillGroup_AndNullCategory_AndNullVendor_AndNullSecondaryDates()
-		{
-			var sut = _fixture.Create<AccountService>();
-			var billName = "test bill";
-			var amount = 1.23M;
-			int? billGroupId = null;
-			int? categoryId = null;
-			int? vendorId = null;
-			DateTime startDate = new DateTime(2013, 7, 30);
-			DateTime endDate = new DateTime(2013, 10, 15);
-			BillFrequency frequency = BillFrequency.Daily;
-			DateTime? secondaryStartDate = null;
-			DateTime? secondaryEndDate = null;
-
-			// create test bill
-			var addBillResult = sut.AddBill(billName, amount, billGroupId, categoryId, vendorId, startDate, endDate, frequency, secondaryStartDate, secondaryEndDate);
-			Assert.False(addBillResult.HasErrors);
-			Assert.Equal(billName, addBillResult.Result.Name);
-			Assert.Equal(amount, addBillResult.Result.Amount);
-			Assert.Equal(billGroupId, addBillResult.Result.BillGroupId);
-			Assert.Equal(categoryId, addBillResult.Result.CategoryId);
-			Assert.Equal(vendorId, addBillResult.Result.VendorId);
-			Assert.Equal(startDate, addBillResult.Result.StartDate);
-			Assert.Equal(endDate, addBillResult.Result.EndDate);
-			Assert.Equal(frequency, addBillResult.Result.RecurrenceFrequency);
-			Assert.Equal(secondaryStartDate, addBillResult.Result.StartDate2);
-			Assert.Equal(secondaryEndDate, addBillResult.Result.EndDate2);
-
-			// act
-			var result = sut.GetBill(addBillResult.Result.Id);
-			Assert.False(result.HasErrors);
-			Assert.Equal(billName, result.Result.Name);
-			Assert.Equal(amount, result.Result.Amount);
-			Assert.Equal(billGroupId, result.Result.BillGroupId);
-			Assert.Equal(categoryId, result.Result.CategoryId);
-			Assert.Equal(vendorId, result.Result.VendorId);
-			Assert.Equal(startDate, result.Result.StartDate);
-			Assert.Equal(endDate, result.Result.EndDate);
-			Assert.Equal(frequency, result.Result.RecurrenceFrequency);
-			Assert.Equal(secondaryStartDate, result.Result.StartDate2);
-			Assert.Equal(secondaryEndDate, result.Result.EndDate2);
-
-			// cleanup
-			sut.DeleteBill(addBillResult.Result.Id);
-		}
-
-		[Fact]
-		public void GetBill_ExistingBill_WithBillGroup_AndCategory_AndVendor_AndSecondaryDates()
-		{
-			var sut = _fixture.Create<AccountService>();
-			var billName = "test bill";
-			var amount = 1.23M;
-			DateTime startDate = new DateTime(2013, 7, 2);
-			DateTime endDate = new DateTime(2013, 10, 2);
-			BillFrequency frequency = BillFrequency.Daily;
-			DateTime? secondaryStartDate = new DateTime(2013, 7, 16);
-			DateTime? secondaryEndDate = new DateTime(2013, 10, 16);
-
-			// create test bill group
-			var billGroupName = "test bill group";
-			var addBillGroupResult = sut.AddBillGroup(billGroupName);
-			Assert.False(addBillGroupResult.HasErrors);
-			Assert.Equal(billGroupName, addBillGroupResult.Result.Name);
-
-			// create test category
-			var categoryName = "test category";
-			var addCategoryResult = sut.AddCategory(categoryName);
-			Assert.False(addCategoryResult.HasErrors);
-			Assert.Equal(categoryName, addCategoryResult.Result.Name);
-
-			// create test vendor
-			var vendorName = "test vendor";
-			var addVendorResult = sut.AddVendor(vendorName);
-			Assert.False(addVendorResult.HasErrors);
-			Assert.Equal(vendorName, addVendorResult.Result.Name);
-
-			// create test bill
-			var addBillResult = sut.AddBill(billName, amount, addBillGroupResult.Result.Id, addCategoryResult.Result.Id, addVendorResult.Result.Id
-				, startDate, endDate, frequency, secondaryStartDate, secondaryEndDate);
-			Assert.False(addBillResult.HasErrors);
-			Assert.Equal(billName, addBillResult.Result.Name);
-			Assert.Equal(amount, addBillResult.Result.Amount);
-			Assert.Equal(addBillGroupResult.Result.Id, addBillResult.Result.BillGroupId);
-			Assert.Equal(addCategoryResult.Result.Id, addBillResult.Result.CategoryId);
-			Assert.Equal(addVendorResult.Result.Id, addBillResult.Result.VendorId);
-			Assert.Equal(startDate, addBillResult.Result.StartDate);
-			Assert.Equal(endDate, addBillResult.Result.EndDate);
-			Assert.Equal(frequency, addBillResult.Result.RecurrenceFrequency);
-			Assert.Equal(secondaryStartDate, addBillResult.Result.StartDate2);
-			Assert.Equal(secondaryEndDate, addBillResult.Result.EndDate2);
-
-			// act
-			var result = sut.GetBill(addBillResult.Result.Id);
-			Assert.False(addBillResult.HasErrors);
-			Assert.Equal(billName, result.Result.Name);
-			Assert.Equal(billName, result.Result.Name);
-			Assert.Equal(amount, result.Result.Amount);
-			Assert.Equal(addBillGroupResult.Result.Id, result.Result.BillGroupId);
-			Assert.Equal(addCategoryResult.Result.Id, result.Result.CategoryId);
-			Assert.Equal(addVendorResult.Result.Id, result.Result.VendorId);
-			Assert.Equal(startDate, result.Result.StartDate);
-			Assert.Equal(endDate, result.Result.EndDate);
-			Assert.Equal(frequency, result.Result.RecurrenceFrequency);
-			Assert.Equal(secondaryStartDate, result.Result.StartDate2);
-			Assert.Equal(secondaryEndDate, result.Result.EndDate2);
-
-			// cleanup
-			sut.DeleteBill(addBillResult.Result.Id);
-			sut.DeleteBillGroup(addBillGroupResult.Result.Id);
-			sut.DeleteCategory(addCategoryResult.Result.Id);
-			sut.DeleteVendor(addVendorResult.Result.Id);
-		}
-
-		[Fact]
-		public void GetBill_NonExistantBill()
-		{
-			var sut = _fixture.Create<AccountService>();
-			var nonExistantVendorId = -1;
-
-			// act
-			var result = sut.GetVendor(nonExistantVendorId);
-
-			Assert.True(result.HasErrors);
-			Assert.True(result.ErrorMessages.Any(x => x.Key == ErrorType.NotFound));
-		}
-	}
-
-	public class GetBillGroupTests : BaseFixture
-	{
-		[Fact]
-		public void GetBillGroup_ExistingBillGroup()
-		{
-			var sut = _fixture.Create<AccountService>();
-			var billGroupName = "test bill group";
-			var displayOrder = 1;
-			var isActive = true;
-
-			// create test bill group
-			var addBillGroupResult = sut.AddBillGroup(billGroupName, displayOrder, isActive);
-			Assert.False(addBillGroupResult.HasErrors);
-			Assert.Equal(billGroupName, addBillGroupResult.Result.Name);
-			Assert.Equal(displayOrder, addBillGroupResult.Result.DisplayOrder);
-			Assert.Equal(isActive, addBillGroupResult.Result.IsActive);
-
-			// act
-			var result = sut.GetBillGroup(addBillGroupResult.Result.Id);
-			Assert.False(result.HasErrors);
-			Assert.Equal(billGroupName, result.Result.Name);
-			Assert.Equal(displayOrder, result.Result.DisplayOrder);
-			Assert.Equal(isActive, result.Result.IsActive);
-
-			// cleanup
-			sut.DeleteBillGroup(addBillGroupResult.Result.Id);
-		}
-
-		[Fact]
-		public void GetBillGroup_NonExistantBillGroup()
-		{
-			var sut = _fixture.Create<AccountService>();
-			var nonExistantBillGroupId = -1;
-
-			// act
-			var result = sut.GetBillGroup(nonExistantBillGroupId);
-
-			Assert.True(result.HasErrors);
-			Assert.True(result.ErrorMessages.Any(x => x.Key == ErrorType.NotFound));
-		}
-	}
-
-	#endregion
-
-	#region GetAll Tests
 
 	public class GetAllAccountsTests : BaseFixture
 	{
+		public GetAllAccountsTests()
+		{
+			_fixture.Register<ICategoryService>(() => _fixture.Create<CategoryService>());
+		}
+
 		[Fact]
 		public void GetAllAccounts()
 		{
@@ -479,75 +182,16 @@ namespace scrilla.Services.Tests
 			// cleanup
 			sut.DeleteAccount(addAccountResult.Result.Id);
 		}
-
 	}
 
-	public class GetAllCategoriesTests : BaseFixture
-	{
-
-	}
-
-	public class GetAllCategoryGroups : BaseFixture
-	{
-
-	}
-
-	public class GetAllVendorsTests : BaseFixture
-	{
-
-	}
-
-	public class GetAllBillsTests : BaseFixture
-	{
-
-	}
-
-	public class GetAllBillGroupsTests : BaseFixture
-	{
-
-	}
-
-	public class GetAllTransactionsTests : BaseFixture
-	{
-
-	}
-
-	public class GetTransactionsTests : BaseFixture
-	{
-
-	}
-
-	public class GetTransactionsByAccountTests : BaseFixture
-	{
-
-	}
-
-	public class GetTransactionsByVendorTests : BaseFixture
-	{
-
-	}
-
-	public class GetTransactionsByCategoryTests : BaseFixture
-	{
-
-	}
-
-	public class GetBudgetCategoriesTests : BaseFixture
-	{
-
-	}
-
-	public class GetBillTransactionsTests : BaseFixture
-	{ 
-	
-	}
-
-	#endregion
-
-	#region Add Tests
 
 	public class AddAccountTests : BaseFixture
 	{
+		public AddAccountTests()
+		{
+			_fixture.Register<ICategoryService>(() => _fixture.Create<CategoryService>());
+		}
+
 		[Fact]
 		public void AddAccount_NullDefaultCategory_And_NullAccountGroup()
 		{
@@ -570,13 +214,14 @@ namespace scrilla.Services.Tests
 		[Fact]
 		public void AddAccount_NonNullDefaultCategory()
 		{
+			var categoryService = _fixture.Create<CategoryService>();
 			var sut = _fixture.Create<AccountService>();
 			var accountName = "test account";
 			var balance = 1.23M;
 
 			// get a default category
 			var categoryName = "test category";
-			var categoryResult = sut.AddCategory(categoryName);
+			var categoryResult = categoryService.AddCategory(categoryName);
 			Assert.False(categoryResult.HasErrors);
 
 			var result = sut.AddAccount(accountName, balance, categoryResult.Result.Id);
@@ -588,7 +233,7 @@ namespace scrilla.Services.Tests
 
 			// cleanup
 			sut.DeleteAccount(result.Result.Id);
-			sut.DeleteCategory(categoryResult.Result.Id);
+			categoryService.DeleteCategory(categoryResult.Result.Id);
 		}
 
 		[Fact]
@@ -646,40 +291,19 @@ namespace scrilla.Services.Tests
 
 	public class AddAccountGroupTests : BaseFixture
 	{
-
+		public AddAccountGroupTests()
+		{
+			_fixture.Register<ICategoryService>(() => _fixture.Create<CategoryService>());
+		}
 	}
-
-	public class AddCategoryTests : BaseFixture
-	{
-
-	}
-
-	public class AddCategoryGroupTests : BaseFixture
-	{
-
-	}
-
-	public class AddBillTests : BaseFixture
-	{
-
-	}
-
-	public class AddBillGroupTests : BaseFixture
-	{
-
-	}
-
-	public class AddVendorTests : BaseFixture
-	{
-
-	}
-	
-	#endregion
-
-	#region Delete Tests
 
 	public class DeleteAccountTests : BaseFixture
 	{
+		public DeleteAccountTests()
+		{
+			_fixture.Register<ICategoryService>(() => _fixture.Create<CategoryService>());
+		}
+
 		[Fact]
 		public void DeleteAccount_ExistingAccount()
 		{
@@ -713,37 +337,9 @@ namespace scrilla.Services.Tests
 
 	public class DeleteAccountGroupTests : BaseFixture
 	{
-
+		public DeleteAccountGroupTests()
+		{
+			_fixture.Register<ICategoryService>(() => _fixture.Create<CategoryService>());
+		}
 	}
-
-	public class DeleteCategoryTests : BaseFixture
-	{
-
-	}
-	public class DeleteCategoryGroupTests : BaseFixture
-	{
-
-	}
-
-	public class DeleteVendorTests : BaseFixture
-	{
-
-	}
-
-	public class DeleteVendorMapTests : BaseFixture
-	{
-
-	}
-
-	public class DeleteBillTests : BaseFixture
-	{
-
-	}
-
-	public class DeleteBillGroupTests : BaseFixture
-	{
-
-	}
-
-	#endregion
 }
