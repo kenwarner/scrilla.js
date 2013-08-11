@@ -8,9 +8,9 @@ using Xunit;
 
 namespace scrilla.Services.Tests
 {
-	public class GetVendorTests : BaseFixture
+	public class VendorServiceFixture : BaseFixture
 	{
-		public GetVendorTests()
+		public VendorServiceFixture()
 		{
 			_fixture.Register<ICategoryService>(() => _fixture.Create<CategoryService>());
 		}
@@ -79,64 +79,6 @@ namespace scrilla.Services.Tests
 
 			Assert.True(result.HasErrors);
 			Assert.True(result.ErrorMessages.Any(x => x.Key == ErrorType.NotFound));
-		}
-	}
-
-	public class GetAllVendorsTests : BaseFixture
-	{
-		public GetAllVendorsTests()
-		{
-			_fixture.Register<ICategoryService>(() => _fixture.Create<CategoryService>());
-		}
-	}
-
-
-
-	public class AddVendorTests : BaseFixture
-	{
-		public AddVendorTests()
-		{
-			_fixture.Register<ICategoryService>(() => _fixture.Create<CategoryService>());
-		}
-	}
-
-
-
-	public class DeleteVendorTests : BaseFixture
-	{
-		public DeleteVendorTests()
-		{
-			_fixture.Register<ICategoryService>(() => _fixture.Create<CategoryService>());
-		}
-
-	}
-
-	public class DeleteVendorMapTests : BaseFixture
-	{
-		public DeleteVendorMapTests()
-		{
-			_fixture.Register<ICategoryService>(() => _fixture.Create<CategoryService>());
-		}
-	}
-	public class UpdateVendorTests : BaseFixture
-	{
-		public UpdateVendorTests()
-		{
-			_fixture.Register<ICategoryService>(() => _fixture.Create<CategoryService>());
-		}
-	}
-	public class UpdateVendorNameTests : BaseFixture
-	{
-		public UpdateVendorNameTests()
-		{
-			_fixture.Register<ICategoryService>(() => _fixture.Create<CategoryService>());
-		}
-	}
-	public class UpdateVendorDefaultCategoryTests : BaseFixture
-	{
-		public UpdateVendorDefaultCategoryTests()
-		{
-			_fixture.Register<ICategoryService>(() => _fixture.Create<CategoryService>());
 		}
 	}
 }

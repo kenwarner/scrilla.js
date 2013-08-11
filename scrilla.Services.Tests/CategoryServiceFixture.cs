@@ -8,7 +8,7 @@ using Xunit;
 
 namespace scrilla.Services.Tests
 {
-	public class GetCategoryTests : BaseFixture
+	public class CategoryServiceFixture : BaseFixture
 	{
 		[Fact]
 		public void GetCategory_ExistingCategory_WithCategoryGroup()
@@ -74,48 +74,5 @@ namespace scrilla.Services.Tests
 			Assert.True(result.HasErrors);
 			Assert.True(result.ErrorMessages.Any(x => x.Key == ErrorType.NotFound));
 		}
-	}
-
-
-	public class GetCategoryGroupTests : BaseFixture
-	{
-
-	}
-
-	public class GetAllCategoriesTests : BaseFixture
-	{
-
-	}
-
-	public class GetAllCategoryGroupsTests : BaseFixture
-	{
-
-	}
-
-
-	public class AddCategoryTests : BaseFixture
-	{
-
-	}
-
-	public class AddCategoryGroupTests : BaseFixture
-	{
-
-	}
-
-
-	public class DeleteCategoryTests : BaseFixture
-	{
-
-	}
-
-	public class DeleteCategoryGroupTests : BaseFixture
-	{
-
-	}
-
-	public class UpdateCategoryNameTests : BaseFixture
-	{
-
 	}
 }

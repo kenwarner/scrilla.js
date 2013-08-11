@@ -7,12 +7,7 @@ using System.Threading.Tasks;
 
 namespace scrilla.Services.Tests
 {
-	public class GetBudgetCategoriesTests : BaseFixture
-	{
-
-	}
-
-	public class UpdateBudgetTests : BaseFixture
+	public class BudgetServiceFixture : BaseFixture
 	{
 
 	}

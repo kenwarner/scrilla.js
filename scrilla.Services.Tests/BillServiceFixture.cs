@@ -9,9 +9,9 @@ using Xunit;
 
 namespace scrilla.Services.Tests
 {
-	public class GetBillTests : BaseFixture
+	public class BillServiceFixture : BaseFixture
 	{
-		public GetBillTests()
+		public BillServiceFixture()
 		{
 			_fixture.Register<ICategoryService>(() => _fixture.Create<CategoryService>());
 			_fixture.Register<IVendorService>(() => _fixture.Create<VendorService>());
@@ -145,15 +145,6 @@ namespace scrilla.Services.Tests
 			Assert.True(result.HasErrors);
 			Assert.True(result.ErrorMessages.Any(x => x.Key == ErrorType.NotFound));
 		}
-	}
-
-	public class GetBillGroupTests : BaseFixture
-	{
-		public GetBillGroupTests()
-		{
-			_fixture.Register<ICategoryService>(() => _fixture.Create<CategoryService>());
-			_fixture.Register<IVendorService>(() => _fixture.Create<VendorService>());
-		}
 
 		[Fact]
 		public void GetBillGroup_ExistingBillGroup()
@@ -195,97 +186,4 @@ namespace scrilla.Services.Tests
 		}
 	}
 
-	public class GetAllBillsTests : BaseFixture
-	{
-		public GetAllBillsTests()
-		{
-			_fixture.Register<ICategoryService>(() => _fixture.Create<CategoryService>());
-			_fixture.Register<IVendorService>(() => _fixture.Create<VendorService>());
-		}
-
-	}
-
-	public class GetAllBillGroupsTests : BaseFixture
-	{
-		public GetAllBillGroupsTests()
-		{
-			_fixture.Register<ICategoryService>(() => _fixture.Create<CategoryService>());
-			_fixture.Register<IVendorService>(() => _fixture.Create<VendorService>());
-		}
-	}
-
-	public class GetBillTransactionsTests : BaseFixture
-	{
-		public GetBillTransactionsTests()
-		{
-			_fixture.Register<ICategoryService>(() => _fixture.Create<CategoryService>());
-			_fixture.Register<IVendorService>(() => _fixture.Create<VendorService>());
-		}
-	}
-
-
-
-	public class AddBillTests : BaseFixture
-	{
-		public AddBillTests()
-		{
-			_fixture.Register<ICategoryService>(() => _fixture.Create<CategoryService>());
-			_fixture.Register<IVendorService>(() => _fixture.Create<VendorService>());
-		}
-	}
-
-	public class AddBillGroupTests : BaseFixture
-	{
-		public AddBillGroupTests()
-		{
-			_fixture.Register<ICategoryService>(() => _fixture.Create<CategoryService>());
-			_fixture.Register<IVendorService>(() => _fixture.Create<VendorService>());
-		}
-	}
-
-
-
-	public class DeleteBillTests : BaseFixture
-	{
-		public DeleteBillTests()
-		{
-			_fixture.Register<ICategoryService>(() => _fixture.Create<CategoryService>());
-			_fixture.Register<IVendorService>(() => _fixture.Create<VendorService>());
-		}
-	}
-
-	public class DeleteBillGroupTests : BaseFixture
-	{
-		public DeleteBillGroupTests()
-		{
-			_fixture.Register<ICategoryService>(() => _fixture.Create<CategoryService>());
-			_fixture.Register<IVendorService>(() => _fixture.Create<VendorService>());
-		}
-
-	}
-	public class UpdateBillTests : BaseFixture
-	{
-		public UpdateBillTests()
-		{
-			_fixture.Register<ICategoryService>(() => _fixture.Create<CategoryService>());
-			_fixture.Register<IVendorService>(() => _fixture.Create<VendorService>());
-		}
-	}
-	public class UpdateBillTransactionTests : BaseFixture
-	{
-		public UpdateBillTransactionTests()
-		{
-			_fixture.Register<ICategoryService>(() => _fixture.Create<CategoryService>());
-			_fixture.Register<IVendorService>(() => _fixture.Create<VendorService>());
-		}
-	}
-
-	public class PredictBillTransactionMatchTests : BaseFixture
-	{
-		public PredictBillTransactionMatchTests()
-		{
-			_fixture.Register<ICategoryService>(() => _fixture.Create<CategoryService>());
-			_fixture.Register<IVendorService>(() => _fixture.Create<VendorService>());
-		}
-	}
 }

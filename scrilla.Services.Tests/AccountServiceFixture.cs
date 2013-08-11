@@ -16,9 +16,9 @@ using Xunit;
 
 namespace scrilla.Services.Tests
 {
-	public class GetAccountTests : BaseFixture
+	public class AccountServiceFixture : BaseFixture
 	{
-		public GetAccountTests()
+		public AccountServiceFixture()
 		{
 			_fixture.Register<ICategoryService>(() => _fixture.Create<CategoryService>());
 		}
@@ -104,14 +104,7 @@ namespace scrilla.Services.Tests
 			Assert.True(result.HasErrors);
 			Assert.True(result.ErrorMessages.Any(x => x.Key == ErrorType.NotFound));
 		}
-	}
 
-	public class GetAccountGroupTests : BaseFixture
-	{
-		public GetAccountGroupTests()
-		{
-			_fixture.Register<ICategoryService>(() => _fixture.Create<CategoryService>());
-		}
 
 		[Fact]
 		public void GetAccountGroup_ExistingAccountGroup()
@@ -151,15 +144,6 @@ namespace scrilla.Services.Tests
 			Assert.True(result.HasErrors);
 			Assert.True(result.ErrorMessages.Any(x => x.Key == ErrorType.NotFound));
 		}
-	}
-
-
-	public class GetAllAccountsTests : BaseFixture
-	{
-		public GetAllAccountsTests()
-		{
-			_fixture.Register<ICategoryService>(() => _fixture.Create<CategoryService>());
-		}
 
 		[Fact]
 		public void GetAllAccounts()
@@ -181,15 +165,6 @@ namespace scrilla.Services.Tests
 
 			// cleanup
 			sut.DeleteAccount(addAccountResult.Result.Id);
-		}
-	}
-
-
-	public class AddAccountTests : BaseFixture
-	{
-		public AddAccountTests()
-		{
-			_fixture.Register<ICategoryService>(() => _fixture.Create<CategoryService>());
 		}
 
 		[Fact]
@@ -287,22 +262,6 @@ namespace scrilla.Services.Tests
 			Assert.True(result.HasErrors);
 			Assert.True(result.ErrorMessages.Any(x => x.Key == ErrorType.NotFound));
 		}
-	}
-
-	public class AddAccountGroupTests : BaseFixture
-	{
-		public AddAccountGroupTests()
-		{
-			_fixture.Register<ICategoryService>(() => _fixture.Create<CategoryService>());
-		}
-	}
-
-	public class DeleteAccountTests : BaseFixture
-	{
-		public DeleteAccountTests()
-		{
-			_fixture.Register<ICategoryService>(() => _fixture.Create<CategoryService>());
-		}
 
 		[Fact]
 		public void DeleteAccount_ExistingAccount()
@@ -333,13 +292,6 @@ namespace scrilla.Services.Tests
 			var result = sut.DeleteAccount(-1);
 			Assert.True(result.HasErrors);
 		}
-	}
 
-	public class DeleteAccountGroupTests : BaseFixture
-	{
-		public DeleteAccountGroupTests()
-		{
-			_fixture.Register<ICategoryService>(() => _fixture.Create<CategoryService>());
-		}
 	}
 }
