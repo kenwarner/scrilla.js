@@ -23,6 +23,12 @@ namespace scrilla.Services
 			return base.GetEntity<Vendor>(vendorId);
 		}
 
+
+		public ServiceResult<ImportDescriptionVendorMap> GetVendorMap(int vendorMapId)
+		{
+			return base.GetEntity<ImportDescriptionVendorMap>(vendorMapId);
+		}
+
 		public ServiceResult<IEnumerable<Vendor>> GetAllVendors()
 		{
 			return base.GetAllEntity<Vendor>();
@@ -59,6 +65,29 @@ namespace scrilla.Services
 			_db.Insert<Vendor>(vendor);
 
 			result.Result = vendor;
+			return result;
+		}
+
+		public ServiceResult<ImportDescriptionVendorMap> AddVendorMap(int vendorId, string description)
+		{
+			var result = new ServiceResult<ImportDescriptionVendorMap>();
+
+			var vendorResult = GetVendor(vendorId);
+			if (vendorResult.HasErrors)
+			{
+				result.AddErrors(vendorResult.ErrorMessages);
+				return result;
+			}
+
+			var vendorMap = new ImportDescriptionVendorMap()
+			{
+				VendorId = vendorId,
+				Description = description
+			};
+
+			_db.Insert<ImportDescriptionVendorMap>(vendorMap);
+
+			result.Result = vendorMap;
 			return result;
 		}
 

@@ -171,7 +171,6 @@ namespace scrilla.Services.Tests
 
 			// act
 			var result = _sut.AddAccount(name, balance);
-
 			Assert.False(result.HasErrors);
 			Assert.Equal(name, result.Result.Name);
 			Assert.Equal(balance, result.Result.Balance);

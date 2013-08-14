@@ -78,5 +78,212 @@ namespace scrilla.Services.Tests
 			Assert.True(result.HasErrors);
 			Assert.True(result.ErrorMessages.Any(x => x.Key == ErrorType.NotFound));
 		}
+
+		[Fact]
+		public void GetVendorMap_ExistingVendorMap()
+		{
+			var vendorName = "test vendor";
+			var description = "test vendor map";
+
+			// add a test vendor
+			var addVendorResult = _sut.AddVendor(vendorName);
+			Assert.False(addVendorResult.HasErrors);
+
+			// add a test vendor map
+			var addVendorMapResult = _sut.AddVendorMap(addVendorResult.Result.Id, description);
+			Assert.False(addVendorMapResult.HasErrors);
+
+			// act
+			var result = _sut.GetVendorMap(addVendorResult.Result.Id);
+			Assert.False(result.HasErrors);
+			Assert.Equal(description, result.Result.Description);
+			Assert.Equal(addVendorResult.Result.Id, result.Result.VendorId);
+
+			// cleanup
+			_sut.DeleteVendorMap(addVendorMapResult.Result.Id);
+			_sut.DeleteVendor(addVendorResult.Result.Id);
+		}
+
+		[Fact]
+		public void GetVendorMap_NonExistantVendorMap()
+		{
+			var nonExistantVendorMapId = -1;
+
+			// act
+			var result = _sut.GetVendorMap(nonExistantVendorMapId);
+
+			Assert.True(result.HasErrors);
+			Assert.True(result.ErrorMessages.Any(x => x.Key == ErrorType.NotFound));
+		}
+
+		[Fact]
+		public void GetAllVendors_OneVendorExistsAfterAddingAVendor()
+		{
+			var vendorResult = _sut.GetAllVendors();
+			Assert.False(vendorResult.HasErrors);
+			Assert.Empty(vendorResult.Result);
+
+			// create test account
+			var name = "test vendor";
+			var addVendorResult = _sut.AddVendor(name);
+			Assert.False(addVendorResult.HasErrors);
+
+			// act
+			vendorResult = _sut.GetAllVendors();
+			Assert.False(vendorResult.HasErrors);
+			Assert.Equal(1, vendorResult.Result.Count());
+
+			// cleanup
+			_sut.DeleteVendor(addVendorResult.Result.Id);
+		}
+
+		[Fact]
+		public void AddVendor_NullDefaultCategoryId()
+		{
+			var name = "test vendor";
+			int? defaultCategoryId = null;
+
+			// act
+			var result = _sut.AddVendor(name, defaultCategoryId);
+			Assert.False(result.HasErrors);
+			Assert.Equal(name, result.Result.Name);
+			Assert.Equal(defaultCategoryId, result.Result.DefaultCategoryId);
+
+			// cleanup
+			_sut.DeleteVendor(result.Result.Id);
+		}
+
+		[Fact]
+		public void AddVendor_NonNullDefaultCategoryId()
+		{
+			var categoryService = _fixture.Create<CategoryService>();
+			var name = "test vendor";
+
+			// get a default category
+			var categoryName = "test category";
+			var categoryResult = categoryService.AddCategory(categoryName);
+			Assert.False(categoryResult.HasErrors);
+
+			// act
+			var result = _sut.AddVendor(name, categoryResult.Result.Id);
+			Assert.False(result.HasErrors);
+			Assert.Equal(name, result.Result.Name);
+			Assert.Equal(categoryResult.Result.Id, result.Result.DefaultCategoryId);
+
+			// cleanup
+			_sut.DeleteVendor(result.Result.Id);
+			categoryService.DeleteCategory(categoryResult.Result.Id);
+		}
+
+		[Fact]
+		public void AddVendorMap_ExistingVendor()
+		{
+			var vendorName = "test vendor";
+			var description = "test vendor map";
+
+			// add a test vendor
+			var addVendorResult = _sut.AddVendor(vendorName);
+			Assert.False(addVendorResult.HasErrors);
+
+			// act
+			var result = _sut.AddVendorMap(addVendorResult.Result.Id, description);
+			Assert.False(result.HasErrors);
+			Assert.Equal(description, result.Result.Description);
+			Assert.Equal(addVendorResult.Result.Id, result.Result.VendorId);
+
+			// cleanup
+			_sut.DeleteVendorMap(result.Result.Id);
+			_sut.DeleteVendor(addVendorResult.Result.Id);
+		}
+
+		[Fact]
+		public void AddVendorMap_NonExistantVendor()
+		{
+			var description = "test vendor map";
+			var nonExistantVendorId = -1;
+
+			// act
+			var result = _sut.AddVendorMap(nonExistantVendorId, description);
+			Assert.True(result.HasErrors);
+		}
+
+		[Fact]
+		public void DeleteVendor_ExistingVendor()
+		{
+			var name = "test vendor";
+
+			// add a test vendor
+			var addResult = _sut.AddVendor(name);
+			Assert.False(addResult.HasErrors);
+
+			// delete the test vendor
+			var deletionResult = _sut.DeleteVendor(addResult.Result.Id);
+			Assert.False(deletionResult.HasErrors);
+
+			// make sure the test vendor does not exist
+			var getResult = _sut.GetVendor(addResult.Result.Id);
+			Assert.True(getResult.HasErrors);
+			Assert.True(getResult.ErrorMessages.Any(x => x.Key == ErrorType.NotFound));
+		}
+
+		[Fact]
+		public void DeleteVendor_NonExistantVendor()
+		{
+			var nonExistantVendorId = -1;
+
+			// act
+			var result = _sut.DeleteVendor(nonExistantVendorId);
+			Assert.True(result.HasErrors);
+		}
+
+		[Fact]
+		public void DeleteVendorMap_ExistingVendorMap()
+		{
+			var vendorName = "test vendor";
+			var description = "test vendor map";
+
+			// add a test vendor
+			var addVendorResult = _sut.AddVendor(vendorName);
+			Assert.False(addVendorResult.HasErrors);
+
+			// add a test vendor map
+			var addVendorMapResult = _sut.AddVendorMap(addVendorResult.Result.Id, description);
+			Assert.False(addVendorMapResult.HasErrors);
+
+			// delete the test vendor map
+			var deletionResult = _sut.DeleteVendorMap(addVendorMapResult.Result.Id);
+			Assert.False(deletionResult.HasErrors);
+
+			// make sure the test vendor map does not exist
+			var getResult = _sut.GetVendorMap(addVendorMapResult.Result.Id);
+			Assert.True(getResult.HasErrors);
+			Assert.True(getResult.ErrorMessages.Any(x => x.Key == ErrorType.NotFound));
+
+			// cleanup
+			_sut.DeleteVendorMap(addVendorMapResult.Result.Id);
+			_sut.DeleteVendor(addVendorResult.Result.Id);
+		}
+
+		[Fact]
+		public void DeleteVendorMap_NonExistantVendorMap()
+		{ 
+		}
+
+		[Fact]
+		public void UpdateVendor()
+		{ 
+		}
+
+		[Fact]
+		public void UpdateVendorName()
+		{
+
+		}
+
+		[Fact]
+		public void UpdateVendorDefaultCategory()
+		{
+
+		}
 	}
 }
