@@ -18,7 +18,6 @@ namespace scrilla.Services.Tests
 		[Fact]
 		public void GetCategory_ExistingCategory_WithCategoryGroup()
 		{
-			
 			var categoryName = "test category";
 			var categoryGroupName = "test category group";
 
@@ -47,7 +46,6 @@ namespace scrilla.Services.Tests
 		[Fact]
 		public void GetCategory_ExistingCategory_WithNullCategoryGroup()
 		{
-			
 			var categoryName = "test category";
 			int? categoryGroupId = null;
 
@@ -70,7 +68,6 @@ namespace scrilla.Services.Tests
 		[Fact]
 		public void GetCategory_NonExistantCategory()
 		{
-			
 			var nonExistantCategoryId = -1;
 
 			// act

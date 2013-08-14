@@ -94,7 +94,6 @@ namespace scrilla.Services.Tests
 		[Fact]
 		public void GetAccount_NonExistantAccount()
 		{
-			
 			var nonExistantAccountId = -1;
 
 			// act
@@ -108,7 +107,6 @@ namespace scrilla.Services.Tests
 		[Fact]
 		public void GetAccountGroup_ExistingAccountGroup()
 		{
-			
 			var accountGroupName = "test account group";
 			var displayOrder = 1;
 			var isActive = true;
@@ -134,7 +132,6 @@ namespace scrilla.Services.Tests
 		[Fact]
 		public void GetAccountGroup_NonExistantAccount()
 		{
-			
 			var nonExistantAccountGroupId = -1;
 
 			// act
@@ -147,17 +144,17 @@ namespace scrilla.Services.Tests
 		[Fact]
 		public void GetAllAccounts_OneAccountExistsAfterAddingAnAccount()
 		{
-			
-
 			var accountsResult = _sut.GetAllAccounts();
 			Assert.False(accountsResult.HasErrors);
 			Assert.Empty(accountsResult.Result);
 
+			// create test account
 			var name = "test account";
 			var balance = 1.23M;
 			var addAccountResult = _sut.AddAccount(name, balance);
 			Assert.False(addAccountResult.HasErrors);
 
+			// act
 			accountsResult = _sut.GetAllAccounts();
 			Assert.False(accountsResult.HasErrors);
 			Assert.Equal(1, accountsResult.Result.Count());
@@ -169,10 +166,10 @@ namespace scrilla.Services.Tests
 		[Fact]
 		public void AddAccount_NullDefaultCategory_And_NullAccountGroup()
 		{
-			
 			var name = "test account";
 			var balance = 1.23M;
 
+			// act
 			var result = _sut.AddAccount(name, balance);
 
 			Assert.False(result.HasErrors);
@@ -189,7 +186,6 @@ namespace scrilla.Services.Tests
 		public void AddAccount_NonNullDefaultCategory()
 		{
 			var categoryService = _fixture.Create<CategoryService>();
-			
 			var accountName = "test account";
 			var balance = 1.23M;
 
@@ -198,8 +194,8 @@ namespace scrilla.Services.Tests
 			var categoryResult = categoryService.AddCategory(categoryName);
 			Assert.False(categoryResult.HasErrors);
 
+			// act
 			var result = _sut.AddAccount(accountName, balance, categoryResult.Result.Id);
-
 			Assert.False(result.HasErrors);
 			Assert.Equal(accountName, result.Result.Name);
 			Assert.Equal(balance, result.Result.Balance);
@@ -213,11 +209,11 @@ namespace scrilla.Services.Tests
 		[Fact]
 		public void AddAccount_NonExistantDefaultCategory()
 		{
-			
 			var accountName = "test account";
 			var balance = 1.23M;
 			var defaultCategoryId = -1;
 
+			// act
 			var result = _sut.AddAccount(accountName, balance, defaultCategoryId);
 
 			Assert.True(result.HasErrors);
@@ -227,7 +223,6 @@ namespace scrilla.Services.Tests
 		[Fact]
 		public void AddAccount_NonNullAccountGroup()
 		{
-			
 			var accountName = "test account";
 			var balance = 1.23M;
 
@@ -236,8 +231,8 @@ namespace scrilla.Services.Tests
 			var accountGroupResult = _sut.AddAccountGroup(accountGroupName);
 			Assert.False(accountGroupResult.HasErrors);
 
+			// act
 			var result = _sut.AddAccount(accountName, balance, accountGroupId: accountGroupResult.Result.Id);
-
 			Assert.False(result.HasErrors);
 			Assert.Equal(accountName, result.Result.Name);
 			Assert.Equal(balance, result.Result.Balance);
@@ -255,6 +250,7 @@ namespace scrilla.Services.Tests
 			var balance = 1.23M;
 			var accountGroupId = -1;
 
+			// act
 			var result = _sut.AddAccount(accountName, balance, accountGroupId: accountGroupId);
 
 			Assert.True(result.HasErrors);
@@ -262,15 +258,24 @@ namespace scrilla.Services.Tests
 		}
 
 		[Fact]
-		public void AddAccountGroup_()
+		public void AddAccountGroup()
 		{
-			
+			var accountGroupName = "test account group";
+			var displayOrder = 1;
+			var isActive = true;
+
+			// act
+			var result = _sut.AddAccountGroup(accountGroupName, displayOrder, isActive);
+
+			Assert.False(result.HasErrors);
+			Assert.Equal(accountGroupName, result.Result.Name);
+			Assert.Equal(displayOrder, result.Result.DisplayOrder);
+			Assert.Equal(isActive, result.Result.IsActive);
 		}
 
 		[Fact]
 		public void DeleteAccount_ExistingAccount()
 		{
-			
 			var name = "test account";
 			var balance = 1.23M;
 
@@ -291,16 +296,16 @@ namespace scrilla.Services.Tests
 		[Fact]
 		public void DeleteAccount_NonExistantAccount()
 		{
-			
+			var nonExistantAccountId = -1;
 
-			var result = _sut.DeleteAccount(-1);
+			// act
+			var result = _sut.DeleteAccount(nonExistantAccountId);
 			Assert.True(result.HasErrors);
 		}
 
 		[Fact]
 		public void DeleteAccountGroup_ExistingAccountGroup()
 		{
-			
 			var name = "test account group";
 
 			// add a test account group
@@ -320,9 +325,10 @@ namespace scrilla.Services.Tests
 		[Fact]
 		public void DeleteAccountGroup_NonExistantAccountGroup()
 		{
-			
+			var nonExistantAccountGroupId = -1;
 
-			var result = _sut.DeleteAccountGroup(-1);
+			// act
+			var result = _sut.DeleteAccountGroup(nonExistantAccountGroupId);
 			Assert.True(result.HasErrors);
 		}
 

@@ -19,7 +19,6 @@ namespace scrilla.Services.Tests
 		[Fact]
 		public void GetVendor_ExistingVendor_WithNullDefaultCategoryId()
 		{
-			
 			var vendorName = "test vendor";
 			int? defaultCategoryId = null;
 
@@ -43,7 +42,6 @@ namespace scrilla.Services.Tests
 		public void GetVendor_ExistingVendor_WithDefaultCategoryId()
 		{
 			var categoryService = _fixture.Create<CategoryService>();
-			
 			var vendorName = "test vendor";
 			var categoryName = "test category";
 
@@ -72,7 +70,6 @@ namespace scrilla.Services.Tests
 		[Fact]
 		public void GetVendor_NonExistantVendor()
 		{
-			
 			var nonExistantVendorId = -1;
 
 			// act
