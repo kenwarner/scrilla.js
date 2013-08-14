@@ -9,18 +9,18 @@ using Xunit;
 
 namespace scrilla.Services.Tests
 {
-	public class BillServiceFixture : BaseFixture
+	public class BillServiceFixture : BaseFixture<BillService>
 	{
 		public BillServiceFixture()
 		{
 			_fixture.Register<ICategoryService>(() => _fixture.Create<CategoryService>());
 			_fixture.Register<IVendorService>(() => _fixture.Create<VendorService>());
+			_sut = _fixture.Create<BillService>();
 		}
 
 		[Fact]
 		public void GetBill_ExistingBill_WithNullBillGroup_AndNullCategory_AndNullVendor_AndNullSecondaryDates()
 		{
-			var sut = _fixture.Create<BillService>();
 			var billName = "test bill";
 			var amount = 1.23M;
 			int? billGroupId = null;
@@ -33,7 +33,7 @@ namespace scrilla.Services.Tests
 			DateTime? secondaryEndDate = null;
 
 			// create test bill
-			var addBillResult = sut.AddBill(billName, amount, billGroupId, categoryId, vendorId, startDate, endDate, frequency, secondaryStartDate, secondaryEndDate);
+			var addBillResult = _sut.AddBill(billName, amount, billGroupId, categoryId, vendorId, startDate, endDate, frequency, secondaryStartDate, secondaryEndDate);
 			Assert.False(addBillResult.HasErrors);
 			Assert.Equal(billName, addBillResult.Result.Name);
 			Assert.Equal(amount, addBillResult.Result.Amount);
@@ -47,7 +47,7 @@ namespace scrilla.Services.Tests
 			Assert.Equal(secondaryEndDate, addBillResult.Result.EndDate2);
 
 			// act
-			var result = sut.GetBill(addBillResult.Result.Id);
+			var result = _sut.GetBill(addBillResult.Result.Id);
 			Assert.False(result.HasErrors);
 			Assert.Equal(billName, result.Result.Name);
 			Assert.Equal(amount, result.Result.Amount);
@@ -61,7 +61,7 @@ namespace scrilla.Services.Tests
 			Assert.Equal(secondaryEndDate, result.Result.EndDate2);
 
 			// cleanup
-			sut.DeleteBill(addBillResult.Result.Id);
+			_sut.DeleteBill(addBillResult.Result.Id);
 		}
 
 		[Fact]
@@ -69,7 +69,6 @@ namespace scrilla.Services.Tests
 		{
 			var categoryService = _fixture.Create<CategoryService>();
 			var vendorService = _fixture.Create<VendorService>();
-			var sut = _fixture.Create<BillService>();
 			var billName = "test bill";
 			var amount = 1.23M;
 			DateTime startDate = new DateTime(2013, 7, 2);
@@ -80,7 +79,7 @@ namespace scrilla.Services.Tests
 
 			// create test bill group
 			var billGroupName = "test bill group";
-			var addBillGroupResult = sut.AddBillGroup(billGroupName);
+			var addBillGroupResult = _sut.AddBillGroup(billGroupName);
 			Assert.False(addBillGroupResult.HasErrors);
 			Assert.Equal(billGroupName, addBillGroupResult.Result.Name);
 
@@ -97,7 +96,7 @@ namespace scrilla.Services.Tests
 			Assert.Equal(vendorName, addVendorResult.Result.Name);
 
 			// create test bill
-			var addBillResult = sut.AddBill(billName, amount, addBillGroupResult.Result.Id, addCategoryResult.Result.Id, addVendorResult.Result.Id
+			var addBillResult = _sut.AddBill(billName, amount, addBillGroupResult.Result.Id, addCategoryResult.Result.Id, addVendorResult.Result.Id
 				, startDate, endDate, frequency, secondaryStartDate, secondaryEndDate);
 			Assert.False(addBillResult.HasErrors);
 			Assert.Equal(billName, addBillResult.Result.Name);
@@ -112,7 +111,7 @@ namespace scrilla.Services.Tests
 			Assert.Equal(secondaryEndDate, addBillResult.Result.EndDate2);
 
 			// act
-			var result = sut.GetBill(addBillResult.Result.Id);
+			var result = _sut.GetBill(addBillResult.Result.Id);
 			Assert.False(addBillResult.HasErrors);
 			Assert.Equal(billName, result.Result.Name);
 			Assert.Equal(billName, result.Result.Name);
@@ -127,8 +126,8 @@ namespace scrilla.Services.Tests
 			Assert.Equal(secondaryEndDate, result.Result.EndDate2);
 
 			// cleanup
-			sut.DeleteBill(addBillResult.Result.Id);
-			sut.DeleteBillGroup(addBillGroupResult.Result.Id);
+			_sut.DeleteBill(addBillResult.Result.Id);
+			_sut.DeleteBillGroup(addBillGroupResult.Result.Id);
 			categoryService.DeleteCategory(addCategoryResult.Result.Id);
 			vendorService.DeleteVendor(addVendorResult.Result.Id);
 		}
@@ -136,11 +135,10 @@ namespace scrilla.Services.Tests
 		[Fact]
 		public void GetBill_NonExistantBill()
 		{
-			var sut = _fixture.Create<BillService>();
 			var nonExistantBillId = -1;
 
 			// act
-			var result = sut.GetBill(nonExistantBillId);
+			var result = _sut.GetBill(nonExistantBillId);
 
 			Assert.True(result.HasErrors);
 			Assert.True(result.ErrorMessages.Any(x => x.Key == ErrorType.NotFound));
@@ -149,37 +147,35 @@ namespace scrilla.Services.Tests
 		[Fact]
 		public void GetBillGroup_ExistingBillGroup()
 		{
-			var sut = _fixture.Create<BillService>();
 			var billGroupName = "test bill group";
 			var displayOrder = 1;
 			var isActive = true;
 
 			// create test bill group
-			var addBillGroupResult = sut.AddBillGroup(billGroupName, displayOrder, isActive);
+			var addBillGroupResult = _sut.AddBillGroup(billGroupName, displayOrder, isActive);
 			Assert.False(addBillGroupResult.HasErrors);
 			Assert.Equal(billGroupName, addBillGroupResult.Result.Name);
 			Assert.Equal(displayOrder, addBillGroupResult.Result.DisplayOrder);
 			Assert.Equal(isActive, addBillGroupResult.Result.IsActive);
 
 			// act
-			var result = sut.GetBillGroup(addBillGroupResult.Result.Id);
+			var result = _sut.GetBillGroup(addBillGroupResult.Result.Id);
 			Assert.False(result.HasErrors);
 			Assert.Equal(billGroupName, result.Result.Name);
 			Assert.Equal(displayOrder, result.Result.DisplayOrder);
 			Assert.Equal(isActive, result.Result.IsActive);
 
 			// cleanup
-			sut.DeleteBillGroup(addBillGroupResult.Result.Id);
+			_sut.DeleteBillGroup(addBillGroupResult.Result.Id);
 		}
 
 		[Fact]
 		public void GetBillGroup_NonExistantBillGroup()
 		{
-			var sut = _fixture.Create<BillService>();
 			var nonExistantBillGroupId = -1;
 
 			// act
-			var result = sut.GetBillGroup(nonExistantBillGroupId);
+			var result = _sut.GetBillGroup(nonExistantBillGroupId);
 
 			Assert.True(result.HasErrors);
 			Assert.True(result.ErrorMessages.Any(x => x.Key == ErrorType.NotFound));

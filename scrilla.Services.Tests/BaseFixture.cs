@@ -13,8 +13,9 @@ using Xunit;
 
 namespace scrilla.Services.Tests
 {
-	public class BaseFixture
+	public class BaseFixture<T>
 	{
+		protected T _sut;
 		protected Fixture _fixture;
 		protected SqlConnection _sqlConnection;
 

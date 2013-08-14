@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace scrilla.Services.Tests
 {
-	public class TransactionServiceFixture : BaseFixture
+	public class TransactionServiceFixture : BaseFixture<TransactionService>
 	{
 
 	}
