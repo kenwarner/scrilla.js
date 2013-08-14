@@ -266,24 +266,104 @@ namespace scrilla.Services.Tests
 
 		[Fact]
 		public void DeleteVendorMap_NonExistantVendorMap()
-		{ 
-		}
-
-		[Fact]
-		public void UpdateVendor()
-		{ 
-		}
-
-		[Fact]
-		public void UpdateVendorName()
 		{
+			var nonExistantVendorMapId = -1;
 
+			// act
+			var result = _sut.DeleteVendorMap(nonExistantVendorMapId);
+			Assert.True(result.HasErrors);
+		}
+
+		[Fact]
+		public void UpdateVendor_ExistingVendor_And_ExistingCategory()
+		{
+			var categoryService = _fixture.Create<CategoryService>();
+			var vendorName = "test vendor";
+			var newVendorName = "new test vendor";
+			var categoryName = "test category";
+
+			// add test vendor
+			var addVendorResult = _sut.AddVendor(vendorName);
+			Assert.False(addVendorResult.HasErrors);
+
+			// add test category
+			var addCategoryResult = categoryService.AddCategory(categoryName);
+			Assert.False(addCategoryResult.HasErrors);
+
+			// act
+			var result = _sut.UpdateVendor(addVendorResult.Result.Id, newVendorName, addCategoryResult.Result.Id, true);
+			Assert.False(result.HasErrors);
+			Assert.Equal(newVendorName, result.Result.Name);
+			Assert.Equal(addCategoryResult.Result.Id, result.Result.DefaultCategoryId);
+
+			// cleanup
+			_sut.DeleteVendor(result.Result.Id);
+			categoryService.DeleteCategory(addCategoryResult.Result.Id);
+		}
+
+		[Fact]
+		public void UpdateVendor_NonExistantVendor()
+		{
+			var nonExistantVendorId = -1;
+			var newVendorName = "new vendor";
+
+			// act
+			var result = _sut.UpdateVendor(nonExistantVendorId, newVendorName, null, true);
+			Assert.True(result.HasErrors);
+		}
+
+		[Fact]
+		public void UpdateVendorName_ExistingVendor()
+		{
+			var vendorName = "test vendor";
+			var newVendorName = "new test vendor";
+
+			// add test vendor
+			var addVendorResult = _sut.AddVendor(vendorName);
+			Assert.False(addVendorResult.HasErrors);
+
+			// act
+			var result = _sut.UpdateVendorName(addVendorResult.Result.Id, newVendorName);
+			Assert.False(result.HasErrors);
+
+			// cleanup
+			_sut.DeleteVendor(result.Result.Id);
+		}
+
+		[Fact]
+		public void UpdateVendorName_NonExistantVendor()
+		{
+			var nonExistantVendorId = -1;
+			var newVendorName = "new vendor";
+
+			// act
+			var result = _sut.UpdateVendorName(nonExistantVendorId, newVendorName);
+			Assert.False(result.HasErrors);
 		}
 
 		[Fact]
 		public void UpdateVendorDefaultCategory()
 		{
+			var categoryService = _fixture.Create<CategoryService>();
+			var vendorName = "test vendor";
+			var categoryName = "test category";
 
+			// add test vendor
+			var addVendorResult = _sut.AddVendor(vendorName);
+			Assert.False(addVendorResult.HasErrors);
+
+			// add test category
+			var addCategoryResult = categoryService.AddCategory(categoryName);
+			Assert.False(addCategoryResult.HasErrors);
+
+			// act
+			var result = _sut.UpdateVendorDefaultCategory(addVendorResult.Result.Id, null);
+			Assert.False(result.HasErrors);
+			Assert.Equal(null, result.Result.DefaultCategoryId);
+
+			// cleanup
+			_sut.DeleteVendor(result.Result.Id);
+			categoryService.DeleteCategory(addCategoryResult.Result.Id);
 		}
 	}
 }
