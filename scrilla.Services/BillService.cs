@@ -82,7 +82,7 @@ namespace scrilla.Services
 				var billGroupResult = GetBillGroup(billGroupId.Value);
 				if (billGroupResult.HasErrors)
 				{
-					result.AddErrors(billGroupResult.ErrorMessages);
+					result.AddErrors(billGroupResult);
 				}
 			}
 
@@ -92,7 +92,7 @@ namespace scrilla.Services
 				var categoryResult = _categoryService.GetCategory(categoryId.Value);
 				if (categoryResult.HasErrors)
 				{
-					result.AddErrors(categoryResult.ErrorMessages);
+					result.AddErrors(categoryResult);
 				}
 			}
 
@@ -102,7 +102,7 @@ namespace scrilla.Services
 				var vendorResult = _vendorService.GetVendor(vendorId.Value);
 				if (vendorResult.HasErrors)
 				{
-					result.AddErrors(vendorResult.ErrorMessages);
+					result.AddErrors(vendorResult);
 				}
 			}
 

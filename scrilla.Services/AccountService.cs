@@ -44,7 +44,7 @@ namespace scrilla.Services
 				var accountGroupResult = GetAccountGroup(accountGroupId.Value);
 				if (accountGroupResult.HasErrors)
 				{
-					result.AddErrors(accountGroupResult.ErrorMessages);
+					result.AddErrors(accountGroupResult);
 					return result;
 				}
 			}
@@ -55,7 +55,7 @@ namespace scrilla.Services
 				var categoryResult = _categoryService.GetCategory(defaultCategoryId.Value);
 				if (categoryResult.HasErrors)
 				{
-					result.AddErrors(categoryResult.ErrorMessages);
+					result.AddErrors(categoryResult);
 					return result;
 				}
 			}
@@ -109,7 +109,6 @@ namespace scrilla.Services
 			}
 
 			result.Result = deletionResult;
-
 			return result;
 		}
 
@@ -126,7 +125,6 @@ namespace scrilla.Services
 			}
 
 			result.Result = deletionResult;
-
 			return result;
 		}
 	}

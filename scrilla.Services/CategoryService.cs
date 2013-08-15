@@ -44,7 +44,7 @@ namespace scrilla.Services
 				var categoryGroupResult = GetCategoryGroup(categoryGroupId.Value);
 				if (categoryGroupResult.HasErrors)
 				{
-					result.AddErrors(categoryGroupResult.ErrorMessages);
+					result.AddErrors(categoryGroupResult);
 					return result;
 				}
 			}

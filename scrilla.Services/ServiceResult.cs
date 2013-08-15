@@ -42,8 +42,16 @@ namespace scrilla.Services
 			ErrorMessages.Add(new KeyValuePair<ErrorType, string>(key, error));
 		}
 
+		public void AddErrors(ServiceResult serviceResult)
+		{
+			AddErrors(serviceResult.ErrorMessages);
+		}
+
 		public void AddErrors(IEnumerable<KeyValuePair<ErrorType, string>> errors)
 		{
+			if (errors == null)
+				return;
+
 			foreach (var error in errors)
 				AddError(error.Key, error.Value);
 		}
