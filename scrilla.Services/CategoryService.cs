@@ -1,4 +1,5 @@
-﻿using DapperExtensions;
+﻿using Dapper;
+using DapperExtensions;
 using scrilla.Data;
 using System;
 using System.Collections.Generic;
@@ -16,6 +17,28 @@ namespace scrilla.Services
 		public ServiceResult<Category> GetCategory(int categoryId)
 		{
 			return base.GetEntity<Category>(categoryId);
+		}
+
+		public ServiceResult<Category> GetCategory(string name)
+		{
+			var result = new ServiceResult<Category>();
+
+			var category = _db.Connection.Query<Category>("SELECT * FROM Category WHERE Name = @name", new { name });
+			if (category == null || !category.Any())
+			{
+				result.AddError(ErrorType.NotFound, "Category {0} not found", name);
+				return result;
+			}
+
+			// are there multiple categories with the same name?
+			if (category.Count() > 1)
+			{
+				result.AddError(ErrorType.Generic, "Multiple Categories with name {0} exist", name);
+				return result;
+			}
+
+			result.Result = category.First();
+			return result;
 		}
 
 		public ServiceResult<CategoryGroup> GetCategoryGroup(int categoryGroupId)
@@ -116,24 +139,50 @@ namespace scrilla.Services
 
 		public ServiceResult<Category> UpdateCategoryName(int categoryId, string name)
 		{
-			throw new NotImplementedException();
-
 			var result = new ServiceResult<Category>();
+			Category resultCategory;
 
-			//var category = _categoryRepository.GetById(categoryId);
-			//if (category == null)
-			//{
-			//	result.AddError(ErrorType.NotFound, "Category {0} not found", categoryId);
-			//	return result;
-			//}
+			// does category exist?
+			var categoryResult = GetCategory(categoryId);
+			if (categoryResult.HasErrors)
+			{
+				result.AddErrors(categoryResult);
+				return result;
+			}
 
-			//category.Name = name;
-			//_unitOfWork.Commit();
+			// does a category with this name already exist?
+			var existingCategoryResult = GetCategory(name);
+			if (existingCategoryResult.Result == null)
+			{
+				// just rename the original category
+				categoryResult.Result.Name = name;
+				_db.Update<Category>(categoryResult.Result);
+				resultCategory = categoryResult.Result;
+			}
+			else
+			{
+				// Bill, BillTransaction, BudgetCategory, Subtransaction, Account, Vendor
+				_db.Connection.Execute("UPDATE Bill SET CategoryId = @existingCategoryId WHERE CategoryId = @categoryId", new { existingCategoryId = existingCategoryResult.Result.Id, categoryId = categoryResult.Result.Id });
+				_db.Connection.Execute("UPDATE BillTransaction SET CategoryId = @existingCategoryId WHERE CategoryId = @categoryId", new { existingCategoryId = existingCategoryResult.Result.Id, categoryId = categoryResult.Result.Id });
+				_db.Connection.Execute("UPDATE BillTransaction SET OriginalCategoryId = @existingCategoryId WHERE OriginalCategoryId = @categoryId", new { existingCategoryId = existingCategoryResult.Result.Id, categoryId = categoryResult.Result.Id });
+				_db.Connection.Execute("UPDATE BudgetCategory SET CategoryId = @existingCategoryId WHERE CategoryId = @categoryId", new { existingCategoryId = existingCategoryResult.Result.Id, categoryId = categoryResult.Result.Id });
+				_db.Connection.Execute("UPDATE Subtransaction SET CategoryId = @existingCategoryId WHERE CategoryId = @categoryId", new { existingCategoryId = existingCategoryResult.Result.Id, categoryId = categoryResult.Result.Id });
+				_db.Connection.Execute("UPDATE [Account] SET DefaultCategoryId = @existingCategoryId WHERE DefaultCategoryId = @categoryId", new { existingCategoryId = existingCategoryResult.Result.Id, categoryId = categoryResult.Result.Id });
+				_db.Connection.Execute("UPDATE Vendor SET DefaultCategoryId = @existingCategoryId WHERE DefaultCategoryId = @categoryId", new { existingCategoryId = existingCategoryResult.Result.Id, categoryId = categoryResult.Result.Id });
 
-			//result.Result = category;
+				// delete the original category
+				var deleteCategoryResult = DeleteCategory(categoryResult.Result.Id);
+				if (deleteCategoryResult.HasErrors)
+				{
+					result.AddErrors(deleteCategoryResult);
+					return result;
+				}
+
+				resultCategory = existingCategoryResult.Result;
+			}
+
+			result.Result = resultCategory;
 			return result;
 		}
-
-
 	}
 }

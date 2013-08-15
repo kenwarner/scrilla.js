@@ -75,5 +75,93 @@ namespace scrilla.Services.Tests
 			Assert.True(result.HasErrors);
 			Assert.True(result.ErrorMessages.Any(x => x.Key == ErrorType.NotFound));
 		}
+
+		[Fact]
+		public void GetCategory_ExistingName()
+		{
+			var categoryName = "test category";
+
+			// create test category
+			var addCategoryResult = _sut.AddCategory(categoryName);
+			Assert.False(addCategoryResult.HasErrors);
+
+			// act
+			var result = _sut.GetCategory(categoryName);
+			Assert.False(result.HasErrors);
+			Assert.Equal(categoryName, result.Result.Name);
+
+			// cleanup
+			_sut.DeleteCategory(addCategoryResult.Result.Id);
+		}
+
+		[Fact]
+		public void GetCategory_NonExistantName()
+		{
+			var nonExistantCategory = "nonexistant category";
+
+			// act
+			var result = _sut.GetCategory(nonExistantCategory);
+			Assert.True(result.HasErrors);
+			Assert.True(result.ErrorMessages.Any(x => x.Key == ErrorType.NotFound));
+		}
+
+
+		[Fact]
+		public void UpdateCategoryName_ExistingCategory_WithDistinctNewName()
+		{
+			var categoryName = "test category";
+			var newCategoryName = "new test category";
+
+			// add test category
+			var addCategoryResult = _sut.AddCategory(categoryName);
+			Assert.False(addCategoryResult.HasErrors);
+
+			// act
+			var updateCategoryNameResult = _sut.UpdateCategoryName(addCategoryResult.Result.Id, newCategoryName);
+			Assert.False(updateCategoryNameResult.HasErrors);
+
+			// cleanup
+			_sut.DeleteCategory(addCategoryResult.Result.Id);
+		}
+
+		[Fact]
+		public void UpdateCategoryName_ExistingCategory_WithExistingNewName()
+		{
+			// TODO make sure all the associations are cleaned up
+
+			var existingCategoryName = "existing test category";
+			var categoryName = "test category";
+
+			// add test category
+			var addCategoryResult = _sut.AddCategory(categoryName);
+			Assert.False(addCategoryResult.HasErrors);
+
+			// add existing test category
+			var addExistingCategoryResult = _sut.AddCategory(existingCategoryName);
+			Assert.False(addExistingCategoryResult.HasErrors);
+
+			// act
+			var updateCategoryNameResult = _sut.UpdateCategoryName(addCategoryResult.Result.Id, existingCategoryName);
+			Assert.False(updateCategoryNameResult.HasErrors);
+
+			var allCategoriesResult = _sut.GetAllCategories();
+			Assert.False(allCategoriesResult.HasErrors);
+			Assert.Equal(1, allCategoriesResult.Result.Count());
+
+			// cleanup
+			_sut.DeleteCategory(addCategoryResult.Result.Id);
+			_sut.DeleteCategory(addExistingCategoryResult.Result.Id);
+		}
+		
+		[Fact]
+		public void UpdateCategoryName_NonExistantCategory()
+		{
+			var nonExistantCategoryId = -1;
+			var newCategoryName = "new category";
+
+			// act
+			var result = _sut.UpdateCategoryName(nonExistantCategoryId, newCategoryName);
+			Assert.True(result.HasErrors);
+		}
 	}
 }

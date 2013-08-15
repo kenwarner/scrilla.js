@@ -353,6 +353,8 @@ namespace scrilla.Services.Tests
 		[Fact]
 		public void UpdateVendorName_ExistingVendor_WithExistingNewName()
 		{
+			// TODO make sure all the associations are cleaned up
+
 			var existingVendorName = "existing test vendor";
 			var vendorName = "test vendor";
 
@@ -360,7 +362,7 @@ namespace scrilla.Services.Tests
 			var addVendorResult = _sut.AddVendor(vendorName);
 			Assert.False(addVendorResult.HasErrors);
 
-			// add exist test vendor
+			// add existing test vendor
 			var addExistingVendorResult = _sut.AddVendor(existingVendorName);
 			Assert.False(addExistingVendorResult.HasErrors);
 

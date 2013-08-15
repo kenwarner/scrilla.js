@@ -10,6 +10,7 @@ namespace scrilla.Services
 	public interface ICategoryService
 	{
 		ServiceResult<Category> GetCategory(int categoryId);
+		ServiceResult<Category> GetCategory(string name);
 
 		ServiceResult<CategoryGroup> GetCategoryGroup(int categoryGroupId);
 
