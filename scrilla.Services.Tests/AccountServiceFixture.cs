@@ -18,12 +18,6 @@ namespace scrilla.Services.Tests
 {
 	public class AccountServiceFixture : BaseFixture<AccountService>
 	{
-		public AccountServiceFixture()
-		{
-			_fixture.Register<ICategoryService>(() => _fixture.Create<CategoryService>());
-			_sut = _fixture.Create<AccountService>();
-		}
-
 		[Fact]
 		public void GetAccount_ExistingAccount_WithDefaultCategory_And_AccountGroup()
 		{

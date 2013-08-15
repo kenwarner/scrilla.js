@@ -10,11 +10,6 @@ namespace scrilla.Services.Tests
 {
 	public class CategoryServiceFixture : BaseFixture<CategoryService>
 	{
-		public CategoryServiceFixture()
-		{
-			_sut = _fixture.Create<CategoryService>();
-		}
-
 		[Fact]
 		public void GetCategory_ExistingCategory_WithCategoryGroup()
 		{

@@ -29,6 +29,14 @@ namespace scrilla.Services.Tests
 
 			_fixture = new Fixture();
 			_fixture.Inject<IDatabase>(new Db(_sqlConnection));
+
+			_fixture.Register<IAccountService>(() => _fixture.Create<AccountService>());
+			_fixture.Register<IBillService>(() => _fixture.Create<BillService>());
+			_fixture.Register<IBudgetService>(() => _fixture.Create<BudgetService>());
+			_fixture.Register<ICategoryService>(() => _fixture.Create<CategoryService>());
+			_fixture.Register<ITransactionService>(() => _fixture.Create<TransactionService>());
+			_fixture.Register<IVendorService>(() => _fixture.Create<VendorService>());
+			_sut = _fixture.Create<T>();
 		}
 
 		private void CreateTestDatabase()

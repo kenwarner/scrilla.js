@@ -11,13 +11,6 @@ namespace scrilla.Services.Tests
 {
 	public class BillServiceFixture : BaseFixture<BillService>
 	{
-		public BillServiceFixture()
-		{
-			_fixture.Register<ICategoryService>(() => _fixture.Create<CategoryService>());
-			_fixture.Register<IVendorService>(() => _fixture.Create<VendorService>());
-			_sut = _fixture.Create<BillService>();
-		}
-
 		[Fact]
 		public void GetBill_ExistingBill_WithNullBillGroup_AndNullCategory_AndNullVendor_AndNullSecondaryDates()
 		{

@@ -10,14 +10,6 @@ namespace scrilla.Services.Tests
 {
 	public class VendorServiceFixture : BaseFixture<VendorService>
 	{
-		public VendorServiceFixture()
-		{
-			_fixture.Register<ITransactionService>(() => _fixture.Create<TransactionService>());
-			_fixture.Register<ICategoryService>(() => _fixture.Create<CategoryService>());
-			_fixture.Register<IAccountService>(() => _fixture.Create<AccountService>());
-			_sut = _fixture.Create<VendorService>();
-		}
-
 		[Fact]
 		public void GetVendor_ExistingVendor_WithNullDefaultCategoryId()
 		{
