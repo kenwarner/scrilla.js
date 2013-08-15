@@ -11,10 +11,12 @@ namespace scrilla.Services
 	public class TransactionService : ITransactionService
 	{
 		private readonly IDatabase _db;
+		private IAccountService _accountService;
 
-		public TransactionService(IDatabase database)
+		public TransactionService(IDatabase database, IAccountService accountService)
 		{
 			_db = database;
+			_accountService = accountService;
 		}
 
 		public ServiceResult<IEnumerable<Transaction>> GetAllTransactions(DateTime? from = null, DateTime? to = null)
@@ -77,15 +79,30 @@ namespace scrilla.Services
 
 		public ServiceResult<IEnumerable<Transaction>> GetTransactionsByAccount(int accountId, DateTime? from = null, DateTime? to = null)
 		{
-			throw new NotImplementedException();
-
 			var result = new ServiceResult<IEnumerable<Transaction>>();
-			//var transactions = _transactionRepository.GetMany(x => x.AccountId == accountId);
 
-			//if (from.HasValue) transactions = transactions.Where(x => x.Timestamp >= from.Value);
-			//if (to.HasValue) transactions = transactions.Where(x => x.Timestamp <= to.Value);
+			var accountResult = _accountService.GetAccount(accountId);
+			if (accountResult.HasErrors)
+			{
+				result.AddErrors(accountResult);
+				return result;
+			}
 
-			//result.Result = transactions;//.ToList();
+			var predicates = new List<IPredicate>();
+			predicates.Add(Predicates.Field<Transaction>(x => x.AccountId, Operator.Eq, accountId));
+
+			if (from.HasValue)
+				predicates.Add(Predicates.Field<Transaction>(x => x.Timestamp, Operator.Ge, from.Value));
+
+			if (to.HasValue)
+				predicates.Add(Predicates.Field<Transaction>(x => x.Timestamp, Operator.Le, to.Value));
+
+			object predicate = !predicates.Any() ?
+				null : (predicates.Count == 1 ?
+					predicates.First() :
+					new PredicateGroup { Operator = GroupOperator.And, Predicates = predicates });
+
+			result.Result = _db.GetList<Transaction>(predicate);
 			return result;
 		}
 
@@ -129,6 +146,51 @@ namespace scrilla.Services
 			return result;
 		}
 
+
+		public ServiceResult<Transaction> AddTransaction(int accountId, DateTime timestamp, decimal amount, bool isReconciled = false, int? vendorId = null, int? billTransactionId = null)
+		{
+			var result = new ServiceResult<Transaction>();
+
+			// does account exist?
+			var accountResult = _accountService.GetAccount(accountId);
+			if (accountResult.HasErrors)
+			{
+				result.AddErrors(accountResult);
+				return result;
+			}
+
+			var transaction = new Transaction()
+			{
+				AccountId = accountId,
+				Timestamp = timestamp,
+				OriginalTimestamp = timestamp,
+				Amount = amount,
+				IsReconciled = isReconciled,
+				VendorId = vendorId,
+				BillTransactionId = billTransactionId
+			};
+
+			_db.Insert<Transaction>(transaction);
+
+			result.Result = transaction;
+			return result;
+		}
+
+		public ServiceResult<bool> DeleteTransaction(int transactionId)
+		{
+			// TODO handle cascading deletes
+			var result = new ServiceResult<bool>();
+
+			var deletionResult = _db.Delete<Transaction>(Predicates.Field<Transaction>(x => x.Id, Operator.Eq, transactionId));
+			if (!deletionResult)
+			{
+				result.AddError(ErrorType.NotFound, "Transaction {0} not found", transactionId);
+				return result;
+			}
+
+			result.Result = deletionResult;
+			return result;
+		}
 
 		public ServiceResult<bool> UpdateTransactionReconciled(int transactionId, bool isReconciled)
 		{

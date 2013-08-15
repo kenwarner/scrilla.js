@@ -15,6 +15,10 @@ namespace scrilla.Services
 		ServiceResult<IEnumerable<Transaction>> GetTransactionsByVendor(int? vendorId, DateTime? from = null, DateTime? to = null);
 		ServiceResult<IEnumerable<Transaction>> GetTransactionsByCategory(int? categoryId, DateTime? from = null, DateTime? to = null);
 
+		ServiceResult<Transaction> AddTransaction(int accountId, DateTime timestamp, decimal amount, bool isReconciled = false, int? vendorId = null, int? billTransactionId = null);
+
+		ServiceResult<bool> DeleteTransaction(int transactionId);
+
 		ServiceResult<bool> UpdateTransactionReconciled(int transactionId, bool isReconciled);
 		ServiceResult<bool> UpdateTransactionCategory(int transactionId, int? categoryId);
 		ServiceResult<bool> UpdateTransactionVendor(int transactionId, int? vendorId);
