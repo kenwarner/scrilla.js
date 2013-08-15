@@ -32,6 +32,11 @@ namespace scrilla.Services
 			return result;
 		}
 
+		public ServiceResult<BudgetCategory> DeleteBudgetCategory(DateTime month, int categoryId)
+		{
+			throw new NotImplementedException();
+		}
+
 		public ServiceResult<BudgetAmountInfo> UpdateBudget(DateTime month, int categoryId, decimal amount)
 		{
 			throw new NotImplementedException();
