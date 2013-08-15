@@ -10,6 +10,7 @@ namespace scrilla.Services
 	public interface IVendorService
 	{
 		ServiceResult<Vendor> GetVendor(int vendorId);
+		ServiceResult<Vendor> GetVendor(string name);
 		ServiceResult<ImportDescriptionVendorMap> GetVendorMap(int vendorMapId);
 
 		ServiceResult<IEnumerable<Vendor>> GetAllVendors();
@@ -21,8 +22,7 @@ namespace scrilla.Services
 		ServiceResult<bool> DeleteVendor(int vendorId);
 		ServiceResult<bool> DeleteVendorMap(int vendorMapId);
 
-		ServiceResult<Vendor> UpdateVendor(int vendorId, string name, int? defaultCategoryId, bool updateUncategorizedTransactions);
 		ServiceResult<Vendor> UpdateVendorName(int vendorId, string name);
-		ServiceResult<Vendor> UpdateVendorDefaultCategory(int vendorId, int? defaultCategoryId);
+		ServiceResult<Vendor> UpdateVendorDefaultCategory(int vendorId, int? defaultCategoryId, bool updateUncategorizedTransactions = false);
 	}
 }

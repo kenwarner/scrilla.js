@@ -1,4 +1,5 @@
-﻿using DapperExtensions;
+﻿using Dapper;
+using DapperExtensions;
 using scrilla.Data;
 using System;
 using System.Collections.Generic;
@@ -23,6 +24,27 @@ namespace scrilla.Services
 			return base.GetEntity<Vendor>(vendorId);
 		}
 
+		public ServiceResult<Vendor> GetVendor(string name)
+		{
+			var result = new ServiceResult<Vendor>();
+
+			var vendor = _db.Connection.Query<Vendor>("SELECT * FROM Vendor WHERE Name = @name", new { name });
+			if (vendor == null || !vendor.Any())
+			{
+				result.AddError(ErrorType.NotFound, "Vendor {0} not found", name);
+				return result;
+			}
+
+			// are there multiple vendors with the same name?
+			if (vendor.Count() > 1)
+			{
+				result.AddError(ErrorType.Generic, "Multiple Vendors with name {0} exist", name);
+				return result;
+			}
+
+			result.Result = vendor.First();
+			return result;
+		}
 
 		public ServiceResult<ImportDescriptionVendorMap> GetVendorMap(int vendorMapId)
 		{
@@ -50,7 +72,7 @@ namespace scrilla.Services
 				var categoryResult = _categoryService.GetCategory(defaultCategoryId.Value);
 				if (categoryResult.HasErrors)
 				{
-					result.AddErrors(categoryResult.ErrorMessages);
+					result.AddErrors(categoryResult);
 					return result;
 				}
 			}
@@ -75,7 +97,7 @@ namespace scrilla.Services
 			var vendorResult = GetVendor(vendorId);
 			if (vendorResult.HasErrors)
 			{
-				result.AddErrors(vendorResult.ErrorMessages);
+				result.AddErrors(vendorResult);
 				return result;
 			}
 
@@ -97,6 +119,10 @@ namespace scrilla.Services
 			// TODO handle cascading deletes
 			var result = new ServiceResult<bool>();
 
+			// delete the vendor maps
+			var vendorMaps = _db.Connection.Delete<ImportDescriptionVendorMap>(Predicates.Field<ImportDescriptionVendorMap>(x => x.VendorId, Operator.Eq, vendorId));
+
+			// delete the vendor
 			var deletionResult = _db.Delete<Vendor>(Predicates.Field<Vendor>(x => x.Id, Operator.Eq, vendorId));
 			if (!deletionResult)
 			{
@@ -105,7 +131,6 @@ namespace scrilla.Services
 			}
 
 			result.Result = deletionResult;
-
 			return result;
 		}
 
@@ -126,156 +151,97 @@ namespace scrilla.Services
 			return result;
 		}
 
-
-		public ServiceResult<Vendor> UpdateVendor(int vendorId, string name, int? defaultCategoryId, bool updateUncategorizedTransactions)
-		{
-			throw new NotImplementedException();
-
-			var result = new ServiceResult<Vendor>();
-
-			//// does this vendor even exist?
-			//var vendor = _vendorRepository.GetById(vendorId);
-			//if (vendor == null)
-			//{
-			//	result.AddError(ErrorType.NotFound, "Vendor with Id {0} not found", vendorId);
-			//	return result;
-			//}
-
-			//// see if a vendor with this name already exists
-			//var existingVendor = _vendorRepository.Get(x => x.Name.Equals(name, StringComparison.CurrentCultureIgnoreCase));
-			//if (existingVendor != null && existingVendor != vendor)
-			//{
-			//	var renameResult = RenameVendor(vendorId, name);
-			//	if (renameResult.HasErrors)
-			//	{
-			//		result.AddErrors(renameResult.ErrorMessages);
-			//		return result;
-			//	}
-
-			//	vendor = renameResult.Result;
-			//}
-
-			//if (defaultCategoryId.HasValue && defaultCategoryId.Value == 0)
-			//	defaultCategoryId = null;
-
-			//// update uncategorized transactions
-			//if (updateUncategorizedTransactions && defaultCategoryId.HasValue)
-			//{
-			//	var uncategorizedTransactions = _transactionRepository.GetMany(x => x.VendorId == vendorId && x.Subtransactions.Any(y => y.CategoryId == null)).ToList();
-			//	if (uncategorizedTransactions != null)
-			//	{
-			//		foreach (var trx in uncategorizedTransactions)
-			//		{
-			//			var subtrx = trx.Subtransactions.Where(x => x.CategoryId == null);
-			//			if (subtrx != null)
-			//			{
-			//				foreach (var sub in subtrx)
-			//				{
-			//					sub.CategoryId = defaultCategoryId.Value;
-			//				}
-			//			}
-			//		}
-			//	}
-			//}
-
-			//// keep track of the rename in the mappings table
-			//if (!vendor.Name.Equals(name, StringComparison.CurrentCultureIgnoreCase))
-			//{
-			//	vendor.ImportDescriptionVendorMaps.Add(new ImportDescriptionVendorMap() { Description = vendor.Name });
-			//}
-
-			//vendor.Name = name;
-			//vendor.DefaultCategoryId = defaultCategoryId;
-			//_unitOfWork.Commit();
-
-			//result.Result = vendor;
-			return result;
-		}
-
 		public ServiceResult<Vendor> UpdateVendorName(int vendorId, string name)
 		{
-			throw new NotImplementedException();
-
 			var result = new ServiceResult<Vendor>();
+			Vendor resultVendor;
 
-			//// does this vendor even exist?
-			//var vendor = _vendorRepository.GetById(vendorId);
-			//if (vendor == null)
-			//{
-			//	result.AddError(ErrorType.NotFound, "Vendor with Id {0} not found", vendorId);
-			//	return result;
-			//}
+			// does vendor exist?
+			var vendorResult = GetVendor(vendorId);
+			if (vendorResult.HasErrors)
+			{
+				result.AddErrors(vendorResult);
+				return result;
+			}
 
-			//// see if a vendor with this name already exists
-			//var existingVendor = _vendorRepository.Get(x => x.Name.Equals(name, StringComparison.CurrentCultureIgnoreCase));
-			//if (existingVendor != null && existingVendor != vendor)
-			//{
-			//	foreach (var trx in vendor.Transactions)
-			//	{
-			//		trx.VendorId = existingVendor.Id;
-			//	}
+			// does a vendor with this name already exist?
+			var existingVendorResult = GetVendor(name);
+			if (existingVendorResult.Result == null)
+			{
+				// just rename the original vendor
+				vendorResult.Result.Name = name;
+				_db.Update<Vendor>(vendorResult.Result);
+				resultVendor = vendorResult.Result;
+			}
+			else
+			{
+				// move this vendor's transactions to the existing vendor
+				_db.Connection.Execute("UPDATE [Transaction] SET VendorId = @existingVendorId WHERE VendorId = @vendorId", new { existingVendorId = existingVendorResult.Result.Id, vendorId = vendorResult.Result.Id });
 
-			//	foreach (var bill in vendor.Bills)
-			//	{
-			//		foreach (var billTrx in bill.BillTransactions)
-			//		{
-			//			if (billTrx.OriginalVendorId == vendorId)
-			//			{
-			//				billTrx.OriginalVendorId = existingVendor.Id;
-			//			}
+				// move this vendor's bills and bill transactions to the existing vendor
+				_db.Connection.Execute("UPDATE Bill SET VendorId = @existingVendorId WHERE VendorId = @vendorId", new { existingVendorId = existingVendorResult.Result.Id, vendorId = vendorResult.Result.Id });
+				_db.Connection.Execute("UPDATE BillTransaction SET VendorId = @existingVendorId WHERE VendorId = @vendorId", new { existingVendorId = existingVendorResult.Result.Id, vendorId = vendorResult.Result.Id });
+				_db.Connection.Execute("UPDATE BillTransaction SET OriginalVendorId = @existingVendorId WHERE OriginalVendorId = @vendorId", new { existingVendorId = existingVendorResult.Result.Id, vendorId = vendorResult.Result.Id });
 
-			//			if (billTrx.VendorId == vendorId)
-			//			{
-			//				billTrx.VendorId = existingVendor.Id;
-			//			}
-			//		}
+				// move this vendor's import description maps to the existing vendor
+				_db.Connection.Execute("UPDATE ImportDescriptionVendorMap SET VendorId = @existingVendorId WHERE VendorId = @vendorId", new { existingVendorId = existingVendorResult.Result.Id, vendorId = vendorResult.Result.Id });
 
-			//		bill.VendorId = existingVendor.Id;
-			//	}
+				// delete the original vendor
+				var deleteVendorResult = DeleteVendor(vendorResult.Result.Id);
+				if (deleteVendorResult.HasErrors)
+				{
+					result.AddErrors(deleteVendorResult);
+					return result;
+				}
 
-			//	_vendorRepository.Delete(vendor);
+				resultVendor = existingVendorResult.Result;
+			}
 
-			//	// keep track of the rename in the mappings table
-			//	existingVendor.ImportDescriptionVendorMaps.Add(new ImportDescriptionVendorMap() { Description = vendor.Name });
+			// keep track of the rename in the mappings table
+			var vendorMapResult = AddVendorMap(resultVendor.Id, name);
+			if (vendorMapResult.HasErrors)
+			{
+				result.AddErrors(vendorMapResult);
+				return result;
+			}
 
-			//	result.Result = existingVendor;
-			//}
-			//else
-			//{
-			//	// if there's not an existing vendor with this name, just rename the one we have
-			//	// keep track of the rename in the mappings table
-			//	vendor.ImportDescriptionVendorMaps.Add(new ImportDescriptionVendorMap() { Description = vendor.Name });
-			//	vendor.Name = name;
-			//	result.Result = vendor;
-			//}
-
-			//_unitOfWork.Commit();
-
+			result.Result = resultVendor;
 			return result;
 		}
 
-		public ServiceResult<Vendor> UpdateVendorDefaultCategory(int vendorId, int? defaultCategoryId)
+		public ServiceResult<Vendor> UpdateVendorDefaultCategory(int vendorId, int? defaultCategoryId, bool updateUncategorizedTransactions = false)
 		{
-			throw new NotImplementedException();
-
 			var result = new ServiceResult<Vendor>();
 
-			//if (defaultCategoryId.HasValue && defaultCategoryId.Value == 0)
-			//	defaultCategoryId = null;
+			// does vendor exist?
+			var vendorResult = GetVendor(vendorId);
+			if (vendorResult.HasErrors)
+			{
+				result.AddErrors(vendorResult);
+				return result;
+			}
 
-			//// does this vendor even exist?
-			//var vendor = _vendorRepository.GetById(vendorId);
-			//if (vendor == null)
-			//{
-			//	result.AddError(ErrorType.NotFound, "Vendor with Id {0} not found", vendorId);
-			//	return result;
-			//}
+			// does category exist?
+			if (defaultCategoryId.HasValue)
+			{
+				var categoryResult = _categoryService.GetCategory(defaultCategoryId.Value);
+				if (categoryResult.HasErrors)
+				{
+					result.AddErrors(categoryResult);
+					return result;
+				}
+			}
 
-			//vendor.DefaultCategoryId = defaultCategoryId;
-			//result.Result = vendor;
+			vendorResult.Result.DefaultCategoryId = defaultCategoryId;
+			_db.Update<Vendor>(vendorResult.Result);
 
-			//_unitOfWork.Commit();
+			// update any uncategorized transactions
+			if (updateUncategorizedTransactions && defaultCategoryId.HasValue)
+			{
+				_db.Connection.Execute("UPDATE s SET s.CategoryId = @categoryId FROM Subtransaction s JOIN [Transaction] t ON t.Id = s.TransactionId AND t.VendorId = @vendorId", new { categoryId = defaultCategoryId.Value, vendorId = vendorId });
+			}
 
+			result.Result = vendorResult.Result;
 			return result;
 		}
 	}
