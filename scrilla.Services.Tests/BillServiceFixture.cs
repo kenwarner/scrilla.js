@@ -139,7 +139,6 @@ namespace scrilla.Services.Tests
 
 			// act
 			var result = _sut.GetBill(nonExistantBillId);
-
 			Assert.True(result.HasErrors);
 			Assert.True(result.ErrorMessages.Any(x => x.Key == ErrorType.NotFound));
 		}
@@ -176,7 +175,6 @@ namespace scrilla.Services.Tests
 
 			// act
 			var result = _sut.GetBillGroup(nonExistantBillGroupId);
-
 			Assert.True(result.HasErrors);
 			Assert.True(result.ErrorMessages.Any(x => x.Key == ErrorType.NotFound));
 		}

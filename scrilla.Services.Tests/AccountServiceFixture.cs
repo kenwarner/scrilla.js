@@ -33,34 +33,34 @@ namespace scrilla.Services.Tests
 
 			// get a default category
 			var categoryName = "test category";
-			var categoryResult = categoryService.AddCategory(categoryName);
-			Assert.False(categoryResult.HasErrors);
+			var addCategoryResult = categoryService.AddCategory(categoryName);
+			Assert.False(addCategoryResult.HasErrors);
 
 			// get a default account group
 			var accountGroupName = "test account group";
-			var accountGroupResult = _sut.AddAccountGroup(accountGroupName);
-			Assert.False(accountGroupResult.HasErrors);
+			var addAccountGroupResult = _sut.AddAccountGroup(accountGroupName);
+			Assert.False(addAccountGroupResult.HasErrors);
 
 			// create test account
-			var addAccountResult = _sut.AddAccount(accountName, balance, categoryResult.Result.Id, accountGroupResult.Result.Id);
+			var addAccountResult = _sut.AddAccount(accountName, balance, addCategoryResult.Result.Id, addAccountGroupResult.Result.Id);
 			Assert.False(addAccountResult.HasErrors);
 			Assert.Equal(accountName, addAccountResult.Result.Name);
 			Assert.Equal(balance, addAccountResult.Result.Balance);
-			Assert.Equal(categoryResult.Result.Id, addAccountResult.Result.DefaultCategoryId);
-			Assert.Equal(accountGroupResult.Result.Id, addAccountResult.Result.AccountGroupId);
+			Assert.Equal(addCategoryResult.Result.Id, addAccountResult.Result.DefaultCategoryId);
+			Assert.Equal(addAccountGroupResult.Result.Id, addAccountResult.Result.AccountGroupId);
 
 			// act
 			var result = _sut.GetAccount(addAccountResult.Result.Id);
 			Assert.False(result.HasErrors);
 			Assert.Equal(accountName, result.Result.Name);
 			Assert.Equal(balance, result.Result.Balance);
-			Assert.Equal(categoryResult.Result.Id, result.Result.DefaultCategoryId);
-			Assert.Equal(accountGroupResult.Result.Id, result.Result.AccountGroupId);
+			Assert.Equal(addCategoryResult.Result.Id, result.Result.DefaultCategoryId);
+			Assert.Equal(addAccountGroupResult.Result.Id, result.Result.AccountGroupId);
 
 			// cleanup
 			_sut.DeleteAccount(addAccountResult.Result.Id);
-			categoryService.DeleteCategory(categoryResult.Result.Id);
-			_sut.DeleteAccountGroup(accountGroupResult.Result.Id);
+			categoryService.DeleteCategory(addCategoryResult.Result.Id);
+			_sut.DeleteAccountGroup(addAccountGroupResult.Result.Id);
 		}
 
 		[Fact]
@@ -98,7 +98,6 @@ namespace scrilla.Services.Tests
 
 			// act
 			var result = _sut.GetAccount(nonExistantAccountId);
-
 			Assert.True(result.HasErrors);
 			Assert.True(result.ErrorMessages.Any(x => x.Key == ErrorType.NotFound));
 		}
@@ -136,7 +135,6 @@ namespace scrilla.Services.Tests
 
 			// act
 			var result = _sut.GetAccountGroup(nonExistantAccountGroupId);
-
 			Assert.True(result.HasErrors);
 			Assert.True(result.ErrorMessages.Any(x => x.Key == ErrorType.NotFound));
 		}
@@ -170,15 +168,15 @@ namespace scrilla.Services.Tests
 			var balance = 1.23M;
 
 			// act
-			var result = _sut.AddAccount(name, balance);
-			Assert.False(result.HasErrors);
-			Assert.Equal(name, result.Result.Name);
-			Assert.Equal(balance, result.Result.Balance);
-			Assert.Null(result.Result.DefaultCategoryId);
-			Assert.Null(result.Result.AccountGroupId);
+			var addAcountResult = _sut.AddAccount(name, balance);
+			Assert.False(addAcountResult.HasErrors);
+			Assert.Equal(name, addAcountResult.Result.Name);
+			Assert.Equal(balance, addAcountResult.Result.Balance);
+			Assert.Null(addAcountResult.Result.DefaultCategoryId);
+			Assert.Null(addAcountResult.Result.AccountGroupId);
 
 			// cleanup
-			_sut.DeleteAccount(result.Result.Id);
+			_sut.DeleteAccount(addAcountResult.Result.Id);
 		}
 
 		[Fact]
@@ -190,19 +188,19 @@ namespace scrilla.Services.Tests
 
 			// get a default category
 			var categoryName = "test category";
-			var categoryResult = categoryService.AddCategory(categoryName);
-			Assert.False(categoryResult.HasErrors);
+			var addCategoryResult = categoryService.AddCategory(categoryName);
+			Assert.False(addCategoryResult.HasErrors);
 
 			// act
-			var result = _sut.AddAccount(accountName, balance, categoryResult.Result.Id);
-			Assert.False(result.HasErrors);
-			Assert.Equal(accountName, result.Result.Name);
-			Assert.Equal(balance, result.Result.Balance);
-			Assert.Equal(categoryResult.Result.Id, result.Result.DefaultCategoryId);
+			var addAccountResult = _sut.AddAccount(accountName, balance, addCategoryResult.Result.Id);
+			Assert.False(addAccountResult.HasErrors);
+			Assert.Equal(accountName, addAccountResult.Result.Name);
+			Assert.Equal(balance, addAccountResult.Result.Balance);
+			Assert.Equal(addCategoryResult.Result.Id, addAccountResult.Result.DefaultCategoryId);
 
 			// cleanup
-			_sut.DeleteAccount(result.Result.Id);
-			categoryService.DeleteCategory(categoryResult.Result.Id);
+			_sut.DeleteAccount(addAccountResult.Result.Id);
+			categoryService.DeleteCategory(addCategoryResult.Result.Id);
 		}
 
 		[Fact]
@@ -214,7 +212,6 @@ namespace scrilla.Services.Tests
 
 			// act
 			var result = _sut.AddAccount(accountName, balance, defaultCategoryId);
-
 			Assert.True(result.HasErrors);
 			Assert.True(result.ErrorMessages.Any(x => x.Key == ErrorType.NotFound));
 		}
@@ -227,19 +224,19 @@ namespace scrilla.Services.Tests
 
 			// get an account group
 			var accountGroupName = "test account group";
-			var accountGroupResult = _sut.AddAccountGroup(accountGroupName);
-			Assert.False(accountGroupResult.HasErrors);
+			var addAccountGroupResult = _sut.AddAccountGroup(accountGroupName);
+			Assert.False(addAccountGroupResult.HasErrors);
 
 			// act
-			var result = _sut.AddAccount(accountName, balance, accountGroupId: accountGroupResult.Result.Id);
-			Assert.False(result.HasErrors);
-			Assert.Equal(accountName, result.Result.Name);
-			Assert.Equal(balance, result.Result.Balance);
-			Assert.Equal(accountGroupResult.Result.Id, result.Result.AccountGroupId);
+			var addAccountResult = _sut.AddAccount(accountName, balance, accountGroupId: addAccountGroupResult.Result.Id);
+			Assert.False(addAccountResult.HasErrors);
+			Assert.Equal(accountName, addAccountResult.Result.Name);
+			Assert.Equal(balance, addAccountResult.Result.Balance);
+			Assert.Equal(addAccountGroupResult.Result.Id, addAccountResult.Result.AccountGroupId);
 
 			// cleanup
-			_sut.DeleteAccount(result.Result.Id);
-			_sut.DeleteAccountGroup(accountGroupResult.Result.Id);
+			_sut.DeleteAccount(addAccountResult.Result.Id);
+			_sut.DeleteAccountGroup(addAccountGroupResult.Result.Id);
 		}
 
 		[Fact]
@@ -251,7 +248,6 @@ namespace scrilla.Services.Tests
 
 			// act
 			var result = _sut.AddAccount(accountName, balance, accountGroupId: accountGroupId);
-
 			Assert.True(result.HasErrors);
 			Assert.True(result.ErrorMessages.Any(x => x.Key == ErrorType.NotFound));
 		}
@@ -265,7 +261,6 @@ namespace scrilla.Services.Tests
 
 			// act
 			var result = _sut.AddAccountGroup(accountGroupName, displayOrder, isActive);
-
 			Assert.False(result.HasErrors);
 			Assert.Equal(accountGroupName, result.Result.Name);
 			Assert.Equal(displayOrder, result.Result.DisplayOrder);

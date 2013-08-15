@@ -72,7 +72,6 @@ namespace scrilla.Services.Tests
 
 			// act
 			var result = _sut.GetCategory(nonExistantCategoryId);
-
 			Assert.True(result.HasErrors);
 			Assert.True(result.ErrorMessages.Any(x => x.Key == ErrorType.NotFound));
 		}
