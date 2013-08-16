@@ -19,6 +19,6 @@ namespace scrilla.Data
 		public Nullable<int> OriginalCategoryId { get; set; }
 		public Nullable<int> OriginalVendorId { get; set; }
 
-		public List<Tuple<Transaction, double>> TransactionPredictions { get; set; }
+		//public List<Tuple<Transaction, double>> TransactionPredictions { get; set; }
 	}
 }
