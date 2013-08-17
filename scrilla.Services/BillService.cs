@@ -12,12 +12,14 @@ namespace scrilla.Services
 	public class BillService : EntityService, IBillService
 	{
 		private ICategoryService _categoryService;
+		private ITransactionService _transactionService;
 		private IVendorService _vendorService;
 
-		public BillService(IDatabase database, ICategoryService categoryService, IVendorService vendorService)
+		public BillService(IDatabase database, ICategoryService categoryService, ITransactionService transactionService, IVendorService vendorService)
 			: base(database)
 		{
 			_categoryService = categoryService;
+			_transactionService = transactionService;
 			_vendorService = vendorService;
 		}
 
@@ -78,12 +80,12 @@ namespace scrilla.Services
 			var result = new ServiceResult<Bill>();
 
 			// TODO do we need to handle a case where billGroupId = 0
-			//if (billGroupId.HasValue && billGroupId.Value == 0)
-			//	billGroupId = null;
-			//if (categoryId.HasValue && categoryId.Value == 0)
-			//	categoryId = null;
-			//if (vendorId.HasValue && vendorId.Value == 0)
-			//	vendorId = null;
+			if (billGroupId.HasValue && billGroupId.Value == 0)
+				billGroupId = null;
+			if (categoryId.HasValue && categoryId.Value == 0)
+				categoryId = null;
+			if (vendorId.HasValue && vendorId.Value == 0)
+				vendorId = null;
 
 			// does the bill group exist?
 			if (billGroupId.HasValue)
@@ -119,8 +121,20 @@ namespace scrilla.Services
 			if (endDate < startDate)
 				result.AddError(ErrorType.Generic, "Start date {0} must come before End date {1}", startDate.ToString(), endDate.ToString());
 
-			// TODO does the secondary dates both have to be null or non-null
-			// TODO does the secondary start date come before the secondary end date
+			// does the secondary startDate come before the secondary endDate?
+			if (secondaryStartDate.HasValue && secondaryEndDate.HasValue)
+			{
+				if (secondaryEndDate.Value < secondaryStartDate.Value)
+				{
+					result.AddError(ErrorType.Generic, "Secondary Start date {0} must come before Secondary End date {1}", secondaryStartDate.ToString(), secondaryEndDate.ToString());
+				}
+			}
+
+			// are both secondary startDate and secondary endDate provided?
+			if ((secondaryStartDate.HasValue && !secondaryEndDate.HasValue) || (!secondaryStartDate.HasValue && secondaryEndDate.HasValue))
+			{
+				result.AddError(ErrorType.Generic, "Both Secondary Start date and Secondary End date should be provided: {0} & {1}", secondaryStartDate.ToString(), secondaryEndDate.ToString());
+			}
 
 			// any errors thus far?
 			if (result.HasErrors)
@@ -244,6 +258,7 @@ namespace scrilla.Services
 				return result;
 			}
 
+			// delete the bill
 			var deletionResult = _db.Delete<Bill>(Predicates.Field<Bill>(x => x.Id, Operator.Eq, billId));
 			if (!deletionResult)
 			{
@@ -260,6 +275,7 @@ namespace scrilla.Services
 			// TODO handle cascading deletes
 			var result = new ServiceResult<bool>();
 
+			// delete the bill group
 			var deletionResult = _db.Delete<BillGroup>(Predicates.Field<BillGroup>(x => x.Id, Operator.Eq, billGroupId));
 			if (!deletionResult)
 			{
@@ -276,6 +292,7 @@ namespace scrilla.Services
 			// TODO handle cascading deletes
 			var result = new ServiceResult<bool>();
 
+			// delete the bill transaction
 			var deletionResult = _db.Delete<BillTransaction>(Predicates.Field<BillTransaction>(x => x.Id, Operator.Eq, billTransactionId));
 			if (!deletionResult)
 			{
@@ -298,8 +315,7 @@ namespace scrilla.Services
 				return result;
 			}
 
-			//// TODO do we need to do exist checks for billGroupId, categoryId, vendorId?
-
+			// if the new value is 0, that means set it to null
 			if (billGroupId.HasValue && billGroupId.Value == 0)
 				billGroupId = null;
 			if (categoryId.HasValue && categoryId.Value == 0)
@@ -336,6 +352,7 @@ namespace scrilla.Services
 				}
 			}
 
+			// TODO handle updateExisting
 			//if (updateExisting)
 			//{
 			//	if (bill.StartDate != startDate || bill.EndDate != endDate || bill.RecurrenceFrequency != frequency || bill.StartDate2 != secondaryStartDate || bill.EndDate2 != secondaryEndDate)
@@ -470,14 +487,14 @@ namespace scrilla.Services
 
 			billResult.Result.Name = name;
 			billResult.Result.Amount = amount;
+			billResult.Result.RecurrenceFrequency = frequency;
+			billResult.Result.StartDate = startDate;
+			billResult.Result.EndDate = endDate;
 			billResult.Result.BillGroupId = billGroupId;
 			billResult.Result.CategoryId = categoryId;
 			billResult.Result.VendorId = vendorId;
-			billResult.Result.StartDate = startDate;
-			billResult.Result.EndDate = endDate;
 			billResult.Result.StartDate2 = secondaryStartDate;
 			billResult.Result.EndDate2 = secondaryEndDate;
-			billResult.Result.RecurrenceFrequency = frequency;
 			_db.Update<Bill>(billResult.Result);
 
 			result.Result = billResult.Result;
@@ -488,6 +505,7 @@ namespace scrilla.Services
 		{
 			var result = new ServiceResult<BillTransaction>();
 
+			// does the bill transaction exist?
 			var billTransactionResult = GetBillTransaction(billTransactionId);
 			if (billTransactionResult.HasErrors)
 			{
@@ -495,28 +513,36 @@ namespace scrilla.Services
 				return result;
 			}
 
-			//var billTransaction = _billTransactionRepository.GetById(billTransactionId);
-			//if (billTransaction == null)
-			//{
-			//	result.AddError(ErrorType.NotFound, "Bill transaction {0} not found", billTransactionId);
-			//	return result;
-			//}
+			// does the transaction exist?
+			if (transactionId.HasValue)
+			{
+				var transactionResult = _transactionService.GetTransaction(transactionId.Value);
+				if (transactionResult.HasErrors)
+				{
+					result.AddErrors(transactionResult);
+					return result;
+				}
 
-			//if (amount.HasValue)
-			//	billTransaction.Amount = amount.Value;
-			//if (date.HasValue)
-			//	billTransaction.Timestamp = date.Value;
-			//if (isPaid.HasValue)
-			//	billTransaction.IsPaid = isPaid.Value;
-			//if (transactionId.HasValue)
-			//{
-			//	var transaction = _transactionRepository.GetById(transactionId.Value);
-			//	if (transaction != null)
-			//		transaction.BillTransactionId = billTransactionId;
-			//}
+				// TODO remove any other transactions that have this billTransactionId
 
-			//_unitOfWork.Commit();
+				// only update the bill transaction if it's different from the current one
+				if (transactionResult.Result.BillTransactionId != billTransactionId)
+				{
+					transactionResult.Result.BillTransactionId = billTransactionId;
+					_transactionService.UpdateTransaction(transactionResult.Result.Id, billTransactionId: billTransactionId);
+				}
+			}
 
+			if (amount.HasValue)
+				billTransactionResult.Result.Amount = amount.Value;
+			if (date.HasValue)
+				billTransactionResult.Result.Timestamp = date.Value;
+			if (isPaid.HasValue)
+				billTransactionResult.Result.IsPaid = isPaid.Value;
+
+			_db.Update<BillTransaction>(billTransactionResult.Result);
+
+			result.Result = billTransactionResult.Result;
 			return result;
 		}
 
