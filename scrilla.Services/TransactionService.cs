@@ -8,15 +8,19 @@ using System.Threading.Tasks;
 
 namespace scrilla.Services
 {
-	public class TransactionService : ITransactionService
+	public class TransactionService : EntityService, ITransactionService
 	{
-		private readonly IDatabase _db;
 		private IAccountService _accountService;
 
 		public TransactionService(IDatabase database, IAccountService accountService)
+			: base(database)
 		{
-			_db = database;
 			_accountService = accountService;
+		}
+
+		public ServiceResult<Transaction> GetTransaction(int transactionId)
+		{
+			return base.GetEntity<Transaction>(transactionId);
 		}
 
 		public ServiceResult<IEnumerable<Transaction>> GetAllTransactions(DateTime? from = null, DateTime? to = null)
@@ -147,7 +151,7 @@ namespace scrilla.Services
 		}
 
 
-		public ServiceResult<Transaction> AddTransaction(int accountId, DateTime timestamp, decimal amount, bool isReconciled = false, int? vendorId = null, int? billTransactionId = null)
+		public ServiceResult<Transaction> AddTransaction(int accountId, DateTime timestamp, decimal amount, string memo = null, string notes = null, int? categoryId = null, int? vendorId = null, int? billTransactionId = null, bool isReconciled = false, bool isExcludedFromBudget = false, bool isTransfer = false)
 		{
 			var result = new ServiceResult<Transaction>();
 
@@ -159,6 +163,7 @@ namespace scrilla.Services
 				return result;
 			}
 
+			// add transaction
 			var transaction = new Transaction()
 			{
 				AccountId = accountId,
@@ -171,6 +176,18 @@ namespace scrilla.Services
 			};
 
 			_db.Insert<Transaction>(transaction);
+
+			// add subtransaction
+			var subTransaction = new Subtransaction()
+			{
+				Amount = amount,
+				CategoryId = categoryId,
+				Memo = memo,
+				Notes = notes,
+				IsTransfer = isTransfer,
+				IsExcludedFromBudget = isExcludedFromBudget,
+				TransactionId = transaction.Id
+			};
 
 			result.Result = transaction;
 			return result;
@@ -192,130 +209,14 @@ namespace scrilla.Services
 			return result;
 		}
 
-		public ServiceResult<bool> UpdateTransactionReconciled(int transactionId, bool isReconciled)
+		public ServiceResult<bool> UpdateTransaction(int transactionId, int? accountId = null, DateTime? timestamp = null, decimal? amount = null, string memo = null, string notes = null, int? categoryId = null, int? vendorId = null, int? billTransactionId = null, bool isReconciled = false, bool isExcludedFromBudget = false, bool isTransfer = false)
 		{
 			throw new NotImplementedException();
 
 			var result = new ServiceResult<bool>();
 
-			//var trx = _transactionRepository.GetById(transactionId);
-			//if (trx == null)
-			//{
-			//	result.AddError(ErrorType.NotFound, "Transaction {0} not found", transactionId);
-			//	return result;
-			//}
-
-			//trx.IsReconciled = isReconciled;
-			//_unitOfWork.Commit();
-			//result.Result = true;
 
 			return result;
 		}
-
-		public ServiceResult<bool> UpdateTransactionCategory(int transactionId, int? categoryId)
-		{
-			throw new NotImplementedException();
-
-			var result = new ServiceResult<bool>();
-
-			//if (categoryId.HasValue)
-			//{
-			//	if (categoryId.Value == 0)
-			//	{
-			//		categoryId = null;
-			//	}
-			//	else
-			//	{
-			//		var category = _categoryRepository.GetById(categoryId.Value);
-			//		if (category == null)
-			//		{
-			//			result.AddError(ErrorType.NotFound, "Category {0} not found", categoryId.Value);
-			//			return result;
-			//		}
-			//	}
-			//}
-
-			//var trx = _transactionRepository.GetById(transactionId);
-			//if (trx == null)
-			//{
-			//	result.AddError(ErrorType.NotFound, "Transaction {0} not found", transactionId);
-			//	return result;
-			//}
-
-			//if (trx.Subtransactions == null)
-			//{
-			//	result.AddError(ErrorType.NotFound, "Transaction {0} has no transaction data", transactionId);
-			//	return result;
-			//}
-
-			//// TODO eventually this needs to have subtransaction granualirty
-			//foreach (var subtrx in trx.Subtransactions)
-			//{
-			//	subtrx.CategoryId = categoryId;
-			//}
-			//_unitOfWork.Commit();
-			//result.Result = true;
-
-			return result;
-		}
-
-		public ServiceResult<bool> UpdateTransactionVendor(int transactionId, int? vendorId)
-		{
-			throw new NotImplementedException();
-
-			var result = new ServiceResult<bool>();
-
-			//if (vendorId.HasValue)
-			//{
-			//	if (vendorId.Value == 0)
-			//	{
-			//		vendorId = null;
-			//	}
-			//	else
-			//	{
-			//		var vendor = _vendorRepository.GetById(vendorId.Value);
-			//		if (vendor == null)
-			//		{
-			//			result.AddError(ErrorType.NotFound, "Vendor {0} not found", vendorId.Value);
-			//			return result;
-			//		}
-			//	}
-			//}
-
-			//var trx = _transactionRepository.GetById(transactionId);
-			//if (trx == null)
-			//{
-			//	result.AddError(ErrorType.NotFound, "Transaction {0} not found", transactionId);
-			//	return result;
-			//}
-
-			//trx.VendorId = vendorId;
-			//_unitOfWork.Commit();
-			//result.Result = true;
-
-			return result;
-		}
-
-		public ServiceResult<bool> UpdateTransactionDate(int transactionId, DateTime date)
-		{
-			throw new NotImplementedException();
-
-			var result = new ServiceResult<bool>();
-
-			//var trx = _transactionRepository.GetById(transactionId);
-			//if (trx == null)
-			//{
-			//	result.AddError(ErrorType.NotFound, "Transaction {0} not found", transactionId);
-			//	return result;
-			//}
-
-			//trx.Timestamp = date;
-			//_unitOfWork.Commit();
-			//result.Result = true;
-
-			return result;
-		}
-
-
 	}
 }

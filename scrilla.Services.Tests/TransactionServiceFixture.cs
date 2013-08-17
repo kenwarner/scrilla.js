@@ -11,6 +11,12 @@ namespace scrilla.Services.Tests
 	public class TransactionServiceFixture : BaseFixture<TransactionService>
 	{
 		[Fact]
+		public void GetTransaction_NotImplemented()
+		{
+			throw new NotImplementedException();
+		}
+
+		[Fact]
 		public void GetAllTransactions_NotImplemented()
 		{
 			throw new NotImplementedException();
@@ -53,25 +59,7 @@ namespace scrilla.Services.Tests
 		}
 
 		[Fact]
-		public void UpdateTransactionReconciled_NotImplemented()
-		{
-			throw new NotImplementedException();
-		}
-
-		[Fact]
-		public void UpdateTransactionCategory_NotImplemented()
-		{
-			throw new NotImplementedException();
-		}
-
-		[Fact]
-		public void UpdateTransactionVendor_NotImplemented()
-		{
-			throw new NotImplementedException();
-		}
-
-		[Fact]
-		public void UpdateTransactionDate_NotImplemented()
+		public void UpdateTransaction_NotImplemented()
 		{
 			throw new NotImplementedException();
 		}
