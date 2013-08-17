@@ -171,6 +171,65 @@ namespace scrilla.Services.Tests
 			Assert.True(result.HasErrors);
 			Assert.True(result.ErrorMessages.Any(x => x.Key == ErrorType.NotFound));
 		}
-	}
 
+		[Fact]
+		public void GetAllBills_NotImplemented()
+		{
+			throw new NotImplementedException();
+		}
+
+		[Fact]
+		public void GetAllBillGroups_NotImplemented()
+		{
+			throw new NotImplementedException();
+		}
+
+		[Fact]
+		public void GetBillTransactions_NotImplemented()
+		{
+			throw new NotImplementedException();
+		}
+
+		[Fact]
+		public void AddBill_NotImplemented()
+		{
+			throw new NotImplementedException();
+		}
+
+		[Fact]
+		public void AddBillGroup_NotImplemented()
+		{
+			throw new NotImplementedException();
+		}
+
+		[Fact]
+		public void DeleteBill_NotImplemented()
+		{
+			throw new NotImplementedException();
+		}
+
+		[Fact]
+		public void DeleteBillGroup_NotImplemented()
+		{
+			throw new NotImplementedException();
+		}
+
+		[Fact]
+		public void UpdateBill_NotImplemented()
+		{
+			throw new NotImplementedException();
+		}
+
+		[Fact]
+		public void UpdateBillTransaction_NotImplemented()
+		{
+			throw new NotImplementedException();
+		}
+
+		[Fact]
+		public void PredictBillTransactionMatch_NotImplemented()
+		{
+			throw new NotImplementedException();
+		}
+	}
 }

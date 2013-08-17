@@ -141,9 +141,9 @@ namespace scrilla.Services.Tests
 			Assert.Empty(accountsResult.Result);
 
 			// create test account
-			var name = "test account";
+			var accountName = "test account";
 			var balance = 1.23M;
-			var addAccountResult = _sut.AddAccount(name, balance);
+			var addAccountResult = _sut.AddAccount(accountName, balance);
 			Assert.False(addAccountResult.HasErrors);
 
 			// act
@@ -158,13 +158,13 @@ namespace scrilla.Services.Tests
 		[Fact]
 		public void AddAccount_NullDefaultCategory_And_NullAccountGroup()
 		{
-			var name = "test account";
+			var accountName = "test account";
 			var balance = 1.23M;
 
 			// act
-			var addAcountResult = _sut.AddAccount(name, balance);
+			var addAcountResult = _sut.AddAccount(accountName, balance);
 			Assert.False(addAcountResult.HasErrors);
-			Assert.Equal(name, addAcountResult.Result.Name);
+			Assert.Equal(accountName, addAcountResult.Result.Name);
 			Assert.Equal(balance, addAcountResult.Result.Balance);
 			Assert.Null(addAcountResult.Result.DefaultCategoryId);
 			Assert.Null(addAcountResult.Result.AccountGroupId);
@@ -264,11 +264,11 @@ namespace scrilla.Services.Tests
 		[Fact]
 		public void DeleteAccount_ExistingAccount()
 		{
-			var name = "test account";
+			var accountName = "test account";
 			var balance = 1.23M;
 
 			// add a test account
-			var addResult = _sut.AddAccount(name, balance);
+			var addResult = _sut.AddAccount(accountName, balance);
 			Assert.False(addResult.HasErrors);
 
 			// delete the test account
@@ -294,10 +294,10 @@ namespace scrilla.Services.Tests
 		[Fact]
 		public void DeleteAccountGroup_ExistingAccountGroup()
 		{
-			var name = "test account group";
+			var accountGroupName = "test account group";
 
 			// add a test account group
-			var addResult = _sut.AddAccountGroup(name);
+			var addResult = _sut.AddAccountGroup(accountGroupName);
 			Assert.False(addResult.HasErrors);
 
 			// delete the test account group

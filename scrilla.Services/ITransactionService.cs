@@ -23,6 +23,5 @@ namespace scrilla.Services
 		ServiceResult<bool> UpdateTransactionCategory(int transactionId, int? categoryId);
 		ServiceResult<bool> UpdateTransactionVendor(int transactionId, int? vendorId);
 		ServiceResult<bool> UpdateTransactionDate(int transactionId, DateTime date);
-
 	}
 }

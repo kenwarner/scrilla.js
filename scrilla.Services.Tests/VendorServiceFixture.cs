@@ -145,8 +145,8 @@ namespace scrilla.Services.Tests
 			Assert.Empty(vendorResult.Result);
 
 			// create test account
-			var name = "test vendor";
-			var addVendorResult = _sut.AddVendor(name);
+			var vendorName = "test vendor";
+			var addVendorResult = _sut.AddVendor(vendorName);
 			Assert.False(addVendorResult.HasErrors);
 
 			// act
@@ -161,13 +161,13 @@ namespace scrilla.Services.Tests
 		[Fact]
 		public void AddVendor_NullDefaultCategoryId()
 		{
-			var name = "test vendor";
+			var vendorName = "test vendor";
 			int? defaultCategoryId = null;
 
 			// act
-			var addVendorResult = _sut.AddVendor(name, defaultCategoryId);
+			var addVendorResult = _sut.AddVendor(vendorName, defaultCategoryId);
 			Assert.False(addVendorResult.HasErrors);
-			Assert.Equal(name, addVendorResult.Result.Name);
+			Assert.Equal(vendorName, addVendorResult.Result.Name);
 			Assert.Equal(defaultCategoryId, addVendorResult.Result.DefaultCategoryId);
 
 			// cleanup
@@ -178,7 +178,7 @@ namespace scrilla.Services.Tests
 		public void AddVendor_NonNullDefaultCategoryId()
 		{
 			var categoryService = _fixture.Create<CategoryService>();
-			var name = "test vendor";
+			var vendorName = "test vendor";
 
 			// get a default category
 			var categoryName = "test category";
@@ -186,9 +186,9 @@ namespace scrilla.Services.Tests
 			Assert.False(addCategoryResult.HasErrors);
 
 			// act
-			var addVendorResult = _sut.AddVendor(name, addCategoryResult.Result.Id);
+			var addVendorResult = _sut.AddVendor(vendorName, addCategoryResult.Result.Id);
 			Assert.False(addVendorResult.HasErrors);
-			Assert.Equal(name, addVendorResult.Result.Name);
+			Assert.Equal(vendorName, addVendorResult.Result.Name);
 			Assert.Equal(addCategoryResult.Result.Id, addVendorResult.Result.DefaultCategoryId);
 
 			// cleanup
@@ -231,10 +231,10 @@ namespace scrilla.Services.Tests
 		[Fact]
 		public void DeleteVendor_ExistingVendor()
 		{
-			var name = "test vendor";
+			var vendorName = "test vendor";
 
 			// add a test vendor
-			var addResult = _sut.AddVendor(name);
+			var addResult = _sut.AddVendor(vendorName);
 			Assert.False(addResult.HasErrors);
 
 			// delete the test vendor
@@ -250,11 +250,11 @@ namespace scrilla.Services.Tests
 		[Fact]
 		public void DeleteVendor_ExistingVendor_With_VendorMap()
 		{
-			var name = "test vendor";
+			var vendorName = "test vendor";
 			var vendorMapDescription = "test vendor description";
 
 			// add a test vendor
-			var addVendorResult = _sut.AddVendor(name);
+			var addVendorResult = _sut.AddVendor(vendorName);
 			Assert.False(addVendorResult.HasErrors);
 
 			// add a vendor map

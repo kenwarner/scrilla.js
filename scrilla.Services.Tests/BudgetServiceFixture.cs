@@ -133,25 +133,25 @@ namespace scrilla.Services.Tests
 		}
 
 		[Fact]
-		public void UpdateBudget_ExistingBudgetCategory()
+		public void UpdateBudget_ExistingBudgetCategory_NotImplemented()
 		{
 			throw new NotImplementedException();
 		}
 
 		[Fact]
-		public void UpdateBudget_NewBudgetCategory()
+		public void UpdateBudget_NewBudgetCategory_NotImplemented()
 		{
 			throw new NotImplementedException();
 		}
 
 		[Fact]
-		public void UpdateBudget_NoBillTransactions()
+		public void UpdateBudget_NoBillTransactions_NotImplemented()
 		{
 			throw new NotImplementedException();
 		}
 
 		[Fact]
-		public void UpdateBudget_IncludesBillTransactions()
+		public void UpdateBudget_IncludesBillTransactions_NotImplemented()
 		{
 			throw new NotImplementedException();
 		}

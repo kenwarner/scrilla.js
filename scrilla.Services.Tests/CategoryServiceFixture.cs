@@ -100,6 +100,89 @@ namespace scrilla.Services.Tests
 			Assert.True(result.ErrorMessages.Any(x => x.Key == ErrorType.NotFound));
 		}
 
+		[Fact]
+		public void GetCategoryGroup_NotImplemented()
+		{
+			throw new NotImplementedException();
+		}
+		[Fact]
+		public void GetAllCategories_NotImplemented()
+		{
+			throw new NotImplementedException();
+		}
+		[Fact]
+		public void GetAllCategoryGroups_NotImplemented()
+		{
+			throw new NotImplementedException();
+		}
+
+		[Fact]
+		public void AddCategory_NullCategoryGroupId()
+		{
+			var categoryName = "test category";
+			int? categoryGroupId = null;
+
+			// act
+			var addCategoryResult = _sut.AddCategory(categoryName, categoryGroupId);
+			Assert.False(addCategoryResult.HasErrors);
+			Assert.Equal(categoryName, addCategoryResult.Result.Name);
+			Assert.Equal(categoryGroupId, addCategoryResult.Result.CategoryGroupId);
+
+			// cleanup
+			_sut.DeleteCategory(addCategoryResult.Result.Id);
+		}
+
+		[Fact]
+		public void AddCategory_NonExistantCategoryGroupId()
+		{
+			var categoryName = "test category";
+			int? nonExistantCategoryGroupId = -1;
+
+			// act
+			var addCategoryResult = _sut.AddCategory(categoryName, nonExistantCategoryGroupId);
+			Assert.True(addCategoryResult.HasErrors);
+		}
+
+
+		[Fact]
+		public void AddCategory_ExistingCategoryGroupId()
+		{
+			var categoryName = "test category";
+			var categoryGroupName = "test category group";
+
+			// add test category group
+			var addCategoryGroupResult = _sut.AddCategoryGroup(categoryGroupName);
+			Assert.False(addCategoryGroupResult.HasErrors);
+
+			// act
+			var addCategoryResult = _sut.AddCategory(categoryName, addCategoryGroupResult.Result.Id);
+			Assert.False(addCategoryResult.HasErrors);
+			Assert.Equal(categoryName, addCategoryResult.Result.Name);
+			Assert.Equal(addCategoryGroupResult.Result.Id, addCategoryResult.Result.CategoryGroupId);
+
+			// cleanup
+			_sut.DeleteCategory(addCategoryResult.Result.Id);
+			_sut.DeleteCategoryGroup(addCategoryGroupResult.Result.Id);
+		}
+
+		[Fact]
+		public void AddCategoryGroup_NotImplemented()
+		{
+			throw new NotImplementedException();
+		}
+
+
+		[Fact]
+		public void DeleteCategory_NotImplemented()
+		{
+			throw new NotImplementedException();
+		}
+
+		[Fact]
+		public void DeleteCategoryGroup_NotImplemented()
+		{
+			throw new NotImplementedException();
+		}
 
 		[Fact]
 		public void UpdateCategoryName_ExistingCategory_WithDistinctNewName()
