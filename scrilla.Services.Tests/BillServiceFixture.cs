@@ -26,7 +26,7 @@ namespace scrilla.Services.Tests
 			DateTime? secondaryEndDate = null;
 
 			// create test bill
-			var addBillResult = _sut.AddBill(billName, amount, billGroupId, categoryId, vendorId, startDate, endDate, frequency, secondaryStartDate, secondaryEndDate);
+			var addBillResult = _sut.AddBill(billName, amount, frequency, startDate, endDate, billGroupId, categoryId, vendorId, secondaryStartDate, secondaryEndDate);
 			Assert.False(addBillResult.HasErrors);
 			Assert.Equal(billName, addBillResult.Result.Name);
 			Assert.Equal(amount, addBillResult.Result.Amount);
@@ -89,8 +89,8 @@ namespace scrilla.Services.Tests
 			Assert.Equal(vendorName, addVendorResult.Result.Name);
 
 			// create test bill
-			var addBillResult = _sut.AddBill(billName, amount, addBillGroupResult.Result.Id, addCategoryResult.Result.Id, addVendorResult.Result.Id
-				, startDate, endDate, frequency, secondaryStartDate, secondaryEndDate);
+			var addBillResult = _sut.AddBill(billName, amount, frequency, startDate, endDate,
+				addBillGroupResult.Result.Id, addCategoryResult.Result.Id, addVendorResult.Result.Id, secondaryStartDate, secondaryEndDate);
 			Assert.False(addBillResult.HasErrors);
 			Assert.Equal(billName, addBillResult.Result.Name);
 			Assert.Equal(amount, addBillResult.Result.Amount);
@@ -173,6 +173,41 @@ namespace scrilla.Services.Tests
 		}
 
 		[Fact]
+		public void GetBillTransaction_ExistingBillTransaction()
+		{
+			var billName = "test bill";
+			var month = new DateTime(2000, 1, 1);
+			var amount = 10M;
+
+			// create test bill transaction
+			var addBillTransactionResult = _sut.AddBill(billName, amount, BillFrequency.OneTime, month, month);
+			Assert.False(addBillTransactionResult.HasErrors);
+			var assumedBillTransactionId = 1;
+
+			// act
+			var result = _sut.GetBillTransaction(assumedBillTransactionId);
+			Assert.False(result.HasErrors);
+			Assert.Equal(month, result.Result.Timestamp);
+			Assert.Equal(month, result.Result.OriginalTimestamp);
+			Assert.Equal(amount, result.Result.Amount);
+			Assert.Equal(amount, result.Result.OriginalAmount);
+
+			// cleanup
+			_sut.DeleteBillTransaction(addBillTransactionResult.Result.Id);
+		}
+
+		[Fact]
+		public void GetBillTransaction_NonExistantBillTransaction()
+		{
+			var nonExistantBillTransactionId = -1;
+
+			// act
+			var result = _sut.GetBillTransaction(nonExistantBillTransactionId);
+			Assert.True(result.HasErrors);
+			Assert.True(result.ErrorMessages.Any(x => x.Key == ErrorType.NotFound));
+		}
+
+		[Fact]
 		public void GetAllBills_NotImplemented()
 		{
 			throw new NotImplementedException();
@@ -210,6 +245,12 @@ namespace scrilla.Services.Tests
 
 		[Fact]
 		public void DeleteBillGroup_NotImplemented()
+		{
+			throw new NotImplementedException();
+		}
+
+		[Fact]
+		public void DeleteBillTransaction_NotImplemented()
 		{
 			throw new NotImplementedException();
 		}

@@ -1,4 +1,5 @@
-﻿using DapperExtensions;
+﻿using Dapper;
+using DapperExtensions;
 using scrilla.Data;
 using System;
 using System.Collections.Generic;
@@ -30,6 +31,11 @@ namespace scrilla.Services
 			return base.GetEntity<BillGroup>(billGroupId);
 		}
 
+		public ServiceResult<BillTransaction> GetBillTransaction(int billTransactionId)
+		{
+			return base.GetEntity<BillTransaction>(billTransactionId);
+		}
+
 		public ServiceResult<IEnumerable<Bill>> GetAllBills()
 		{
 			return base.GetAllEntity<Bill>();
@@ -49,22 +55,25 @@ namespace scrilla.Services
 		/// <returns></returns>
 		public ServiceResult<IEnumerable<BillTransaction>> GetBillTransactions(int? billId, DateTime? from = null, DateTime? to = null)
 		{
-			throw new NotImplementedException();
-
 			var result = new ServiceResult<IEnumerable<BillTransaction>>();
 
-			//var billTransactions = billId.HasValue ?
-			//	_billTransactionRepository.GetMany(x => x.BillId == billId) :
-			//	_billTransactionRepository.GetAll();
+			var predicates = new List<IPredicate>();
 
-			//if (from.HasValue) billTransactions = billTransactions.Where(x => x.Timestamp >= from.Value);
-			//if (to.HasValue) billTransactions = billTransactions.Where(x => x.Timestamp <= to.Value);
+			if (billId.HasValue)
+				predicates.Add(Predicates.Field<BillTransaction>(x => x.BillId, Operator.Eq, billId.Value));
+			if (from.HasValue)
+				predicates.Add(Predicates.Field<BillTransaction>(x => x.Timestamp, Operator.Ge, from.Value));
+			if (to.HasValue)
+				predicates.Add(Predicates.Field<BillTransaction>(x => x.Timestamp, Operator.Le, to.Value));
 
-			//result.Result = billTransactions.ToList();
+			var predicate = new PredicateGroup { Operator = GroupOperator.And, Predicates = predicates };
+			var billTransactions = _db.GetList<BillTransaction>(predicate);
+
+			result.Result = billTransactions;
 			return result;
 		}
 
-		public ServiceResult<Bill> AddBill(string name, decimal amount, int? billGroupId, int? categoryId, int? vendorId, DateTime startDate, DateTime endDate, BillFrequency frequency, DateTime? secondaryStartDate, DateTime? secondaryEndDate)
+		public ServiceResult<Bill> AddBill(string name, decimal amount, BillFrequency frequency, DateTime startDate, DateTime endDate, int? billGroupId = null, int? categoryId = null, int? vendorId = null, DateTime? secondaryStartDate = null, DateTime? secondaryEndDate = null)
 		{
 			var result = new ServiceResult<Bill>();
 
@@ -135,66 +144,70 @@ namespace scrilla.Services
 			_db.Insert<Bill>(bill);
 
 			// create bill transactions
-			//// create transactions
-			//int count = 0;
-			//DateTime cur = new DateTime(startDate.Year, startDate.Month, startDate.Day);
+			int count = 0;
+			var billTransactions = new List<BillTransaction>();
+			DateTime cur = new DateTime(startDate.Year, startDate.Month, startDate.Day);
 
-			//while (cur <= endDate)
-			//{
-			//	BillTransaction trx = new BillTransaction()
-			//	{
-			//		Amount = amount,
-			//		OriginalAmount = amount,
-			//		CategoryId = categoryId,
-			//		OriginalCategoryId = categoryId,
-			//		VendorId = vendorId,
-			//		OriginalVendorId = vendorId,
-			//		Timestamp = cur,
-			//		OriginalTimestamp = cur
-			//	};
-			//	bill.BillTransactions.Add(trx);
+			while (cur <= endDate)
+			{
+				BillTransaction trx = new BillTransaction()
+				{
+					BillId = bill.Id,
+					Amount = amount,
+					OriginalAmount = amount,
+					CategoryId = categoryId,
+					OriginalCategoryId = categoryId,
+					VendorId = vendorId,
+					OriginalVendorId = vendorId,
+					Timestamp = cur,
+					OriginalTimestamp = cur
+				};
+				billTransactions.Add(trx);
 
-			//	count++;
-			//	if (frequency == 0)
-			//		cur = endDate.AddDays(1);
-			//	else if (frequency > 0)
-			//		cur = startDate.AddDays(count * frequency);
-			//	else
-			//		cur = startDate.AddMonths(count * -1 * frequency);
-			//}
+				count++;
+				if (frequency == 0)
+					cur = endDate.AddDays(1);
+				else if (frequency > 0)
+					cur = startDate.AddDays(count * (int)frequency);
+				else
+					cur = startDate.AddMonths(count * -1 * (int)frequency);
+			}
 
-			//if (secondaryStartDate.HasValue)
-			//{
-			//	if (secondaryEndDate.HasValue)
-			//		endDate = secondaryEndDate.Value;
+			if (secondaryStartDate.HasValue)
+			{
+				if (secondaryEndDate.HasValue)
+					endDate = secondaryEndDate.Value;
 
-			//	count = 0;
-			//	cur = new DateTime(secondaryStartDate.Value.Year, secondaryStartDate.Value.Month, secondaryStartDate.Value.Day);
+				count = 0;
+				cur = new DateTime(secondaryStartDate.Value.Year, secondaryStartDate.Value.Month, secondaryStartDate.Value.Day);
 
-			//	while (cur <= endDate)
-			//	{
-			//		BillTransaction trx = new BillTransaction()
-			//		{
-			//			Amount = amount,
-			//			OriginalAmount = amount,
-			//			CategoryId = categoryId,
-			//			OriginalCategoryId = categoryId,
-			//			VendorId = vendorId,
-			//			OriginalVendorId = vendorId,
-			//			Timestamp = cur,
-			//			OriginalTimestamp = cur
-			//		};
-			//		bill.BillTransactions.Add(trx);
+				while (cur <= endDate)
+				{
+					BillTransaction trx = new BillTransaction()
+					{
+						BillId = bill.Id,
+						Amount = amount,
+						OriginalAmount = amount,
+						CategoryId = categoryId,
+						OriginalCategoryId = categoryId,
+						VendorId = vendorId,
+						OriginalVendorId = vendorId,
+						Timestamp = cur,
+						OriginalTimestamp = cur
+					};
+					billTransactions.Add(trx);
 
-			//		count++;
-			//		if (frequency == 0)
-			//			cur = endDate.AddDays(1);
-			//		else if (frequency > 0)
-			//			cur = secondaryStartDate.Value.AddDays(count * frequency);
-			//		else
-			//			cur = secondaryStartDate.Value.AddMonths(count * -1 * frequency);
-			//	}
-			//}
+					count++;
+					if (frequency == 0)
+						cur = endDate.AddDays(1);
+					else if (frequency > 0)
+						cur = secondaryStartDate.Value.AddDays(count * (int)frequency);
+					else
+						cur = secondaryStartDate.Value.AddMonths(count * -1 * (int)frequency);
+				}
+			}
+
+			_db.Insert<BillTransaction>(billTransactions);
 
 			result.Result = bill;
 			return result;
@@ -223,6 +236,14 @@ namespace scrilla.Services
 			// TODO handle cascading deletes
 			var result = new ServiceResult<bool>();
 
+			// delete bill transactions for this bill
+			var deleteBillTransactionsResult = _db.Delete<BillTransaction>(Predicates.Field<BillTransaction>(x => x.BillId, Operator.Eq, billId));
+			if (!deleteBillTransactionsResult)
+			{
+				result.AddError(ErrorType.Generic, "Error deleting Bill Transactions with BillId {0}", billId);
+				return result;
+			}
+
 			var deletionResult = _db.Delete<Bill>(Predicates.Field<Bill>(x => x.Id, Operator.Eq, billId));
 			if (!deletionResult)
 			{
@@ -231,7 +252,6 @@ namespace scrilla.Services
 			}
 
 			result.Result = deletionResult;
-
 			return result;
 		}
 
@@ -248,29 +268,73 @@ namespace scrilla.Services
 			}
 
 			result.Result = deletionResult;
-
 			return result;
 		}
 
-		public ServiceResult<Bill> UpdateBill(int billId, string name, decimal amount, int billGroupId, int? categoryId, int? vendorId, DateTime startDate, DateTime endDate, int frequency, bool updateExisting, DateTime? secondaryStartDate, DateTime? secondaryEndDate)
+		public ServiceResult<bool> DeleteBillTransaction(int billTransactionId)
 		{
-			throw new NotImplementedException();
+			// TODO handle cascading deletes
+			var result = new ServiceResult<bool>();
 
+			var deletionResult = _db.Delete<BillTransaction>(Predicates.Field<BillTransaction>(x => x.Id, Operator.Eq, billTransactionId));
+			if (!deletionResult)
+			{
+				result.AddError(ErrorType.NotFound, "Bill Transaction {0} not found", billTransactionId);
+				return result;
+			}
+
+			result.Result = deletionResult;
+			return result;
+		}
+
+		public ServiceResult<Bill> UpdateBill(int billId, string name, decimal amount, BillFrequency frequency, DateTime startDate, DateTime endDate, int? billGroupId = null, int? categoryId = null, int? vendorId = null, DateTime? secondaryStartDate = null, DateTime? secondaryEndDate = null, bool updateExisting = false)
+		{
 			var result = new ServiceResult<Bill>();
 
-			//var bill = _billRepository.GetById(billId);
-			//if (bill == null)
-			//{
-			//	result.AddError(ErrorType.NotFound, "Bill {0} not found", billId);
-			//	return result;
-			//}
+			var billResult = GetBill(billId);
+			if (billResult.HasErrors)
+			{
+				result.AddErrors(billResult);
+				return result;
+			}
 
 			//// TODO do we need to do exist checks for billGroupId, categoryId, vendorId?
 
-			//if (categoryId.HasValue && categoryId.Value == 0)
-			//	categoryId = null;
-			//if (vendorId.HasValue && vendorId.Value == 0)
-			//	vendorId = null;
+			if (billGroupId.HasValue && billGroupId.Value == 0)
+				billGroupId = null;
+			if (categoryId.HasValue && categoryId.Value == 0)
+				categoryId = null;
+			if (vendorId.HasValue && vendorId.Value == 0)
+				vendorId = null;
+
+			// do the new BillGroup, Category and Vendor exist?
+			if (billGroupId.HasValue)
+			{
+				var billGroupResult = GetBillGroup(billGroupId.Value);
+				if (billGroupResult.HasErrors)
+				{
+					result.AddErrors(billGroupResult);
+					return result;
+				}
+			}
+			if (categoryId.HasValue)
+			{
+				var categoryResult = _categoryService.GetCategory(categoryId.Value);
+				if (categoryResult.HasErrors)
+				{
+					result.AddErrors(categoryResult);
+					return result;
+				}
+			}
+			if (vendorId.HasValue)
+			{
+				var vendorResult = _vendorService.GetVendor(vendorId.Value);
+				if (vendorResult.HasErrors)
+				{
+					result.AddErrors(vendorResult);
+					return result;
+				}
+			}
 
 			//if (updateExisting)
 			//{
@@ -404,29 +468,32 @@ namespace scrilla.Services
 			//	}
 			//}
 
-			//bill.Name = name;
-			//bill.Amount = amount;
-			//bill.BillGroupId = billGroupId;
-			//bill.CategoryId = categoryId;
-			//bill.VendorId = vendorId;
-			//bill.StartDate = startDate;
-			//bill.EndDate = endDate;
-			//bill.StartDate2 = secondaryStartDate;
-			//bill.EndDate2 = secondaryEndDate;
+			billResult.Result.Name = name;
+			billResult.Result.Amount = amount;
+			billResult.Result.BillGroupId = billGroupId;
+			billResult.Result.CategoryId = categoryId;
+			billResult.Result.VendorId = vendorId;
+			billResult.Result.StartDate = startDate;
+			billResult.Result.EndDate = endDate;
+			billResult.Result.StartDate2 = secondaryStartDate;
+			billResult.Result.EndDate2 = secondaryEndDate;
+			billResult.Result.RecurrenceFrequency = frequency;
+			_db.Update<Bill>(billResult.Result);
 
-			//bill.RecurrenceFrequency = frequency;
-
-			//_unitOfWork.Commit();
-
-			//result.Result = bill;
+			result.Result = billResult.Result;
 			return result;
 		}
 
 		public ServiceResult<BillTransaction> UpdateBillTransaction(int billTransactionId, decimal? amount, DateTime? date, bool? isPaid, int? transactionId)
 		{
-			throw new NotImplementedException();
-
 			var result = new ServiceResult<BillTransaction>();
+
+			var billTransactionResult = GetBillTransaction(billTransactionId);
+			if (billTransactionResult.HasErrors)
+			{
+				result.AddErrors(billTransactionResult);
+				return result;
+			}
 
 			//var billTransaction = _billTransactionRepository.GetById(billTransactionId);
 			//if (billTransaction == null)
