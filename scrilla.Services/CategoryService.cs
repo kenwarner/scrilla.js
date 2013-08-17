@@ -105,8 +105,23 @@ namespace scrilla.Services
 
 		public ServiceResult<bool> DeleteCategory(int categoryId)
 		{
-			// TODO handle cascading deletes
 			var result = new ServiceResult<bool>();
+
+			var categoryResult = GetCategory(categoryId);
+			if (categoryResult.HasErrors)
+			{
+				result.AddErrors(categoryResult);
+				return result;
+			}
+
+			// unassign other entities that use this category
+			_db.Connection.Execute("UPDATE Account SET DefaultCategoryId = NULL WHERE DefaultCategoryId = @categoryId", new { categoryId });
+			_db.Connection.Execute("UPDATE Bill SET CategoryId = NULL WHERE CategoryId = @categoryId", new { categoryId });
+			_db.Connection.Execute("UPDATE BillTransaction SET CategoryId = NULL WHERE CategoryId = @categoryId", new { categoryId });
+			_db.Connection.Execute("UPDATE BillTransaction SET OriginalCategoryId = NULL WHERE OriginalCategoryId = @categoryId", new { categoryId });
+			_db.Connection.Execute("UPDATE BudgetCategory SET CategoryId = NULL WHERE CategoryId = @categoryId", new { categoryId });
+			_db.Connection.Execute("UPDATE Subtransaction SET CategoryId = NULL WHERE CategoryId = @categoryId", new { categoryId });
+			_db.Connection.Execute("UPDATE Vendor SET DefaultCategoryId = NULL WHERE DefaultCategoryId = @categoryId", new { categoryId });
 
 			var deletionResult = _db.Delete<Category>(Predicates.Field<Category>(x => x.Id, Operator.Eq, categoryId));
 			if (!deletionResult)
@@ -116,7 +131,6 @@ namespace scrilla.Services
 			}
 
 			result.Result = deletionResult;
-
 			return result;
 		}
 
