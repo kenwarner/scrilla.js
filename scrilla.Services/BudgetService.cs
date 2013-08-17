@@ -132,7 +132,7 @@ namespace scrilla.Services
 			predicates = new List<IPredicate>();
 			predicates.Add(Predicates.Field<BillTransaction>(x => x.CategoryId, Operator.Eq, categoryId));
 			predicates.Add(Predicates.Field<BillTransaction>(x => x.Timestamp, Operator.Ge, month));
-			predicates.Add(Predicates.Field<BillTransaction>(x => x.Timestamp, Operator.Lt, nextMonth));
+			predicates.Add(Predicates.Field<BillTransaction>(x => x.Timestamp, Operator.Le, nextMonth));
 			predicate = new PredicateGroup { Operator = GroupOperator.And, Predicates = predicates };
 			var billTransactions = _db.GetList<BillTransaction>(predicate);
 			var billsAmount = billTransactions.Any() ? billTransactions.Sum(x => x.Amount) : 0M;
@@ -141,8 +141,6 @@ namespace scrilla.Services
 			result.Result = budgetAmountInfo;
 			return result;
 		}
-
-
 	}
 
 	public class BudgetAmountInfo
