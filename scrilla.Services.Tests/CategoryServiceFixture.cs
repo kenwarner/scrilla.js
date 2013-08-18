@@ -151,7 +151,7 @@ namespace scrilla.Services.Tests
 		}
 
 		[Fact]
-		public void GetAllCategoryGroups_NotImplemented()
+		public void GetAllCategoryGroups_OneCategoryGroupExistsAfterAddingACategoryGroup()
 		{
 			var categoryGroupsResult = _sut.GetAllCategoryGroups();
 			Assert.False(categoryGroupsResult.HasErrors);
@@ -221,23 +221,78 @@ namespace scrilla.Services.Tests
 		}
 
 		[Fact]
-		public void AddCategoryGroup_NotImplemented()
+		public void AddCategoryGroup()
 		{
-			throw new NotImplementedException();
+			var categoryGroupName = "test category group";
+
+			// act
+			var result = _sut.AddCategoryGroup(categoryGroupName);
+			Assert.False(result.HasErrors);
+			Assert.Equal(categoryGroupName, result.Result.Name);
+
+			// cleanup
+			_sut.DeleteCategoryGroup(result.Result.Id);
 		}
 
 
 		[Fact]
-		public void DeleteCategory_NotImplemented()
+		public void DeleteCategory_NonExistantCategory()
 		{
-			throw new NotImplementedException();
+			var nonExistantCategoryId = -1;
+
+			// act
+			var result = _sut.DeleteCategory(nonExistantCategoryId);
+			Assert.True(result.HasErrors);
 		}
 
 		[Fact]
-		public void DeleteCategoryGroup_NotImplemented()
+		public void DeleteCategory_ExistingCategory()
 		{
-			throw new NotImplementedException();
+			var categoryName = "test category";
+
+			// add a test category
+			var addCategoryResult = _sut.AddCategory(categoryName);
+			Assert.False(addCategoryResult.HasErrors);
+
+			// delete the test category
+			var deletionResult = _sut.DeleteCategory(addCategoryResult.Result.Id);
+			Assert.False(deletionResult.HasErrors);
+
+			// make sure the test category does not exist
+			var getResult = _sut.GetCategory(addCategoryResult.Result.Id);
+			Assert.True(getResult.HasErrors);
+			Assert.True(getResult.ErrorMessages.Any(x => x.Key == ErrorType.NotFound));
 		}
+
+		[Fact]
+		public void DeleteCategoryGroup_NonExistantCategoryGroup()
+		{
+			var nonExistantCategoryGroupId = -1;
+
+			// act
+			var result = _sut.DeleteCategory(nonExistantCategoryGroupId);
+			Assert.True(result.HasErrors);
+		}
+
+		[Fact]
+		public void DeleteCategoryGroup_ExistingCategoryGroup()
+		{
+			var categoryGroupName = "test category group";
+
+			// add a test category group
+			var addCategoryGroupResult = _sut.AddCategoryGroup(categoryGroupName);
+			Assert.False(addCategoryGroupResult.HasErrors);
+
+			// delete the test category group
+			var deletionResult = _sut.DeleteCategoryGroup(addCategoryGroupResult.Result.Id);
+			Assert.False(deletionResult.HasErrors);
+
+			// make sure the test category group does not exist
+			var getResult = _sut.GetCategoryGroup(addCategoryGroupResult.Result.Id);
+			Assert.True(getResult.HasErrors);
+			Assert.True(getResult.ErrorMessages.Any(x => x.Key == ErrorType.NotFound));
+		}
+
 
 		[Fact]
 		public void UpdateCategoryName_ExistingCategory_WithDistinctNewName()

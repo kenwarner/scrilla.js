@@ -268,15 +268,15 @@ namespace scrilla.Services.Tests
 			var balance = 1.23M;
 
 			// add a test account
-			var addResult = _sut.AddAccount(accountName, balance);
-			Assert.False(addResult.HasErrors);
+			var addAccountResult = _sut.AddAccount(accountName, balance);
+			Assert.False(addAccountResult.HasErrors);
 
 			// delete the test account
-			var deletionResult = _sut.DeleteAccount(addResult.Result.Id);
+			var deletionResult = _sut.DeleteAccount(addAccountResult.Result.Id);
 			Assert.False(deletionResult.HasErrors);
 
 			// make sure the test account does not exist
-			var getResult = _sut.GetAccount(addResult.Result.Id);
+			var getResult = _sut.GetAccount(addAccountResult.Result.Id);
 			Assert.True(getResult.HasErrors);
 			Assert.True(getResult.ErrorMessages.Any(x => x.Key == ErrorType.NotFound));
 		}
@@ -297,15 +297,15 @@ namespace scrilla.Services.Tests
 			var accountGroupName = "test account group";
 
 			// add a test account group
-			var addResult = _sut.AddAccountGroup(accountGroupName);
-			Assert.False(addResult.HasErrors);
+			var addAccountGroupResult = _sut.AddAccountGroup(accountGroupName);
+			Assert.False(addAccountGroupResult.HasErrors);
 
 			// delete the test account group
-			var deletionResult = _sut.DeleteAccountGroup(addResult.Result.Id);
+			var deletionResult = _sut.DeleteAccountGroup(addAccountGroupResult.Result.Id);
 			Assert.False(deletionResult.HasErrors);
 
 			// make sure the test account group does not exist
-			var getResult = _sut.GetAccount(addResult.Result.Id);
+			var getResult = _sut.GetAccount(addAccountGroupResult.Result.Id);
 			Assert.True(getResult.HasErrors);
 			Assert.True(getResult.ErrorMessages.Any(x => x.Key == ErrorType.NotFound));
 		}
