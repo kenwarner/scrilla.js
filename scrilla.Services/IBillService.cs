@@ -27,6 +27,6 @@ namespace scrilla.Services
 
 		ServiceResult<Bill> UpdateBill(int billId, string name, decimal amount, BillFrequency frequency, DateTime startDate, DateTime endDate, int? billGroupId = null, int? categoryId = null, int? vendorId = null, DateTime? secondaryStartDate = null, DateTime? secondaryEndDate = null, bool updateExisting = false);
 		ServiceResult<BillTransaction> UpdateBillTransaction(int billTransactionId, decimal? amount, DateTime? date, bool? isPaid, int? transactionId);
-		ServiceResult<List<Tuple<Transaction, double>>> PredictBillTransactionMatch(int billTransactionId);
+		ServiceResult<List<BillTransactionPrediction>> PredictBillTransactionMatch(int billTransactionId);
 	}
 }

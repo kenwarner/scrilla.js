@@ -21,4 +21,28 @@ namespace scrilla.Data
 
 		//public List<Tuple<Transaction, double>> TransactionPredictions { get; set; }
 	}
+
+	public class BillTransactionPrediction
+	{
+		public int BillTransactionId { get; set; }
+		public int TransactionId { get; set; }
+		public decimal Amount { get; set; }
+		public DateTime Timestamp { get; set; }
+		public string VendorName { get; set; }
+
+		public decimal AmountConfidence { get; set; }
+		public decimal TimestampConfidence { get; set; }
+		public decimal VendorNameConfidence { get; set; }
+
+		public decimal Confidence
+		{
+			get
+			{
+				return
+					(AmountConfidence * .1M) +
+					(TimestampConfidence * .4M) +
+					(VendorNameConfidence * .5M);
+			}
+		}
+	}
 }

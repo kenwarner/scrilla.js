@@ -546,61 +546,58 @@ namespace scrilla.Services
 			return result;
 		}
 
-		public ServiceResult<List<Tuple<Transaction, double>>> PredictBillTransactionMatch(int billTransactionId)
+		public ServiceResult<List<BillTransactionPrediction>> PredictBillTransactionMatch(int billTransactionId)
 		{
-			throw new NotImplementedException();
+			var result = new ServiceResult<List<BillTransactionPrediction>>();
 
-			var result = new ServiceResult<List<Tuple<Transaction, double>>>();
+			// get the bill transaction
+			var billTransactionResult = GetBillTransaction(billTransactionId);
+			if (billTransactionResult.HasErrors)
+			{
+				result.AddErrors(billTransactionResult);
+				return result;
+			}
 
-			//var billTransaction = _billTransactionRepository.GetById(billTransactionId);
-			//if (billTransaction == null)
-			//{
-			//	result.AddError(ErrorType.NotFound, "Bill transaction {0} not found", billTransactionId);
-			//	return result;
-			//}
+			// get the vendor name
+			string billTransactionVendorName = "";
+			if (billTransactionResult.Result.VendorId.HasValue)
+			{
+				var vendorResult = _vendorService.GetVendor(billTransactionResult.Result.VendorId.Value);
+				if (vendorResult.HasErrors)
+				{
+					result.AddErrors(vendorResult);
+					return result;
+				}
 
-			//// find predictions if it's not paid, or there are no associated transactions to indicate the paid status
-			//if (!billTransaction.IsPaid || !billTransaction.Transactions.Any())
-			//{
-			//	var timestampLower = billTransaction.Timestamp.AddMonths(-2);
-			//	var timestampUpper = billTransaction.Timestamp.AddMonths(2);
-			//	var amountLower = billTransaction.Amount / 5.0M;
-			//	var amountUpper = billTransaction.Amount * 5.0M;
-			//	var amount = amountUpper;
-			//	amountUpper = Math.Max(amountLower, amountUpper);
-			//	amountLower = Math.Min(amount, amountLower);
+				billTransactionVendorName = vendorResult.Result.Name;
+			}
 
-			//	// find reasonable predictions
-			//	var predictions = _transactionRepository.GetMany(x =>
-			//		(x.Amount > amountLower && x.Amount < amountUpper)
-			//		&& (x.Timestamp > timestampLower && x.Timestamp < timestampUpper)).ToList();
+			// get all transactions
+			var transactions = _db.Connection.Query(@"
+SELECT t.Id, t.Amount, t.Timestamp, v.Name
+FROM [Transaction] t
+LEFT JOIN Vendor v on v.Id = t.VendorId
+");
 
-			//	// calculate confidence level
-			//	var billTransactionVendorName = billTransaction.Vendor == null ? "" : billTransaction.Vendor.Name;
-			//	var confidences = predictions.Select(x => new Tuple<Transaction, double>(x,
-			//		(.1 * Math.Exp(-1 * Math.Pow((double)((x.Amount - billTransaction.Amount) / billTransaction.Amount), 2.0) / 2.0)
-			//		+ .2 * Math.Exp(-1 * Math.Pow(((x.Timestamp - billTransaction.Timestamp).TotalDays / 60.0), 2.0))
-			//		+ .2 * (x.Timestamp.Month == billTransaction.Timestamp.Month ? 1 : 0)
-			//		+ .2 * ((x.VendorId.HasValue && (x.VendorId == billTransaction.VendorId)) ? 1 : 0)
-			//		+ .3 * Math.Exp(-1 * Math.Pow(LevenshteinDistance.Compute(x.Vendor == null ? "" : x.Vendor.Name, billTransactionVendorName) / 20.0, 2.0)))
-			//		* (x.BillTransaction == null ? 1.0 : 0.0)
-			//		));
+			// calculate confidences
+			var confidences = transactions.Select(t => new BillTransactionPrediction()
+				{
+					BillTransactionId = billTransactionId,
+					TransactionId = t.Id,
+					Amount = t.Amount,
+					Timestamp = t.Timestamp,
+					VendorName = t.Name,
 
-			//	// debug
-			//	//Debug.WriteLine("{0}\t{1}\t{2}\t{3}\t{4}\t{5}", "", billTransaction.Amount, billTransaction.Timestamp, billTransaction.VendorId, billTransactionVendorName, LevenshteinDistance.Compute(billTransactionVendorName, billTransactionVendorName));
-			//	//predictions.ForEach(p =>
-			//	//{
-			//	//	var vendorName = p.Vendor == null ? "" : p.Vendor.Name;
-			//	//	Debug.WriteLine("{0}\t{1}\t{2}\t{3}\t{4}\t{5}", p.Id, p.Amount, p.Timestamp, p.VendorId, vendorName, LevenshteinDistance.Compute(vendorName, billTransactionVendorName));
-			//	//});
-
-			//	// order by confidence
-			//	result.Result = confidences
-			//		.OrderByDescending(x => x.Item2)
-			//		.Take(5)
-			//		.ToList();
-
-			//}
+					AmountConfidence = (decimal)Math.Exp(-1 * Math.Pow((double)((t.Amount - billTransactionResult.Result.Amount) / billTransactionResult.Result.Amount), 2.0) / 2.0),
+					TimestampConfidence = (decimal)Math.Exp(-1 * Math.Pow(((t.Timestamp - billTransactionResult.Result.Timestamp).TotalDays / 60.0), 2.0)),
+					VendorNameConfidence = (decimal)Math.Exp(-1 * Math.Pow(LevenshteinDistance.Compute(t.Name == null ? "" : t.Name, billTransactionVendorName) / 20.0, 2.0))
+				});
+			
+			// order by confidence
+			result.Result = confidences
+				.OrderByDescending(x => x.Confidence)
+				.Take(5)
+				.ToList();
 
 			return result;
 		}
