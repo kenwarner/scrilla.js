@@ -101,19 +101,74 @@ namespace scrilla.Services.Tests
 		}
 
 		[Fact]
-		public void GetCategoryGroup_NotImplemented()
+		public void GetCategoryGroup_ExistingName()
 		{
-			throw new NotImplementedException();
+			var categoryGroupName = "test category group";
+
+			// create test category group
+			var addCategoryGroupResult = _sut.AddCategoryGroup(categoryGroupName);
+			Assert.False(addCategoryGroupResult.HasErrors);
+
+			// act
+			var result = _sut.GetCategoryGroup(addCategoryGroupResult.Result.Id);
+			Assert.False(result.HasErrors);
+			Assert.Equal(categoryGroupName, result.Result.Name);
+
+			// cleanup
+			_sut.DeleteCategoryGroup(result.Result.Id);
 		}
+
 		[Fact]
-		public void GetAllCategories_NotImplemented()
+		public void GetCategoryGroup_NonExistantName()
 		{
-			throw new NotImplementedException();
+			var nonExistantCategoryGroup = -1;
+
+			// act
+			var result = _sut.GetCategoryGroup(nonExistantCategoryGroup);
+			Assert.True(result.HasErrors);
+			Assert.True(result.ErrorMessages.Any(x => x.Key == ErrorType.NotFound));
 		}
+
+		[Fact]
+		public void GetAllCategories_OneCategoryExistsAfterAddingACategory()
+		{
+			var categoriesResult = _sut.GetAllCategories();
+			Assert.False(categoriesResult.HasErrors);
+			Assert.Empty(categoriesResult.Result);
+
+			// create test category
+			var categoryName = "test category";
+			var addCategoryResult = _sut.AddCategory(categoryName);
+			Assert.False(addCategoryResult.HasErrors);
+
+			// act
+			categoriesResult = _sut.GetAllCategories();
+			Assert.False(categoriesResult.HasErrors);
+			Assert.Equal(1, categoriesResult.Result.Count());
+
+			// cleanup
+			_sut.DeleteCategory(addCategoryResult.Result.Id);
+		}
+
 		[Fact]
 		public void GetAllCategoryGroups_NotImplemented()
 		{
-			throw new NotImplementedException();
+			var categoryGroupsResult = _sut.GetAllCategoryGroups();
+			Assert.False(categoryGroupsResult.HasErrors);
+			Assert.Empty(categoryGroupsResult.Result);
+
+			// create test category group
+			var categoryGroupName = "test category group";
+			var addCategoryGroupResult = _sut.AddCategoryGroup(categoryGroupName);
+			Assert.False(addCategoryGroupResult.HasErrors);
+
+			// act
+			categoryGroupsResult = _sut.GetAllCategoryGroups();
+			Assert.False(categoryGroupsResult.HasErrors);
+			Assert.Equal(1, categoryGroupsResult.Result.Count());
+
+			// cleanup
+			_sut.DeleteCategoryGroup(addCategoryGroupResult.Result.Id);
 		}
 
 		[Fact]
