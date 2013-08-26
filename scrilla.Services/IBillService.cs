@@ -16,7 +16,7 @@ namespace scrilla.Services
 		ServiceResult<IEnumerable<Bill>> GetAllBills();
 		ServiceResult<IEnumerable<BillGroup>> GetAllBillGroups();
 
-		ServiceResult<IEnumerable<BillTransaction>> GetBillTransactions(int? billId, DateTime? from, DateTime? to);
+		ServiceResult<IEnumerable<BillTransaction>> GetBillTransactions(int? billId, DateTime? from = null, DateTime? to = null);
 
 		ServiceResult<Bill> AddBill(string name, decimal amount, BillFrequency frequency, DateTime startDate, DateTime endDate, int? billGroupId = null, int? categoryId = null, int? vendorId = null, DateTime? secondaryStartDate = null, DateTime? secondaryEndDate = null);
 		ServiceResult<BillGroup> AddBillGroup(string name, int displayOrder, bool isActive);
