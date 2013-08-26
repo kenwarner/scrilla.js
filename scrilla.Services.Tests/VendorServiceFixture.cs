@@ -412,7 +412,7 @@ namespace scrilla.Services.Tests
 			var result = _sut.UpdateVendorDefaultCategory(addVendorResult.Result.Id, addCategoryResult.Result.Id, true);
 			Assert.False(result.HasErrors);
 			Assert.Equal(addCategoryResult.Result.Id, result.Result.DefaultCategoryId);
-			var transactionResult = transactionService.GetTransactionsByAccount(addAccountResult.Result.Id);
+			var transactionResult = transactionService.GetTransactions(accountId: new Filter<int?>(addAccountResult.Result.Id));
 			Assert.False(transactionResult.HasErrors);
 			Assert.Equal(1, transactionResult.Result.Count());
 			Assert.Equal(addCategoryResult.Result.Id, transactionResult.Result.First().Id);

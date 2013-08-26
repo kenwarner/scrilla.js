@@ -207,68 +207,68 @@ namespace scrilla.Services.Tests
 			Assert.True(result.ErrorMessages.Any(x => x.Key == ErrorType.NotFound));
 		}
 
-		[Fact]
-		public void GetAllBills_NotImplemented()
+		[Fact(Skip = "Not yet implemented")]
+		public void GetAllBills()
 		{
 			throw new NotImplementedException();
 		}
 
-		[Fact]
-		public void GetAllBillGroups_NotImplemented()
+		[Fact(Skip = "Not yet implemented")]
+		public void GetAllBillGroups()
 		{
 			throw new NotImplementedException();
 		}
 
-		[Fact]
-		public void GetBillTransactions_NotImplemented()
+		[Fact(Skip = "Not yet implemented")]
+		public void GetBillTransactions()
 		{
 			throw new NotImplementedException();
 		}
 
-		[Fact]
-		public void AddBill_NotImplemented()
+		[Fact(Skip = "Not yet implemented")]
+		public void AddBill()
 		{
 			throw new NotImplementedException();
 		}
 
-		[Fact]
-		public void AddBillGroup_NotImplemented()
+		[Fact(Skip = "Not yet implemented")]
+		public void AddBillGroup()
 		{
 			throw new NotImplementedException();
 		}
 
-		[Fact]
-		public void DeleteBill_NotImplemented()
+		[Fact(Skip = "Not yet implemented")]
+		public void DeleteBill()
 		{
 			throw new NotImplementedException();
 		}
 
-		[Fact]
-		public void DeleteBillGroup_NotImplemented()
+		[Fact(Skip = "Not yet implemented")]
+		public void DeleteBillGroup()
 		{
 			throw new NotImplementedException();
 		}
 
-		[Fact]
-		public void DeleteBillTransaction_NotImplemented()
+		[Fact(Skip = "Not yet implemented")]
+		public void DeleteBillTransaction()
 		{
 			throw new NotImplementedException();
 		}
 
-		[Fact]
-		public void UpdateBill_NotImplemented()
+		[Fact(Skip = "Not yet implemented")]
+		public void UpdateBill()
 		{
 			throw new NotImplementedException();
 		}
 
-		[Fact]
-		public void UpdateBillTransaction_NotImplemented()
+		[Fact(Skip = "Not yet implemented")]
+		public void UpdateBillTransaction()
 		{
 			throw new NotImplementedException();
 		}
 
-		[Fact]
-		public void PredictBillTransactionMatch_NotImplemented()
+		[Fact(Skip = "Not yet implemented")]
+		public void PredictBillTransactionMatch()
 		{
 			throw new NotImplementedException();
 		}
