@@ -17,5 +17,7 @@ namespace scrilla.Data
 
 		public Nullable<int> VendorId { get; set; }
 		public Nullable<int> BillTransactionId { get; set; }
+
+		public IEnumerable<Subtransaction> Subtransactions { get; set; }
 	}
 }
