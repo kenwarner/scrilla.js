@@ -11,11 +11,7 @@ namespace scrilla.Services
 	{
 		ServiceResult<Transaction> GetTransaction(int transactionId);
 
-		ServiceResult<IEnumerable<Transaction>> GetAllTransactions(DateTime? from = null, DateTime? to = null);
-		ServiceResult<IEnumerable<Transaction>> GetTransactions(int accountId, int? categoryId, DateTime? from = null, DateTime? to = null);
-		ServiceResult<IEnumerable<Transaction>> GetTransactionsByAccount(int accountId, DateTime? from = null, DateTime? to = null);
-		ServiceResult<IEnumerable<Transaction>> GetTransactionsByVendor(int? vendorId, DateTime? from = null, DateTime? to = null);
-		ServiceResult<IEnumerable<Transaction>> GetTransactionsByCategory(int? categoryId, DateTime? from = null, DateTime? to = null);
+		ServiceResult<IEnumerable<Transaction>> GetTransactions(Filter<int?> accountId = null, Filter<int?> categoryId = null, Filter<int?> vendorId = null, DateTime? from = null, DateTime? to = null);
 
 		ServiceResult<Transaction> AddTransaction(int accountId, DateTime timestamp, decimal amount, string memo = null, string notes = null, int? categoryId = null, int? vendorId = null, int? billTransactionId = null, bool isReconciled = false, bool isExcludedFromBudget = false, bool isTransfer = false);
 

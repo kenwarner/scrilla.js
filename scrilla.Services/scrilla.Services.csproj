@@ -67,6 +67,7 @@
     <Compile Include="BudgetService.cs" />
     <Compile Include="CategoryService.cs" />
     <Compile Include="EntityService.cs" />
+    <Compile Include="Filter.cs" />
     <Compile Include="IAccountService.cs" />
     <Compile Include="IBillService.cs" />
     <Compile Include="IBudgetService.cs" />
