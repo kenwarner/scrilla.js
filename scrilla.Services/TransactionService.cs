@@ -26,7 +26,7 @@ namespace scrilla.Services
 		private ServiceResult<IEnumerable<Transaction>> GetTransactions(Filter<int> transactionId = null, Filter<int?> accountId = null, Filter<int?> categoryId = null, Filter<int?> vendorId = null, DateTime? from = null, DateTime? to = null)
 		{
 			var result = new ServiceResult<IEnumerable<Transaction>>();
-			var predicates = new List<IPredicate>();
+			var parameters = new List<dynamic>();
 
 			var builder = new StringBuilder();
 			builder.Append(@"
@@ -45,7 +45,8 @@ JOIN Subtransaction st ON st.TransactionId = t.Id
 					result.AddErrors(transactionResult);
 					return result;
 				}
-				whereClauses.Add("t.Id = " + transactionId.Object);
+				whereClauses.Add("t.Id = @transactionId");
+				parameters.Add(new { transactionId = transactionId.Object });
 			}
 
 			// account clause
@@ -61,7 +62,8 @@ JOIN Subtransaction st ON st.TransactionId = t.Id
 						return result;
 					}
 				}
-				whereClauses.Add("t.AccountId = " + accountId.Object);
+				whereClauses.Add("t.AccountId = @accountId");
+				parameters.Add(new { accountId = accountId.Object });
 			}
 
 			// category clause
@@ -77,7 +79,8 @@ JOIN Subtransaction st ON st.TransactionId = t.Id
 						return result;
 					}
 				}
-				whereClauses.Add("st.CategoryId = " + categoryId.Object);
+				whereClauses.Add("st.CategoryId = @categoryId");
+				parameters.Add(new { categoryId = categoryId.Object });
 			}
 
 			// vendor clause
@@ -93,16 +96,24 @@ JOIN Subtransaction st ON st.TransactionId = t.Id
 						return result;
 					}
 				}
-				whereClauses.Add("t.VendorId = " + vendorId.Object);
+				whereClauses.Add("t.VendorId = @vendorId");
+				parameters.Add(new { vendorId = vendorId.Object });
 			}
 
 			// start/end clauses
 			if (from.HasValue)
-				whereClauses.Add("t.Timestamp >= " + from.Value.ToShortDateString());
+			{
+				whereClauses.Add("t.Timestamp >= @from");
+				parameters.Add(new { from = from.Value });
+			}
+				
 
 			if (to.HasValue)
-				whereClauses.Add("t.Timestamp <= " + to.Value.ToShortDateString());
-
+			{
+				whereClauses.Add("t.Timestamp <= @to");
+				parameters.Add(new { to = to.Value });
+			}
+				
 			if (whereClauses.Any())
 			{
 				builder.Append("WHERE ");
@@ -111,8 +122,9 @@ JOIN Subtransaction st ON st.TransactionId = t.Id
 
 			// get transactions and subtransactions separately
 			var sql = builder.ToString();
-			var transactions = _db.Connection.Query<Transaction>("SELECT t.* " + sql);
-			var subtransactions = _db.Connection.Query<Subtransaction>("SELECT st.* " + sql);
+			object mergedParameters = MergeParameters(parameters);
+			var transactions = _db.Connection.Query<Transaction>("SELECT t.* " + sql, mergedParameters);
+			var subtransactions = _db.Connection.Query<Subtransaction>("SELECT st.* " + sql, mergedParameters);
 
 			// stitch the subtransactions into the transactions
 			foreach (var t in transactions)

@@ -1,7 +1,9 @@
 ﻿using DapperExtensions;
 using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -33,6 +35,23 @@ namespace scrilla.Services
 		{
 			var result = new ServiceResult<IEnumerable<T>>();
 			result.Result = _db.GetList<T>();
+			return result;
+		}
+
+		protected dynamic MergeParameters(IEnumerable<dynamic> parameters)
+		{
+			var expando = new ExpandoObject();
+			var dobject = expando as IDictionary<string, object>; //work with the Expando as a Dictionary
+
+			foreach (var param in parameters)
+			{
+				foreach (PropertyInfo info in param.GetType().GetProperties())
+				{
+					dobject[info.Name] = info.GetValue(param, null);
+				}
+			}
+
+			dynamic result = expando;
 			return result;
 		}
 	}
