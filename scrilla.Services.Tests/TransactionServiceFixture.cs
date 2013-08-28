@@ -86,6 +86,42 @@ namespace scrilla.Services.Tests
 		}
 
 		[Fact]
+		public void GetTransaction_ExistingAccount_NoCategory_NoVendor_NoBill()
+		{
+			// create test transaction
+			var timestamp = new DateTime(2000, 1, 14);
+			var amount = 12.1M;
+			var memo = "test memo";
+			var notes = "test notes";
+			var isReconciled = true;
+			var isExcludedFromBudget = false;
+			var isTransfer = true;
+
+			var addAccountResult = AddTestAccount();
+
+			var addTransactionResult = _sut.AddTransaction(addAccountResult.Result.Id, timestamp, amount, memo, notes, null, null, null, isReconciled, isExcludedFromBudget, isTransfer);
+			Assert.False(addTransactionResult.HasErrors);
+
+			// act
+			var result = _sut.GetTransaction(addTransactionResult.Result.Id);
+			Assert.False(result.HasErrors);
+			Assert.Equal(addTransactionResult.Result.AccountId, result.Result.AccountId);
+			Assert.Equal(addTransactionResult.Result.Amount, result.Result.Amount);
+			Assert.Equal(null, result.Result.BillTransactionId);
+			Assert.Equal(addTransactionResult.Result.Id, result.Result.Id);
+			Assert.Equal(addTransactionResult.Result.IsReconciled, result.Result.IsReconciled);
+			Assert.Equal(addTransactionResult.Result.OriginalTimestamp, result.Result.OriginalTimestamp);
+			Assert.Equal(addTransactionResult.Result.Timestamp, result.Result.Timestamp);
+			Assert.Equal(null, result.Result.VendorId);
+			Assert.Equal(1, result.Result.Subtransactions.Count());
+			Assert.Equal(null, result.Result.Subtransactions.First().CategoryId);
+
+			// cleanup
+			_sut.DeleteTransaction(result.Result.Id);
+			_accountService.DeleteAccount(result.Result.AccountId);
+		}
+
+		[Fact]
 		public void GetTransaction_ExistingAccount_ExistingCategory_ExistingVendor_ExistingBill()
 		{
 			// create test transaction
@@ -115,11 +151,170 @@ namespace scrilla.Services.Tests
 			_accountService.DeleteAccount(result.Result.AccountId);
 		}
 
-		[Fact(Skip = "Not yet implemented")]
-		public void GetTransactions()
+		[Fact]
+		public void GetTransactions_NoFilters_NoTransactions()
 		{
-
+			// act
+			var result = _sut.GetTransactions();
+			Assert.False(result.HasErrors);
+			Assert.Equal(0, result.Result.Count());
 		}
+
+		[Fact]
+		public void GetTransactions_NonExistantAccount_NoTransactions()
+		{
+			// create test account
+			var nonExistantAccountId = -1;
+
+			// act
+			var result = _sut.GetTransactions(new Filter<int?>(new Nullable<int>(nonExistantAccountId)));
+			Assert.True(result.HasErrors);
+			Assert.Equal(1, result.ErrorMessages.Count(x => x.Key == ErrorType.NotFound));
+		}
+
+		[Fact]
+		public void GetTransactions_ExistingAccount_NoTransactions()
+		{
+			// create test account
+			var addAccountResult = AddTestAccount();
+
+			// act
+			var result = _sut.GetTransactions(new Filter<int?>(new Nullable<int>(addAccountResult.Result.Id)));
+			Assert.False(result.HasErrors);
+			Assert.Equal(0, result.Result.Count());
+		}
+
+		[Fact]
+		public void GetTransactions_ExistingAccount_OneTransaction()
+		{
+			var timestamp = new DateTime(2000, 1, 14);
+			var amount = 12.1M;
+			var memo = "test memo";
+			var notes = "test notes";
+			var isReconciled = true;
+			var isExcludedFromBudget = false;
+			var isTransfer = true;
+
+			// create test account
+			var addAccountResult = AddTestAccount();
+
+			// create test transaction
+			var addTransactionResult = _sut.AddTransaction(addAccountResult.Result.Id, timestamp, amount, memo, notes, null, null, null, isReconciled, isExcludedFromBudget, isTransfer);
+
+			// act
+			var result = _sut.GetTransactions(new Filter<int?>(new Nullable<int>(addAccountResult.Result.Id)));
+			Assert.False(result.HasErrors);
+			Assert.Equal(1, result.Result.Count());
+			Assert.Equal(1, result.Result.First().Subtransactions.Count());
+		}
+
+		[Fact]
+		public void GetTransactions_ExistingAccount_MultipleTransactions()
+		{
+			var timestamp = new DateTime(2000, 1, 14);
+			var amount = 12.1M;
+			var memo = "test memo";
+			var notes = "test notes";
+			var isReconciled = true;
+			var isExcludedFromBudget = false;
+			var isTransfer = true;
+
+			// create test account
+			var addAccountResult = AddTestAccount();
+
+			// create test transactions
+			_sut.AddTransaction(addAccountResult.Result.Id, timestamp, amount, memo, notes, null, null, null, isReconciled, isExcludedFromBudget, isTransfer);
+			_sut.AddTransaction(addAccountResult.Result.Id, timestamp, amount, memo, notes, null, null, null, isReconciled, isExcludedFromBudget, isTransfer);
+
+			// act
+			var result = _sut.GetTransactions(new Filter<int?>(new Nullable<int>(addAccountResult.Result.Id)));
+			Assert.False(result.HasErrors);
+			Assert.Equal(2, result.Result.Count());
+			Assert.Equal(1, result.Result.ElementAt(0).Subtransactions.Count());
+			Assert.Equal(1, result.Result.ElementAt(1).Subtransactions.Count());
+		}
+
+		[Fact]
+		public void GetTransactions_MultipleAccounts_OneTransactionEach()
+		{
+			var timestamp = new DateTime(2000, 1, 14);
+			var amount = 12.1M;
+			var memo = "test memo";
+			var notes = "test notes";
+			var isReconciled = true;
+			var isExcludedFromBudget = false;
+			var isTransfer = true;
+
+			// create test account
+			var addAccountResult = AddTestAccount();
+			var addAccountResult2 = AddTestAccount();
+
+			// create test transactions
+			_sut.AddTransaction(addAccountResult.Result.Id, timestamp, amount, memo, notes, null, null, null, isReconciled, isExcludedFromBudget, isTransfer);
+			_sut.AddTransaction(addAccountResult2.Result.Id, timestamp, amount, memo, notes, null, null, null, isReconciled, isExcludedFromBudget, isTransfer);
+
+			// act
+			var result = _sut.GetTransactions(new Filter<int?>(new Nullable<int>(addAccountResult.Result.Id)));
+			Assert.False(result.HasErrors);
+			Assert.Equal(1, result.Result.Count());
+			Assert.Equal(1, result.Result.ElementAt(0).Subtransactions.Count());
+		}
+
+		[Fact]
+		public void GetTransactions_MultipleAccounts_OneTransactionEach_WithinFromToDates()
+		{
+			var timestamp = new DateTime(2000, 1, 14);
+			var amount = 12.1M;
+			var memo = "test memo";
+			var notes = "test notes";
+			var isReconciled = true;
+			var isExcludedFromBudget = false;
+			var isTransfer = true;
+
+			// create test account
+			var addAccountResult = AddTestAccount();
+			var addAccountResult2 = AddTestAccount();
+
+			// create test transactions
+			_sut.AddTransaction(addAccountResult.Result.Id, timestamp, amount, memo, notes, null, null, null, isReconciled, isExcludedFromBudget, isTransfer);
+			_sut.AddTransaction(addAccountResult2.Result.Id, timestamp, amount, memo, notes, null, null, null, isReconciled, isExcludedFromBudget, isTransfer);
+
+			// act
+			var result = _sut.GetTransactions(new Filter<int?>(new Nullable<int>(addAccountResult.Result.Id)), from: timestamp.AddDays(-1), to: timestamp.AddDays(1));
+			Assert.False(result.HasErrors);
+			Assert.Equal(1, result.Result.Count());
+			Assert.Equal(1, result.Result.ElementAt(0).Subtransactions.Count());
+		}
+
+		[Fact]
+		public void GetTransactions_MultipleAccounts_OneTransactionEach_OutsideFromToDates()
+		{
+			var timestamp = new DateTime(2000, 1, 14);
+			var amount = 12.1M;
+			var memo = "test memo";
+			var notes = "test notes";
+			var isReconciled = true;
+			var isExcludedFromBudget = false;
+			var isTransfer = true;
+
+			// create test account
+			var addAccountResult = AddTestAccount();
+			var addAccountResult2 = AddTestAccount();
+
+			// create test transactions
+			_sut.AddTransaction(addAccountResult.Result.Id, timestamp, amount, memo, notes, null, null, null, isReconciled, isExcludedFromBudget, isTransfer);
+			_sut.AddTransaction(addAccountResult2.Result.Id, timestamp, amount, memo, notes, null, null, null, isReconciled, isExcludedFromBudget, isTransfer);
+
+			// act
+			var result = _sut.GetTransactions(new Filter<int?>(new Nullable<int>(addAccountResult.Result.Id)), from: timestamp.AddDays(-2), to: timestamp.AddDays(-1));
+			Assert.False(result.HasErrors);
+			Assert.Equal(0, result.Result.Count());
+
+			result = _sut.GetTransactions(new Filter<int?>(new Nullable<int>(addAccountResult.Result.Id)), from: timestamp.AddDays(1), to: timestamp.AddDays(2));
+			Assert.False(result.HasErrors);
+			Assert.Equal(0, result.Result.Count());
+		}
+
 
 		[Fact]
 		public void AddTransaction_ExistingAccount_ExistingCategory_ExistingVendor_ExistingBill()
