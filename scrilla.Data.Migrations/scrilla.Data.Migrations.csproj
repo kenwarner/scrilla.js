@@ -74,6 +74,7 @@
     <Compile Include="_002\_011_AccountMakeAccountGroupNullable.cs" />
     <Compile Include="_002\_012_CategoryMakeCategoryGroupNullable.cs" />
     <Compile Include="_002\_013_BillMakeBillGroupNullable.cs" />
+    <Compile Include="_002\_014_SubtransactionMakeMemoAndNotesNullable.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="tests\scratch.bat" />

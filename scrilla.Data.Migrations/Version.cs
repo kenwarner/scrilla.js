@@ -56,5 +56,6 @@ namespace scrilla.Data.Migrations
 		_011 = 11 + VersionMonth.July2013,
 		_012 = 12 + VersionMonth.July2013,
 		_013 = 13 + VersionMonth.July2013,
+		_014 = 14 + VersionMonth.August2013,
 	}
 }
