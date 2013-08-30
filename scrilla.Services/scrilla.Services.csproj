@@ -50,8 +50,9 @@
     <Reference Include="Dapper">
       <HintPath>..\packages\Dapper.1.13\lib\net45\Dapper.dll</HintPath>
     </Reference>
-    <Reference Include="DapperExtensions">
-      <HintPath>..\packages\DapperExtensions.1.4.1\lib\net40\DapperExtensions.dll</HintPath>
+    <Reference Include="DapperExtensions, Version=1.4.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\DapperExtensions.1.4.2\lib\net40\DapperExtensions.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
