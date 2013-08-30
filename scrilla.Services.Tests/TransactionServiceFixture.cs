@@ -80,7 +80,7 @@ namespace scrilla.Services.Tests
 			Assert.Equal(1, billTransactionsResult.Result.Count());
 			var billTransaction = billTransactionsResult.Result.First();
 
-			var addTransactionResult = _sut.AddTransaction(addAccountResult.Result.Id, timestamp, amount, memo, notes, addCategoryResult.Result.Id, addVendorResult.Result.Id, billTransaction.Id, isReconciled, isExcludedFromBudget, isTransfer);
+			var addTransactionResult = _sut.AddTransaction(addAccountResult.Result.Id, timestamp, amount, memo, notes, isReconciled, isExcludedFromBudget, isTransfer, addCategoryResult.Result.Id, addVendorResult.Result.Id, billTransaction.Id);
 			Assert.False(addTransactionResult.HasErrors);
 			return addTransactionResult;
 		}
@@ -99,7 +99,7 @@ namespace scrilla.Services.Tests
 
 			var addAccountResult = AddTestAccount();
 
-			var addTransactionResult = _sut.AddTransaction(addAccountResult.Result.Id, timestamp, amount, memo, notes, null, null, null, isReconciled, isExcludedFromBudget, isTransfer);
+			var addTransactionResult = _sut.AddTransaction(addAccountResult.Result.Id, timestamp, amount, memo, notes, isReconciled, isExcludedFromBudget, isTransfer);
 			Assert.False(addTransactionResult.HasErrors);
 
 			// act
@@ -199,7 +199,7 @@ namespace scrilla.Services.Tests
 			var addAccountResult = AddTestAccount();
 
 			// create test transaction
-			var addTransactionResult = _sut.AddTransaction(addAccountResult.Result.Id, timestamp, amount, memo, notes, null, null, null, isReconciled, isExcludedFromBudget, isTransfer);
+			var addTransactionResult = _sut.AddTransaction(addAccountResult.Result.Id, timestamp, amount, memo, notes, isReconciled, isExcludedFromBudget, isTransfer);
 
 			// act
 			var result = _sut.GetTransactions(new Filter<int?>(new Nullable<int>(addAccountResult.Result.Id)));
@@ -223,8 +223,8 @@ namespace scrilla.Services.Tests
 			var addAccountResult = AddTestAccount();
 
 			// create test transactions
-			_sut.AddTransaction(addAccountResult.Result.Id, timestamp, amount, memo, notes, null, null, null, isReconciled, isExcludedFromBudget, isTransfer);
-			_sut.AddTransaction(addAccountResult.Result.Id, timestamp, amount, memo, notes, null, null, null, isReconciled, isExcludedFromBudget, isTransfer);
+			_sut.AddTransaction(addAccountResult.Result.Id, timestamp, amount, memo, notes, isReconciled, isExcludedFromBudget, isTransfer);
+			_sut.AddTransaction(addAccountResult.Result.Id, timestamp, amount, memo, notes, isReconciled, isExcludedFromBudget, isTransfer);
 
 			// act
 			var result = _sut.GetTransactions(new Filter<int?>(new Nullable<int>(addAccountResult.Result.Id)));
@@ -250,8 +250,8 @@ namespace scrilla.Services.Tests
 			var addAccountResult2 = AddTestAccount();
 
 			// create test transactions
-			_sut.AddTransaction(addAccountResult.Result.Id, timestamp, amount, memo, notes, null, null, null, isReconciled, isExcludedFromBudget, isTransfer);
-			_sut.AddTransaction(addAccountResult2.Result.Id, timestamp, amount, memo, notes, null, null, null, isReconciled, isExcludedFromBudget, isTransfer);
+			_sut.AddTransaction(addAccountResult.Result.Id, timestamp, amount, memo, notes, isReconciled, isExcludedFromBudget, isTransfer);
+			_sut.AddTransaction(addAccountResult2.Result.Id, timestamp, amount, memo, notes, isReconciled, isExcludedFromBudget, isTransfer);
 
 			// act
 			var result = _sut.GetTransactions(new Filter<int?>(new Nullable<int>(addAccountResult.Result.Id)));
@@ -276,8 +276,8 @@ namespace scrilla.Services.Tests
 			var addAccountResult2 = AddTestAccount();
 
 			// create test transactions
-			_sut.AddTransaction(addAccountResult.Result.Id, timestamp, amount, memo, notes, null, null, null, isReconciled, isExcludedFromBudget, isTransfer);
-			_sut.AddTransaction(addAccountResult2.Result.Id, timestamp, amount, memo, notes, null, null, null, isReconciled, isExcludedFromBudget, isTransfer);
+			_sut.AddTransaction(addAccountResult.Result.Id, timestamp, amount, memo, notes, isReconciled, isExcludedFromBudget, isTransfer);
+			_sut.AddTransaction(addAccountResult2.Result.Id, timestamp, amount, memo, notes, isReconciled, isExcludedFromBudget, isTransfer);
 
 			// act
 			var result = _sut.GetTransactions(new Filter<int?>(new Nullable<int>(addAccountResult.Result.Id)), from: timestamp.AddDays(-1), to: timestamp.AddDays(1));
@@ -302,8 +302,8 @@ namespace scrilla.Services.Tests
 			var addAccountResult2 = AddTestAccount();
 
 			// create test transactions
-			_sut.AddTransaction(addAccountResult.Result.Id, timestamp, amount, memo, notes, null, null, null, isReconciled, isExcludedFromBudget, isTransfer);
-			_sut.AddTransaction(addAccountResult2.Result.Id, timestamp, amount, memo, notes, null, null, null, isReconciled, isExcludedFromBudget, isTransfer);
+			_sut.AddTransaction(addAccountResult.Result.Id, timestamp, amount, memo, notes, isReconciled, isExcludedFromBudget, isTransfer);
+			_sut.AddTransaction(addAccountResult2.Result.Id, timestamp, amount, memo, notes, isReconciled, isExcludedFromBudget, isTransfer);
 
 			// act
 			var result = _sut.GetTransactions(new Filter<int?>(new Nullable<int>(addAccountResult.Result.Id)), from: timestamp.AddDays(-2), to: timestamp.AddDays(-1));
@@ -338,7 +338,7 @@ namespace scrilla.Services.Tests
 			var billTransaction = billTransactionResult.Result.First();
 
 			// act
-			var result = _sut.AddTransaction(addAccountResult.Result.Id, transactionTimestamp, transactionAmount, memo, notes, addCategoryResult.Result.Id, addVendorResult.Result.Id, billTransaction.Id, isReconciled, isExcludedFromBudget, isTransfer);
+			var result = _sut.AddTransaction(addAccountResult.Result.Id, transactionTimestamp, transactionAmount, memo, notes, isReconciled, isExcludedFromBudget, isTransfer, addCategoryResult.Result.Id, addVendorResult.Result.Id, billTransaction.Id);
 			Assert.False(result.HasErrors);
 			Assert.Equal(addAccountResult.Result.Id, result.Result.AccountId);
 			Assert.Equal(transactionAmount, result.Result.Amount);
@@ -373,7 +373,7 @@ namespace scrilla.Services.Tests
 			var addAccountResult = AddTestAccount();
 
 			// act
-			var result = _sut.AddTransaction(addAccountResult.Result.Id, transactionTimestamp, transactionAmount, memo, notes, null, null, null, isReconciled, isExcludedFromBudget, isTransfer);
+			var result = _sut.AddTransaction(addAccountResult.Result.Id, transactionTimestamp, transactionAmount, memo, notes, isReconciled, isExcludedFromBudget, isTransfer);
 			Assert.False(result.HasErrors);
 			Assert.Equal(addAccountResult.Result.Id, result.Result.AccountId);
 			Assert.Equal(transactionAmount, result.Result.Amount);

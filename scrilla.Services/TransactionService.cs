@@ -162,7 +162,7 @@ JOIN Subtransaction st ON st.TransactionId = t.Id
 			return GetTransactions(transactionId: null, accountId: accountId, vendorId: vendorId, from: from, to: to);
 		}
 
-		public ServiceResult<Transaction> AddTransaction(int accountId, DateTime timestamp, decimal amount, string memo = null, string notes = null, int? categoryId = null, int? vendorId = null, int? billTransactionId = null, bool isReconciled = false, bool isExcludedFromBudget = false, bool isTransfer = false)
+		public ServiceResult<Transaction> AddTransaction(int accountId, DateTime timestamp, decimal amount, string memo = null, string notes = null, bool isReconciled = false, bool isExcludedFromBudget = false, bool isTransfer = false, int? categoryId = null, int? vendorId = null, int? billTransactionId = null)
 		{
 			var result = new ServiceResult<Transaction>();
 
@@ -226,7 +226,7 @@ JOIN Subtransaction st ON st.TransactionId = t.Id
 			return result;
 		}
 
-		public ServiceResult<bool> UpdateTransaction(int transactionId, int? accountId = null, DateTime? timestamp = null, decimal? amount = null, string memo = null, string notes = null, int? categoryId = null, int? vendorId = null, int? billTransactionId = null, bool isReconciled = false, bool isExcludedFromBudget = false, bool isTransfer = false)
+		public ServiceResult<bool> UpdateTransaction(int transactionId, int? accountId = null, DateTime? timestamp = null, decimal? amount = null, string memo = null, string notes = null, bool isReconciled = false, bool isExcludedFromBudget = false, bool isTransfer = false, int? categoryId = null, int? vendorId = null, int? billTransactionId = null)
 		{
 			throw new NotImplementedException();
 
