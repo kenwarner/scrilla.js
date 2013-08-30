@@ -420,10 +420,159 @@ namespace scrilla.Services.Tests
 		}
 
 
-		[Fact(Skip = "Not yet implemented")]
-		public void UpdateTransaction()
+		[Fact]
+		public void UpdateTransaction_NonExistantTransaction()
 		{
+			var nonExistantTransactionId = -1;
 
+			// act
+			var result = _sut.UpdateTransaction(nonExistantTransactionId);
+			Assert.True(result.HasErrors);
+		}
+
+		[Fact]
+		public void UpdateTransaction_ExistingTransaction_ExistingAccountCategoryVendorBillTransaction()
+		{
+			var addTransactionResult = AddTestTransaction();
+
+			var newTimestamp = new DateTime(2000, 1, 15);
+			var newAmount = 12.2M;
+			var newMemo = "new test memo";
+			var newNotes = "new test notes";
+			var newIsReconciled = false;
+			var newIsExcludedFromBudget = true;
+			var newIsTransfer = false;
+
+			var addNewAccountResult = AddTestAccount();
+			var addNewCategoryResult = AddTestCategory();
+			var addNewVendorResult = AddTestVendor();
+			var addNewBillResult = AddTestBill();
+
+			var newBillTransactionsResult = _billService.GetBillTransactions(addNewBillResult.Result.Id);
+			Assert.False(newBillTransactionsResult.HasErrors);
+			Assert.Equal(1, newBillTransactionsResult.Result.Count());
+			var newBillTransaction = newBillTransactionsResult.Result.First();
+
+			// act
+			var result = _sut.UpdateTransaction(addTransactionResult.Result.Id, new Filter<int>(addNewAccountResult.Result.Id), newTimestamp, newAmount, newMemo, newNotes, newIsReconciled, newIsExcludedFromBudget, newIsTransfer, new Filter<int?>(new Nullable<int>(addNewCategoryResult.Result.Id)), new Filter<int?>(new Nullable<int>(addNewVendorResult.Result.Id)), new Filter<int?>(new Nullable<int>(newBillTransaction.Id)));
+			Assert.False(result.HasErrors);
+			Assert.Equal(addNewAccountResult.Result.Id, result.Result.AccountId);
+			Assert.Equal(newAmount, result.Result.Amount);
+			Assert.Equal(newBillTransaction.Id, result.Result.BillTransactionId);
+			Assert.Equal(newIsReconciled, result.Result.IsReconciled);
+			Assert.Equal(addTransactionResult.Result.OriginalTimestamp, result.Result.OriginalTimestamp); // original timestamp doesn't change
+			Assert.Equal(newTimestamp, result.Result.Timestamp);
+			Assert.Equal(addNewVendorResult.Result.Id, result.Result.VendorId);
+			Assert.Equal(1, result.Result.Subtransactions.Count());
+			Assert.Equal(addNewCategoryResult.Result.Id, result.Result.Subtransactions.First().CategoryId);
+			Assert.Equal(result.Result.Id, result.Result.Subtransactions.First().TransactionId);
+
+			var getTransactionResult = _sut.GetTransaction(addTransactionResult.Result.Id);
+			Assert.False(getTransactionResult.HasErrors);
+			Assert.Equal(addNewAccountResult.Result.Id, getTransactionResult.Result.AccountId);
+			Assert.Equal(newAmount, getTransactionResult.Result.Amount);
+			Assert.Equal(newBillTransaction.Id, getTransactionResult.Result.BillTransactionId);
+			Assert.Equal(newIsReconciled, getTransactionResult.Result.IsReconciled);
+			Assert.Equal(addTransactionResult.Result.OriginalTimestamp, getTransactionResult.Result.OriginalTimestamp); // original timestamp doesn't change
+			Assert.Equal(newTimestamp, getTransactionResult.Result.Timestamp);
+			Assert.Equal(addNewVendorResult.Result.Id, getTransactionResult.Result.VendorId);
+			Assert.Equal(1, getTransactionResult.Result.Subtransactions.Count());
+			Assert.Equal(addNewCategoryResult.Result.Id, getTransactionResult.Result.Subtransactions.First().CategoryId);
+			Assert.Equal(result.Result.Id, getTransactionResult.Result.Subtransactions.First().TransactionId);
+
+			// cleanup
+			_sut.DeleteTransaction(addTransactionResult.Result.Id);
+			var billTransactionResult = _billService.GetBillTransaction(addTransactionResult.Result.BillTransactionId.Value);
+			Assert.False(billTransactionResult.HasErrors);
+			_billService.DeleteBill(billTransactionResult.Result.BillId);
+			_vendorService.DeleteVendor(addTransactionResult.Result.VendorId.Value);
+			_categoryService.DeleteCategory(addTransactionResult.Result.Subtransactions.First().CategoryId.Value);
+			_accountService.DeleteAccount(addTransactionResult.Result.AccountId);
+
+			_billService.DeleteBill(addNewBillResult.Result.Id);
+			_vendorService.DeleteVendor(addNewVendorResult.Result.Id);
+			_categoryService.DeleteCategory(addNewCategoryResult.Result.Id);
+			_accountService.DeleteAccount(addNewAccountResult.Result.Id);
+		}
+
+		[Fact]
+		public void UpdateTransaction_ExistingTransaction_NonExistantAccount()
+		{
+			var addTransactionResult = AddTestTransaction();
+			var nonExistantAccountId = -1;
+
+			// act
+			var result = _sut.UpdateTransaction(addTransactionResult.Result.Id, new Filter<int>(nonExistantAccountId));
+			Assert.True(result.HasErrors);
+
+			// cleanup
+			_sut.DeleteTransaction(addTransactionResult.Result.Id);
+			var billTransactionResult = _billService.GetBillTransaction(addTransactionResult.Result.BillTransactionId.Value);
+			Assert.False(billTransactionResult.HasErrors);
+			_billService.DeleteBill(billTransactionResult.Result.BillId);
+			_vendorService.DeleteVendor(addTransactionResult.Result.VendorId.Value);
+			_categoryService.DeleteCategory(addTransactionResult.Result.Subtransactions.First().CategoryId.Value);
+			_accountService.DeleteAccount(addTransactionResult.Result.AccountId);
+		}
+
+		[Fact]
+		public void UpdateTransaction_ExistingTransaction_NonExistantCategory()
+		{
+			var addTransactionResult = AddTestTransaction();
+			var nonExistantCategoryId = -1;
+
+			// act
+			var result = _sut.UpdateTransaction(addTransactionResult.Result.Id, categoryId: new Filter<int?>(new Nullable<int>(nonExistantCategoryId)));
+			Assert.True(result.HasErrors);
+
+			// cleanup
+			_sut.DeleteTransaction(addTransactionResult.Result.Id);
+			var billTransactionResult = _billService.GetBillTransaction(addTransactionResult.Result.BillTransactionId.Value);
+			Assert.False(billTransactionResult.HasErrors);
+			_billService.DeleteBill(billTransactionResult.Result.BillId);
+			_vendorService.DeleteVendor(addTransactionResult.Result.VendorId.Value);
+			_categoryService.DeleteCategory(addTransactionResult.Result.Subtransactions.First().CategoryId.Value);
+			_accountService.DeleteAccount(addTransactionResult.Result.AccountId);
+		}
+
+		[Fact]
+		public void UpdateTransaction_ExistingTransaction_NonExistantVendor()
+		{
+			var addTransactionResult = AddTestTransaction();
+			var nonExistantVendorId = -1;
+
+			// act
+			var result = _sut.UpdateTransaction(addTransactionResult.Result.Id, vendorId: new Filter<int?>(new Nullable<int>(nonExistantVendorId)));
+			Assert.True(result.HasErrors);
+
+			// cleanup
+			_sut.DeleteTransaction(addTransactionResult.Result.Id);
+			var billTransactionResult = _billService.GetBillTransaction(addTransactionResult.Result.BillTransactionId.Value);
+			Assert.False(billTransactionResult.HasErrors);
+			_billService.DeleteBill(billTransactionResult.Result.BillId);
+			_vendorService.DeleteVendor(addTransactionResult.Result.VendorId.Value);
+			_categoryService.DeleteCategory(addTransactionResult.Result.Subtransactions.First().CategoryId.Value);
+			_accountService.DeleteAccount(addTransactionResult.Result.AccountId);
+		}
+
+		[Fact]
+		public void UpdateTransaction_ExistingTransaction_NonExistantBillTransaction()
+		{
+			var addTransactionResult = AddTestTransaction();
+			var nonExistantBillTransactionId = -1;
+
+			// act
+			var result = _sut.UpdateTransaction(addTransactionResult.Result.Id, billTransactionId: new Filter<int?>(new Nullable<int>(nonExistantBillTransactionId)));
+			Assert.True(result.HasErrors);
+
+			// cleanup
+			_sut.DeleteTransaction(addTransactionResult.Result.Id);
+			var billTransactionResult = _billService.GetBillTransaction(addTransactionResult.Result.BillTransactionId.Value);
+			Assert.False(billTransactionResult.HasErrors);
+			_billService.DeleteBill(billTransactionResult.Result.BillId);
+			_vendorService.DeleteVendor(addTransactionResult.Result.VendorId.Value);
+			_categoryService.DeleteCategory(addTransactionResult.Result.Subtransactions.First().CategoryId.Value);
+			_accountService.DeleteAccount(addTransactionResult.Result.AccountId);
 		}
 	}
 }

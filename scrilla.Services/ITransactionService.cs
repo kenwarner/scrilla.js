@@ -17,6 +17,6 @@ namespace scrilla.Services
 
 		ServiceResult<bool> DeleteTransaction(int transactionId);
 
-		ServiceResult<bool> UpdateTransaction(int transactionId, int? accountId = null, DateTime? timestamp = null, decimal? amount = null, string memo = null, string notes = null, bool isReconciled = false, bool isExcludedFromBudget = false, bool isTransfer = false, int? categoryId = null, int? vendorId = null, int? billTransactionId = null);
+		ServiceResult<Transaction> UpdateTransaction(int transactionId, Filter<int> accountId = null, DateTime? timestamp = null, decimal? amount = null, string memo = null, string notes = null, bool isReconciled = false, bool isExcludedFromBudget = false, bool isTransfer = false, Filter<int?> categoryId = null, Filter<int?> vendorId = null, Filter<int?> billTransactionId = null);
 	}
 }

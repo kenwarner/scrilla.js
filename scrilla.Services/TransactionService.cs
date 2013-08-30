@@ -14,13 +14,15 @@ namespace scrilla.Services
 		private IAccountService _accountService;
 		private ICategoryService _categoryService;
 		private IVendorService _vendorService;
+		private IBillService _billService;
 
-		public TransactionService(IDatabase database, IAccountService accountService, ICategoryService categoryService, IVendorService vendorService)
+		public TransactionService(IDatabase database, IAccountService accountService, ICategoryService categoryService, IVendorService vendorService, IBillService billService)
 			: base(database)
 		{
 			_accountService = accountService;
 			_categoryService = categoryService;
 			_vendorService = vendorService;
+			_billService = billService;
 		}
 
 		private ServiceResult<IEnumerable<Transaction>> GetTransactions(Filter<int> transactionId = null, Filter<int?> accountId = null, Filter<int?> categoryId = null, Filter<int?> vendorId = null, DateTime? from = null, DateTime? to = null)
@@ -226,13 +228,109 @@ JOIN Subtransaction st ON st.TransactionId = t.Id
 			return result;
 		}
 
-		public ServiceResult<bool> UpdateTransaction(int transactionId, int? accountId = null, DateTime? timestamp = null, decimal? amount = null, string memo = null, string notes = null, bool isReconciled = false, bool isExcludedFromBudget = false, bool isTransfer = false, int? categoryId = null, int? vendorId = null, int? billTransactionId = null)
+		public ServiceResult<Transaction> UpdateTransaction(int transactionId, Filter<int> accountId = null, DateTime? timestamp = null, decimal? amount = null, string memo = null, string notes = null, bool isReconciled = false, bool isExcludedFromBudget = false, bool isTransfer = false, Filter<int?> categoryId = null, Filter<int?> vendorId = null, Filter<int?> billTransactionId = null)
 		{
-			throw new NotImplementedException();
+			var result = new ServiceResult<Transaction>();
 
-			var result = new ServiceResult<bool>();
+			var transactionResult = GetTransaction(transactionId);
+			if (transactionResult.HasErrors)
+			{
+				result.AddErrors(transactionResult);
+				return result;
+			}
 
+			// account update
+			if (accountId != null)
+			{
+				// make sure account exists
+				var accountResult = _accountService.GetAccount(accountId.Object);
+				if (accountResult.HasErrors)
+				{
+					result.AddErrors(accountResult);
+					return result;
+				}
 
+				transactionResult.Result.AccountId = accountId.Object;
+			}
+
+			// category update
+			if (categoryId != null)
+			{
+				// make sure category exists
+				if (categoryId.Object.HasValue)
+				{
+					var categoryResult = _categoryService.GetCategory(categoryId.Object.Value);
+					if (categoryResult.HasErrors)
+					{
+						result.AddErrors(categoryResult);
+						return result;
+					}
+				}
+
+				foreach (var s in transactionResult.Result.Subtransactions)
+				{
+					s.CategoryId = categoryId.Object;
+				}
+			}
+
+			// vendor update
+			if (vendorId != null)
+			{
+				// make sure vendor exists
+				if (vendorId.Object.HasValue)
+				{
+					var vendorResult = _vendorService.GetVendor(vendorId.Object.Value);
+					if (vendorResult.HasErrors)
+					{
+						result.AddErrors(vendorResult);
+						return result;
+					}
+				}
+
+				transactionResult.Result.VendorId = vendorId.Object;
+			}
+
+			// bill transaction update
+			if (billTransactionId != null)
+			{
+				// make sure bill transaction exists
+				if (billTransactionId.Object.HasValue)
+				{
+					var billTransactionResult = _billService.GetBillTransaction(billTransactionId.Object.Value);
+					if (billTransactionResult.HasErrors)
+					{
+						result.AddErrors(billTransactionResult);
+						return result;
+					}
+				}
+
+				transactionResult.Result.BillTransactionId = billTransactionId.Object;
+			}
+
+			if (timestamp.HasValue)
+				transactionResult.Result.Timestamp = timestamp.Value;
+
+			if (amount.HasValue)
+				transactionResult.Result.Amount = amount.Value;
+
+			foreach (var s in transactionResult.Result.Subtransactions)
+			{
+				s.Memo = memo;
+				s.Notes = notes;
+				s.IsExcludedFromBudget = isExcludedFromBudget;
+				s.IsTransfer = isTransfer;
+			}
+
+			transactionResult.Result.IsReconciled = isReconciled;
+
+			// update database
+			_db.Update<Transaction>(transactionResult.Result);
+			foreach (var s in transactionResult.Result.Subtransactions)
+			{
+				_db.Update<Subtransaction>(s);
+			}
+
+			result.Result = transactionResult.Result;
 			return result;
 		}
 	}

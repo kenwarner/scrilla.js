@@ -12,14 +12,12 @@ namespace scrilla.Services
 	public class BillService : EntityService, IBillService
 	{
 		private ICategoryService _categoryService;
-		private ITransactionService _transactionService;
 		private IVendorService _vendorService;
 
-		public BillService(IDatabase database, ICategoryService categoryService, ITransactionService transactionService, IVendorService vendorService)
+		public BillService(IDatabase database, ICategoryService categoryService, IVendorService vendorService)
 			: base(database)
 		{
 			_categoryService = categoryService;
-			_transactionService = transactionService;
 			_vendorService = vendorService;
 		}
 
@@ -501,7 +499,7 @@ namespace scrilla.Services
 			return result;
 		}
 
-		public ServiceResult<BillTransaction> UpdateBillTransaction(int billTransactionId, decimal? amount, DateTime? date, bool? isPaid, int? transactionId)
+		public ServiceResult<BillTransaction> UpdateBillTransaction(int billTransactionId, decimal? amount, DateTime? date, bool? isPaid)
 		{
 			var result = new ServiceResult<BillTransaction>();
 
@@ -511,26 +509,6 @@ namespace scrilla.Services
 			{
 				result.AddErrors(billTransactionResult);
 				return result;
-			}
-
-			// does the transaction exist?
-			if (transactionId.HasValue)
-			{
-				var transactionResult = _transactionService.GetTransaction(transactionId.Value);
-				if (transactionResult.HasErrors)
-				{
-					result.AddErrors(transactionResult);
-					return result;
-				}
-
-				// TODO remove any other transactions that have this billTransactionId
-
-				// only update the bill transaction if it's different from the current one
-				if (transactionResult.Result.BillTransactionId != billTransactionId)
-				{
-					transactionResult.Result.BillTransactionId = billTransactionId;
-					_transactionService.UpdateTransaction(transactionResult.Result.Id, billTransactionId: billTransactionId);
-				}
 			}
 
 			if (amount.HasValue)
