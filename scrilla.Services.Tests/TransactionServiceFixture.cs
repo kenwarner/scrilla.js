@@ -391,11 +391,34 @@ namespace scrilla.Services.Tests
 			_accountService.DeleteAccount(addAccountResult.Result.Id);
 		}
 
-		[Fact(Skip="Not yet implemented")]
-		public void DeleteTransaction()
+		[Fact]
+		public void DeleteTransaction_ExistingTransaction()
 		{
+			var addTransactionResult = AddTestTransaction();
 
+			// act
+			var result = _sut.DeleteTransaction(addTransactionResult.Result.Id);
+			Assert.False(result.HasErrors);
+
+			// cleanup
+			var billTransactionResult = _billService.GetBillTransaction(addTransactionResult.Result.BillTransactionId.Value);
+			Assert.False(billTransactionResult.HasErrors);
+			_billService.DeleteBill(billTransactionResult.Result.BillId);
+			_vendorService.DeleteVendor(addTransactionResult.Result.VendorId.Value);
+			_categoryService.DeleteCategory(addTransactionResult.Result.Subtransactions.First().CategoryId.Value);
+			_accountService.DeleteAccount(addTransactionResult.Result.AccountId);
 		}
+
+		[Fact]
+		public void DeleteTransaction_NonExistantTransaction()
+		{
+			var nonExistantTransactionId = -1;
+
+			// act
+			var result = _sut.DeleteTransaction(nonExistantTransactionId);
+			Assert.True(result.HasErrors);
+		}
+
 
 		[Fact(Skip = "Not yet implemented")]
 		public void UpdateTransaction()
