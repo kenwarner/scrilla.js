@@ -317,6 +317,106 @@ namespace scrilla.Services.Tests
 
 
 		[Fact]
+		public void GetTransactions_NonExistantCategory_NoTransactions()
+		{
+			// create test category
+			var nonExistantCategoryId = -1;
+
+			// act
+			var result = _sut.GetTransactions(categoryId: new Filter<int?>(new Nullable<int>(nonExistantCategoryId)));
+			Assert.True(result.HasErrors);
+			Assert.Equal(1, result.ErrorMessages.Count(x => x.Key == ErrorType.NotFound));
+		}
+
+		[Fact]
+		public void GetTransactions_ExistingCategory_NoTransactions()
+		{
+			// create test category
+			var addCategoryResult = AddTestCategory();
+
+			// act
+			var result = _sut.GetTransactions(categoryId: new Filter<int?>(new Nullable<int>(addCategoryResult.Result.Id)));
+			Assert.False(result.HasErrors);
+			Assert.Equal(0, result.Result.Count());
+		}
+
+		[Fact]
+		public void GetTransactions_ExistingCategory_OneTransaction()
+		{
+			var timestamp = new DateTime(2000, 1, 14);
+			var amount = 12.1M;
+			var memo = "test memo";
+			var notes = "test notes";
+			var isReconciled = true;
+			var isExcludedFromBudget = false;
+			var isTransfer = true;
+
+			// create test account and category
+			var addAccountResult = AddTestAccount();
+			var addCategoryResult = AddTestCategory();
+
+			// create test transaction
+			var addTransactionResult = _sut.AddTransaction(addAccountResult.Result.Id, timestamp, amount, memo, notes, isReconciled, isExcludedFromBudget, isTransfer, categoryId: addCategoryResult.Result.Id);
+
+			// act
+			var result = _sut.GetTransactions(categoryId: new Filter<int?>(new Nullable<int>(addCategoryResult.Result.Id)));
+			Assert.False(result.HasErrors);
+			Assert.Equal(1, result.Result.Count());
+			Assert.Equal(1, result.Result.First().Subtransactions.Count());
+		}
+
+
+		[Fact]
+		public void GetTransactions_NonExistantVendor_NoTransactions()
+		{
+			// create test vendor
+			var nonExistantVendorId = -1;
+
+			// act
+			var result = _sut.GetTransactions(vendorId: new Filter<int?>(new Nullable<int>(nonExistantVendorId)));
+			Assert.True(result.HasErrors);
+			Assert.Equal(1, result.ErrorMessages.Count(x => x.Key == ErrorType.NotFound));
+		}
+
+		[Fact]
+		public void GetTransactions_ExistingVendor_NoTransactions()
+		{
+			// create test vendor
+			var addVendorResult = AddTestVendor();
+
+			// act
+			var result = _sut.GetTransactions(vendorId: new Filter<int?>(new Nullable<int>(addVendorResult.Result.Id)));
+			Assert.False(result.HasErrors);
+			Assert.Equal(0, result.Result.Count());
+		}
+
+		[Fact]
+		public void GetTransactions_ExistingVendor_OneTransaction()
+		{
+			var timestamp = new DateTime(2000, 1, 14);
+			var amount = 12.1M;
+			var memo = "test memo";
+			var notes = "test notes";
+			var isReconciled = true;
+			var isExcludedFromBudget = false;
+			var isTransfer = true;
+
+			// create test account and vendor
+			var addAccountResult = AddTestAccount();
+			var addVendorResult = AddTestVendor();
+
+			// create test transaction
+			var addTransactionResult = _sut.AddTransaction(addAccountResult.Result.Id, timestamp, amount, memo, notes, isReconciled, isExcludedFromBudget, isTransfer, vendorId: addVendorResult.Result.Id);
+
+			// act
+			var result = _sut.GetTransactions(vendorId: new Filter<int?>(new Nullable<int>(addVendorResult.Result.Id)));
+			Assert.False(result.HasErrors);
+			Assert.Equal(1, result.Result.Count());
+			Assert.Equal(1, result.Result.First().Subtransactions.Count());
+		}
+
+
+		[Fact]
 		public void AddTransaction_ExistingAccount_ExistingCategory_ExistingVendor_ExistingBill()
 		{
 			var transactionTimestamp = new DateTime(2000, 1, 14);

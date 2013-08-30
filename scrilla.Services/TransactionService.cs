@@ -161,7 +161,7 @@ JOIN Subtransaction st ON st.TransactionId = t.Id
 
 		public ServiceResult<IEnumerable<Transaction>> GetTransactions(Filter<int?> accountId = null, Filter<int?> categoryId = null, Filter<int?> vendorId = null, DateTime? from = null, DateTime? to = null)
 		{
-			return GetTransactions(transactionId: null, accountId: accountId, vendorId: vendorId, from: from, to: to);
+			return GetTransactions(transactionId: null, accountId: accountId, categoryId: categoryId, vendorId: vendorId, from: from, to: to);
 		}
 
 		public ServiceResult<Transaction> AddTransaction(int accountId, DateTime timestamp, decimal amount, string memo = null, string notes = null, bool isReconciled = false, bool isExcludedFromBudget = false, bool isTransfer = false, int? categoryId = null, int? vendorId = null, int? billTransactionId = null)
