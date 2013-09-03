@@ -51,11 +51,11 @@ namespace scrilla.js.Web.Areas.HelpPage.Controllers
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public HelpController Actions { get { return MVC.HelpPage.Help; } }
         [GeneratedCode("T4MVC", "2.0")]
-        public readonly string Area = "HelpPage";
+        public readonly string Area = "helppage";
         [GeneratedCode("T4MVC", "2.0")]
-        public readonly string Name = "Help";
+        public readonly string Name = "help";
         [GeneratedCode("T4MVC", "2.0")]
-        public const string NameConst = "Help";
+        public const string NameConst = "help";
 
         static readonly ActionNamesClass s_actions = new ActionNamesClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -63,15 +63,8 @@ namespace scrilla.js.Web.Areas.HelpPage.Controllers
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionNamesClass
         {
-            public readonly string Index = "Index";
-            public readonly string Api = "Api";
-        }
-
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public class ActionNameConstants
-        {
-            public const string Index = "Index";
-            public const string Api = "Api";
+            public readonly string Index = ("Index").ToLowerInvariant();
+            public readonly string Api = ("Api").ToLowerInvariant();
         }
 
 
@@ -81,7 +74,7 @@ namespace scrilla.js.Web.Areas.HelpPage.Controllers
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionParamsClass_Api
         {
-            public readonly string apiId = "apiId";
+            public readonly string apiId = ("apiId").ToLowerInvariant();
         }
         static readonly ViewsClass s_views = new ViewsClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
