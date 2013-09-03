@@ -3,11 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using scrilla.Services;
-
 using System.Data.SqlClient;
 using System.Configuration;
-using Dapper;
-using Dapper.Contrib.Extensions;
 
 namespace scrilla.Data.SeedConsole
 {
