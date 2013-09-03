@@ -21,8 +21,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "scrilla.Data.SeedConsole", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "scrilla.Services", "scrilla.Services\scrilla.Services.csproj", "{34156E2E-A2CE-418D-8AEC-E4E6A92FB215}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "scrilla.js.Web", "scrilla.js.Web\scrilla.js.Web.csproj", "{8D2D88A6-2FB5-4198-A96E-BE5885E505A9}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "scrilla.Data.Dapper", "scrilla.Data.Dapper\scrilla.Data.Dapper.csproj", "{14237860-E43C-4294-9235-81C6C4173773}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "scrilla.Services.Tests", "scrilla.Services.Tests\scrilla.Services.Tests.csproj", "{507B66D4-32AF-466B-89CA-313A0407036D}"
@@ -33,6 +31,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{B5A8FD
 		.nuget\NuGet.exe = .nuget\NuGet.exe
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "scrilla.js.Web.Legacy", "scrilla.js.Web.Legacy\scrilla.js.Web.Legacy.csproj", "{01BF8471-5795-44FE-90D1-D67389924F13}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "scrilla.js.Web", "scrilla.js.Web\scrilla.js.Web.csproj", "{3C8683AD-2C61-415D-868A-DB820755AED3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -68,12 +70,6 @@ Global
 		{34156E2E-A2CE-418D-8AEC-E4E6A92FB215}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{34156E2E-A2CE-418D-8AEC-E4E6A92FB215}.Release|Any CPU.Build.0 = Release|Any CPU
 		{34156E2E-A2CE-418D-8AEC-E4E6A92FB215}.Release|x86.ActiveCfg = Release|Any CPU
-		{8D2D88A6-2FB5-4198-A96E-BE5885E505A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8D2D88A6-2FB5-4198-A96E-BE5885E505A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8D2D88A6-2FB5-4198-A96E-BE5885E505A9}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{8D2D88A6-2FB5-4198-A96E-BE5885E505A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8D2D88A6-2FB5-4198-A96E-BE5885E505A9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8D2D88A6-2FB5-4198-A96E-BE5885E505A9}.Release|x86.ActiveCfg = Release|Any CPU
 		{14237860-E43C-4294-9235-81C6C4173773}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{14237860-E43C-4294-9235-81C6C4173773}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{14237860-E43C-4294-9235-81C6C4173773}.Debug|x86.ActiveCfg = Debug|Any CPU
@@ -86,6 +82,18 @@ Global
 		{507B66D4-32AF-466B-89CA-313A0407036D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{507B66D4-32AF-466B-89CA-313A0407036D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{507B66D4-32AF-466B-89CA-313A0407036D}.Release|x86.ActiveCfg = Release|Any CPU
+		{01BF8471-5795-44FE-90D1-D67389924F13}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{01BF8471-5795-44FE-90D1-D67389924F13}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{01BF8471-5795-44FE-90D1-D67389924F13}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{01BF8471-5795-44FE-90D1-D67389924F13}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{01BF8471-5795-44FE-90D1-D67389924F13}.Release|Any CPU.Build.0 = Release|Any CPU
+		{01BF8471-5795-44FE-90D1-D67389924F13}.Release|x86.ActiveCfg = Release|Any CPU
+		{3C8683AD-2C61-415D-868A-DB820755AED3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C8683AD-2C61-415D-868A-DB820755AED3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3C8683AD-2C61-415D-868A-DB820755AED3}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{3C8683AD-2C61-415D-868A-DB820755AED3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3C8683AD-2C61-415D-868A-DB820755AED3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3C8683AD-2C61-415D-868A-DB820755AED3}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
