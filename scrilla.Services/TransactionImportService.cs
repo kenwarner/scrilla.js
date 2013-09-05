@@ -32,8 +32,12 @@ namespace scrilla.Services
 		public void Import(string fileName)
 		{
 			var transactions = ReadTransactions(fileName);
-			WriteTransactions(transactions);
-			_accountService.UpdateAccountBalances();
+
+			if (transactions != null)
+			{
+				WriteTransactions(transactions);
+				_accountService.UpdateAccountBalances();
+			}
 		}
 
 		private CsvConfiguration CreateCsvConfiguration()

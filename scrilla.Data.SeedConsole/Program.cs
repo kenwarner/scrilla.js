@@ -7,6 +7,7 @@ using System.Data.SqlClient;
 using System.Configuration;
 using Castle.Windsor;
 using Castle.Windsor.Installer;
+using scrilla.Data.Dapper;
 
 namespace scrilla.Data.SeedConsole
 {
@@ -25,6 +26,7 @@ namespace scrilla.Data.SeedConsole
 		{
 			using (var container = new WindsorContainer())
 			{
+				container.Install(FromAssembly.Containing<DapperInstaller>());
 				container.Install(FromAssembly.Containing<ServicesInstaller>());
 				var importService = container.Resolve<ITransactionImportService>();
 				importService.Import(filename);

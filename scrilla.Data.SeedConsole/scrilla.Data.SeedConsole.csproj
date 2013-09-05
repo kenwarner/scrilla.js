@@ -111,6 +111,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\scrilla.Data.Dapper\scrilla.Data.Dapper.csproj">
+      <Project>{14237860-e43c-4294-9235-81c6c4173773}</Project>
+      <Name>scrilla.Data.Dapper</Name>
+    </ProjectReference>
     <ProjectReference Include="..\scrilla.Data\scrilla.Data.csproj">
       <Project>{A286DBC0-E497-4542-A0FA-80177D61FAEF}</Project>
       <Name>scrilla.Data</Name>

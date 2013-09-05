@@ -13,7 +13,7 @@ namespace scrilla.Services
 	{
 		public void Install(IWindsorContainer container, IConfigurationStore store)
 		{
-			container.Register(Types.FromThisAssembly()
+			container.Register(Classes.FromThisAssembly()
 				.Where(type => type.Name.EndsWith("Service"))
 				.WithService.DefaultInterfaces());
 		}
