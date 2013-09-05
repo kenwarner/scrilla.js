@@ -35,6 +35,7 @@ namespace scrilla.Services.Tests
 			_fixture.Register<IBudgetService>(() => _fixture.Create<BudgetService>());
 			_fixture.Register<ICategoryService>(() => _fixture.Create<CategoryService>());
 			_fixture.Register<ITransactionService>(() => _fixture.Create<TransactionService>());
+			_fixture.Register<ITransactionImportService>(() => _fixture.Create<TransactionImportService>());
 			_fixture.Register<IVendorService>(() => _fixture.Create<VendorService>());
 			_sut = _fixture.Create<T>();
 		}
