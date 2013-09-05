@@ -205,6 +205,8 @@ JOIN Subtransaction st ON st.TransactionId = t.Id
 			_db.Insert<Subtransaction>(subTransaction);
 			transaction.Subtransactions = new List<Subtransaction>() { subTransaction };
 
+			_accountService.UpdateAccountBalances();
+
 			result.Result = transaction;
 			return result;
 		}
@@ -223,6 +225,8 @@ JOIN Subtransaction st ON st.TransactionId = t.Id
 				result.AddError(ErrorType.NotFound, "Transaction {0} not found", transactionId);
 				return result;
 			}
+
+			_accountService.UpdateAccountBalances();
 
 			result.Result = deletionResult;
 			return result;
@@ -315,6 +319,7 @@ JOIN Subtransaction st ON st.TransactionId = t.Id
 
 			foreach (var s in transactionResult.Result.Subtransactions)
 			{
+				// TODO how does the amount parameter relate to the subtransaction values?
 				s.Memo = memo;
 				s.Notes = notes;
 				s.IsExcludedFromBudget = isExcludedFromBudget;
@@ -329,6 +334,8 @@ JOIN Subtransaction st ON st.TransactionId = t.Id
 			{
 				_db.Update<Subtransaction>(s);
 			}
+
+			_accountService.UpdateAccountBalances();
 
 			result.Result = transactionResult.Result;
 			return result;
