@@ -51,6 +51,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.AspNet.Mvc.FixedDisplayModes.1.0.1\lib\net40\Microsoft.Web.Mvc.FixedDisplayModes.dll</HintPath>
     </Reference>
+    <Reference Include="MiniProfiler">
+      <HintPath>..\packages\MiniProfiler.2.0.2\lib\net40\MiniProfiler.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.5.0.6\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -129,6 +132,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\T4MVCExtensions.3.7.3\lib\net40\T4MVCExtensions.dll</HintPath>
     </Reference>
+    <Reference Include="WebActivator">
+      <HintPath>..\packages\WebActivator.1.4.4\lib\net40\WebActivator.dll</HintPath>
+    </Reference>
     <Reference Include="WebActivatorEx">
       <HintPath>..\packages\WebActivatorEx.2.0.3\lib\net40\WebActivatorEx.dll</HintPath>
     </Reference>
@@ -141,6 +147,7 @@
     <Compile Include="App_Start\BootstrapBundleConfig.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\MiniProfiler.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\HelpPage\ApiDescriptionExtensions.cs" />

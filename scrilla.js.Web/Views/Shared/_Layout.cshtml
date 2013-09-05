@@ -1,18 +1,23 @@
-﻿<!DOCTYPE html>
+﻿@using StackExchange.Profiling;
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
+  @this.InitClientTimings()
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Scrilla</title>
-  @Styles.Render(Links.Bundles.Styles.bootstrap)
-  @Styles.Render(Links.Bundles.Styles.bootstrapTheme)
-  @Styles.Render(Links.Bundles.Styles.site)
+  @this.TimeScript(Links.Bundles.Styles.bootstrap, Styles.Render(Links.Bundles.Styles.bootstrap))
+  @this.TimeScript(Links.Bundles.Styles.bootstrapTheme, Styles.Render(Links.Bundles.Styles.bootstrapTheme))
+  @this.TimeScript(Links.Bundles.Styles.site, Styles.Render(Links.Bundles.Styles.site))
 </head>
 <body>
   @RenderBody()
 
-  @Scripts.Render(Links.Bundles.Scripts.jquery)
-  @Scripts.Render(Links.Bundles.Scripts.bootstrap)
+  @this.TimeScript(Links.Bundles.Scripts.jquery, Scripts.Render(Links.Bundles.Scripts.jquery))
+  @this.TimeScript(Links.Bundles.Scripts.bootstrap, Scripts.Render(Links.Bundles.Scripts.bootstrap))
+  @MiniProfiler.RenderIncludes(position: RenderPosition.Right, showTrivial: true, showTimeWithChildren: true, showControls: true, useExistingjQuery: true)
+
   @RenderSection("scripts", required: false)
 </body>
 </html>
