@@ -72,6 +72,29 @@ namespace scrilla.Services.Tests
 		}
 
 		[Fact]
+		public void WriteTransactions_SameAccount()
+		{
+			// arrange
+			var row1 = new ImportRecord() { Date = new DateTime(2012, 1, 1), Description = "Vendor 1", OriginalDescription = "VENDOR 1", Amount = 10.0M, TransactionType = "debit", Category = "Category 1", AccountName = "Account 1" };
+			var row2 = new ImportRecord() { Date = new DateTime(2012, 1, 1), Description = "Vendor 1", OriginalDescription = "VENDOR 1", Amount = 11.0M, TransactionType = "debit", Category = "Category 1", AccountName = "Account 1" };
+			var importRecords = new List<ImportRecord>() { row1, row2 };
+
+			// act
+			_sut.WriteTransactions(importRecords);
+
+			// assert
+			var transactionService = _fixture.Create<ITransactionService>();
+			var transactionsResult = transactionService.GetTransactions();
+			Assert.False(transactionsResult.HasErrors);
+			Assert.Equal(2, transactionsResult.Result.Count());
+
+			var accountService = _fixture.Create<IAccountService>();
+			var accountResult = accountService.GetAllAccounts();
+			Assert.False(accountResult.HasErrors);
+			Assert.Equal(1, accountResult.Result.Count());
+		}
+
+		[Fact]
 		public void WriteTransactions_ExistingAccount()
 		{
 			// arrange
@@ -121,6 +144,29 @@ namespace scrilla.Services.Tests
 			var vendorResult = vendorService.GetAllVendors();
 			Assert.False(vendorResult.HasErrors);
 			Assert.Equal(2, vendorResult.Result.Count());
+		}
+
+		[Fact]
+		public void WriteTransactions_SameVendor()
+		{
+			// arrange
+			var row1 = new ImportRecord() { Date = new DateTime(2012, 1, 1), Description = "Vendor 1", OriginalDescription = "VENDOR 1", Amount = 10.0M, TransactionType = "debit", Category = "Category 1", AccountName = "Account 1" };
+			var row2 = new ImportRecord() { Date = new DateTime(2012, 1, 1), Description = "Vendor 1", OriginalDescription = "VENDOR 1", Amount = 11.0M, TransactionType = "debit", Category = "Category 1", AccountName = "Account 1" };
+			var importRecords = new List<ImportRecord>() { row1, row2 };
+
+			// act
+			_sut.WriteTransactions(importRecords);
+
+			// assert
+			var transactionService = _fixture.Create<ITransactionService>();
+			var transactionsResult = transactionService.GetTransactions();
+			Assert.False(transactionsResult.HasErrors);
+			Assert.Equal(2, transactionsResult.Result.Count());
+
+			var vendorService = _fixture.Create<IVendorService>();
+			var vendorResult = vendorService.GetAllVendors();
+			Assert.False(vendorResult.HasErrors);
+			Assert.Equal(1, vendorResult.Result.Count());
 		}
 
 		[Fact]

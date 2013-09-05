@@ -71,13 +71,13 @@ namespace scrilla.Services
 			var accountGroupsResult = _accountService.GetAllAccountGroups();
 			var existingAccountGroups = accountGroupsResult.Result;
 			var accountNameMapsResult = _accountService.GetAllAccountNameMaps();
-			var existingAccountNameMaps = accountNameMapsResult.Result;
+			var existingAccountNameMaps = accountNameMapsResult.Result.ToList();
 			var categoriesResult = _categoryService.GetAllCategories();
 			var existingCategories = categoriesResult.Result;
 			var vendorsResult = _vendorService.GetAllVendors();
 			var existingVendors = vendorsResult.Result.ToList();
 			var mappedVendorsResult = _vendorService.GetAllVendorMaps();
-			var existingMappedVendors = mappedVendorsResult.Result;
+			var existingMappedVendors = mappedVendorsResult.Result.ToList();
 			var transactionsResult = _transactionService.GetTransactions();
 			var existingTransactions = transactionsResult.Result.ToList();
 
@@ -87,11 +87,20 @@ namespace scrilla.Services
 				var amount = row.Amount * (row.TransactionType.Equals("debit") ? -1.0M : 1.0M);
 
 				// transaction a transfer?
-				var isTransfer = row.Description.StartsWith("Transfer from") || row.Description.StartsWith("Transfer to");
+				var isTransfer = String.IsNullOrEmpty(row.Description) ? false : row.Description.StartsWith("Transfer from") || row.Description.StartsWith("Transfer to");
 
 				// find the account in the local cache
-				var accountNameMap = existingAccountNameMaps.FirstOrDefault(x => x.Name.Equals(row.AccountName, StringComparison.CurrentCultureIgnoreCase));
-				Account account = accountNameMap == null ? null : existingAccounts.SingleOrDefault(x => x.Id == accountNameMap.AccountId);
+				var account = existingAccounts.SingleOrDefault(x => x.Name.Equals(row.AccountName, StringComparison.CurrentCultureIgnoreCase));
+
+				// find the account in the mapped accounts
+				if (account == null)
+				{
+					var accountNameMap = existingAccountNameMaps.FirstOrDefault(x => x.Name.Equals(row.AccountName, StringComparison.CurrentCultureIgnoreCase));
+					if (accountNameMap != null)
+					{
+						account = existingAccounts.SingleOrDefault(x => x.Id == accountNameMap.AccountId);
+					}
+				}
 
 				// if we didn't find the account, make one
 				if (account == null)
@@ -106,6 +115,7 @@ namespace scrilla.Services
 						throw new Exception();
 
 					existingAccounts.Add(account);
+					existingAccountNameMaps.Add(addAccountNameMapResult.Result);
 				}
 				else
 				{
@@ -129,10 +139,13 @@ namespace scrilla.Services
 				var vendor = existingVendors.SingleOrDefault(x => x.Name.Equals(row.Description, StringComparison.CurrentCultureIgnoreCase));
 
 				// find the vendor in the description map
-				var mappedVendor = existingMappedVendors.Where(x => x.Description.Equals(row.Description, StringComparison.CurrentCultureIgnoreCase));
-				if (mappedVendor.Any())
+				if (vendor == null)
 				{
-					vendor = existingVendors.FirstOrDefault(x => x.Id == mappedVendor.FirstOrDefault().VendorId);
+					var mappedVendor = existingMappedVendors.Where(x => x.Description.Equals(row.Description, StringComparison.CurrentCultureIgnoreCase));
+					if (mappedVendor.Any())
+					{
+						vendor = existingVendors.FirstOrDefault(x => x.Id == mappedVendor.FirstOrDefault().VendorId);
+					}
 				}
 
 				// if we didn't find the vendor, make one
@@ -148,6 +161,7 @@ namespace scrilla.Services
 						throw new Exception();
 
 					existingVendors.Add(vendor);
+					existingMappedVendors.Add(addVendorMapResult.Result);
 				}
 
 				// add the transaction
@@ -187,9 +201,15 @@ namespace scrilla.Services
 	{
 		public override void CreateMap()
 		{
+			Map(m => m.Date);
+			Map(m => m.Description);
 			Map(m => m.OriginalDescription).Name("Original Description");
+			Map(m => m.Amount);
 			Map(m => m.TransactionType).Name("Transaction Type");
+			Map(m => m.Category);
 			Map(m => m.AccountName).Name("Account Name");
+			Map(m => m.Labels);
+			Map(m => m.Notes);
 		}
 	}
 }
