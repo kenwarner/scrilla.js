@@ -72,23 +72,50 @@ internal partial class T4MVC_System_Web_Mvc_ActionResult : System.Web.Mvc.Action
 namespace Links
 {
     [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+    public static class Content {
+        private const string URLPATH = "~/Content";
+        public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
+        public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public static class bootstrap {
+            private const string URLPATH = "~/Content/bootstrap";
+            public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
+            public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
+            public static readonly string bootstrap_theme_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/bootstrap-theme.min.css") ? Url("bootstrap-theme.min.css") : Url("bootstrap-theme.css");
+                 
+            public static readonly string bootstrap_theme_min_css = Url("bootstrap-theme.min.css");
+            public static readonly string bootstrap_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/bootstrap.min.css") ? Url("bootstrap.min.css") : Url("bootstrap.css");
+                 
+            public static readonly string bootstrap_min_css = Url("bootstrap.min.css");
+        }
+    
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public static class fonts {
+            private const string URLPATH = "~/Content/fonts";
+            public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
+            public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
+            public static readonly string glyphicons_halflings_regular_eot = Url("glyphicons-halflings-regular.eot");
+            public static readonly string glyphicons_halflings_regular_svg = Url("glyphicons-halflings-regular.svg");
+            public static readonly string glyphicons_halflings_regular_ttf = Url("glyphicons-halflings-regular.ttf");
+            public static readonly string glyphicons_halflings_regular_woff = Url("glyphicons-halflings-regular.woff");
+        }
+    
+        public static readonly string site_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/site.min.css") ? Url("site.min.css") : Url("site.css");
+             
+    }
+
+    [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
     public static class scripts {
         private const string URLPATH = "~/scripts";
         public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
         public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
         public static readonly string _references_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/_references.min.js") ? Url("_references.min.js") : Url("_references.js");
-        public static readonly string jquery_1_8_2_intellisense_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery-1.8.2.intellisense.min.js") ? Url("jquery-1.8.2.intellisense.min.js") : Url("jquery-1.8.2.intellisense.js");
-        public static readonly string jquery_1_8_2_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery-1.8.2.min.js") ? Url("jquery-1.8.2.min.js") : Url("jquery-1.8.2.js");
-        public static readonly string jquery_1_8_2_min_js = Url("jquery-1.8.2.min.js");
-    }
-
-    [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-    public static class styles {
-        private const string URLPATH = "~/styles";
-        public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
-        public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-        public static readonly string site_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/site.min.css") ? Url("site.min.css") : Url("site.css");
-             
+        public static readonly string bootstrap_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/bootstrap.min.js") ? Url("bootstrap.min.js") : Url("bootstrap.js");
+        public static readonly string bootstrap_min_js = Url("bootstrap.min.js");
+        public static readonly string jquery_2_0_3_intellisense_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery-2.0.3.intellisense.min.js") ? Url("jquery-2.0.3.intellisense.min.js") : Url("jquery-2.0.3.intellisense.js");
+        public static readonly string jquery_2_0_3_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery-2.0.3.min.js") ? Url("jquery-2.0.3.min.js") : Url("jquery-2.0.3.js");
+        public static readonly string jquery_2_0_3_min_js = Url("jquery-2.0.3.min.js");
+        public static readonly string jquery_2_0_3_min_map = Url("jquery-2.0.3.min.map");
     }
 
     [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -115,7 +142,8 @@ internal static class T4MVCHelpers {
     //      return "http://localhost" + path + "?foo=bar";
     private static string ProcessVirtualPathDefault(string virtualPath) {
         // The path that comes in starts with ~/ and must first be made absolute
-        string path = VirtualPathUtility.ToAbsolute(virtualPath);
+        //string path = VirtualPathUtility.ToAbsolute(virtualPath);
+		string path = VirtualPathUtility.ToAppRelative(virtualPath);
         
         // Add your own modifications here before returning the path
         return path;
