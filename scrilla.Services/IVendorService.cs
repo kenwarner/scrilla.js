@@ -14,6 +14,7 @@ namespace scrilla.Services
 		ServiceResult<ImportDescriptionVendorMap> GetVendorMap(int vendorMapId);
 
 		ServiceResult<IEnumerable<Vendor>> GetAllVendors();
+		ServiceResult<IEnumerable<ImportDescriptionVendorMap>> GetAllVendorMaps();
 
 		ServiceResult<Vendor> AddVendor(string name, int? defaultCategoryId = null);
 

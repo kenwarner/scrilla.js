@@ -56,6 +56,10 @@ namespace scrilla.Services
 			return base.GetAllEntity<Vendor>();
 		}
 
+		public ServiceResult<IEnumerable<ImportDescriptionVendorMap>> GetAllVendorMaps()
+		{
+			return base.GetAllEntity<ImportDescriptionVendorMap>();
+		}
 
 		public ServiceResult<Vendor> AddVendor(string name, int? defaultCategoryId = null)
 		{
