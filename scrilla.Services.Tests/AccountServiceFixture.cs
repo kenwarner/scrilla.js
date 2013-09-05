@@ -61,15 +61,16 @@ namespace scrilla.Services.Tests
 		public void GetAccount_ExistingAccount_WithNullDefaultCategory_And_NullAccountGroup()
 		{
 			var accountName = "test account";
-			var balance = 1.23M;
+			var initialBalance = 1.23M;
 			int? defaultCategoryId = null;
 			int? accountGroupId = null;
 
 			// create test account
-			var addAccountResult = _sut.AddAccount(accountName, balance, defaultCategoryId, accountGroupId);
+			var addAccountResult = _sut.AddAccount(accountName, initialBalance, defaultCategoryId, accountGroupId);
 			Assert.False(addAccountResult.HasErrors);
 			Assert.Equal(accountName, addAccountResult.Result.Name);
-			Assert.Equal(balance, addAccountResult.Result.Balance);
+			Assert.Equal(initialBalance, addAccountResult.Result.InitialBalance);
+			Assert.Equal(initialBalance, addAccountResult.Result.Balance);
 			Assert.Equal(defaultCategoryId, addAccountResult.Result.DefaultCategoryId);
 			Assert.Equal(accountGroupId, addAccountResult.Result.AccountGroupId);
 
@@ -77,7 +78,8 @@ namespace scrilla.Services.Tests
 			var result = _sut.GetAccount(addAccountResult.Result.Id);
 			Assert.False(result.HasErrors);
 			Assert.Equal(accountName, result.Result.Name);
-			Assert.Equal(balance, result.Result.Balance);
+			Assert.Equal(initialBalance, result.Result.InitialBalance);
+			Assert.Equal(initialBalance, result.Result.Balance);
 			Assert.Equal(defaultCategoryId, result.Result.DefaultCategoryId);
 			Assert.Equal(accountGroupId, result.Result.AccountGroupId);
 
@@ -142,8 +144,8 @@ namespace scrilla.Services.Tests
 
 			// create test account
 			var accountName = "test account";
-			var balance = 1.23M;
-			var addAccountResult = _sut.AddAccount(accountName, balance);
+			var initialBalance = 1.23M;
+			var addAccountResult = _sut.AddAccount(accountName, initialBalance);
 			Assert.False(addAccountResult.HasErrors);
 
 			// act
@@ -159,13 +161,14 @@ namespace scrilla.Services.Tests
 		public void AddAccount_NullDefaultCategory_And_NullAccountGroup()
 		{
 			var accountName = "test account";
-			var balance = 1.23M;
+			var initialBalance = 1.23M;
 
 			// act
-			var addAcountResult = _sut.AddAccount(accountName, balance);
+			var addAcountResult = _sut.AddAccount(accountName, initialBalance);
 			Assert.False(addAcountResult.HasErrors);
 			Assert.Equal(accountName, addAcountResult.Result.Name);
-			Assert.Equal(balance, addAcountResult.Result.Balance);
+			Assert.Equal(initialBalance, addAcountResult.Result.InitialBalance);
+			Assert.Equal(initialBalance, addAcountResult.Result.Balance);
 			Assert.Null(addAcountResult.Result.DefaultCategoryId);
 			Assert.Null(addAcountResult.Result.AccountGroupId);
 
@@ -178,7 +181,7 @@ namespace scrilla.Services.Tests
 		{
 			var categoryService = _fixture.Create<CategoryService>();
 			var accountName = "test account";
-			var balance = 1.23M;
+			var initialBalance = 1.23M;
 
 			// get a default category
 			var categoryName = "test category";
@@ -186,10 +189,11 @@ namespace scrilla.Services.Tests
 			Assert.False(addCategoryResult.HasErrors);
 
 			// act
-			var addAccountResult = _sut.AddAccount(accountName, balance, addCategoryResult.Result.Id);
+			var addAccountResult = _sut.AddAccount(accountName, initialBalance, addCategoryResult.Result.Id);
 			Assert.False(addAccountResult.HasErrors);
 			Assert.Equal(accountName, addAccountResult.Result.Name);
-			Assert.Equal(balance, addAccountResult.Result.Balance);
+			Assert.Equal(initialBalance, addAccountResult.Result.InitialBalance);
+			Assert.Equal(initialBalance, addAccountResult.Result.Balance);
 			Assert.Equal(addCategoryResult.Result.Id, addAccountResult.Result.DefaultCategoryId);
 
 			// cleanup
@@ -201,11 +205,10 @@ namespace scrilla.Services.Tests
 		public void AddAccount_NonExistantDefaultCategory()
 		{
 			var accountName = "test account";
-			var balance = 1.23M;
 			var defaultCategoryId = -1;
 
 			// act
-			var result = _sut.AddAccount(accountName, balance, defaultCategoryId);
+			var result = _sut.AddAccount(accountName, defaultCategoryId: defaultCategoryId);
 			Assert.True(result.HasErrors);
 			Assert.True(result.ErrorMessages.Any(x => x.Key == ErrorType.NotFound));
 		}
@@ -214,7 +217,7 @@ namespace scrilla.Services.Tests
 		public void AddAccount_NonNullAccountGroup()
 		{
 			var accountName = "test account";
-			var balance = 1.23M;
+			var initialBalance = 1.23M;
 
 			// get an account group
 			var accountGroupName = "test account group";
@@ -222,10 +225,11 @@ namespace scrilla.Services.Tests
 			Assert.False(addAccountGroupResult.HasErrors);
 
 			// act
-			var addAccountResult = _sut.AddAccount(accountName, balance, accountGroupId: addAccountGroupResult.Result.Id);
+			var addAccountResult = _sut.AddAccount(accountName, initialBalance, accountGroupId: addAccountGroupResult.Result.Id);
 			Assert.False(addAccountResult.HasErrors);
 			Assert.Equal(accountName, addAccountResult.Result.Name);
-			Assert.Equal(balance, addAccountResult.Result.Balance);
+			Assert.Equal(initialBalance, addAccountResult.Result.InitialBalance);
+			Assert.Equal(initialBalance, addAccountResult.Result.Balance);
 			Assert.Equal(addAccountGroupResult.Result.Id, addAccountResult.Result.AccountGroupId);
 
 			// cleanup
@@ -237,11 +241,10 @@ namespace scrilla.Services.Tests
 		public void AddAccount_NonExistantAccountGroup()
 		{
 			var accountName = "test account";
-			var balance = 1.23M;
 			var accountGroupId = -1;
 
 			// act
-			var result = _sut.AddAccount(accountName, balance, accountGroupId: accountGroupId);
+			var result = _sut.AddAccount(accountName, accountGroupId: accountGroupId);
 			Assert.True(result.HasErrors);
 			Assert.True(result.ErrorMessages.Any(x => x.Key == ErrorType.NotFound));
 		}
@@ -265,10 +268,9 @@ namespace scrilla.Services.Tests
 		public void DeleteAccount_ExistingAccount()
 		{
 			var accountName = "test account";
-			var balance = 1.23M;
 
 			// add a test account
-			var addAccountResult = _sut.AddAccount(accountName, balance);
+			var addAccountResult = _sut.AddAccount(accountName);
 			Assert.False(addAccountResult.HasErrors);
 
 			// delete the test account

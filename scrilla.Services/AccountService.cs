@@ -5,6 +5,7 @@ using System.Text;
 using System.Diagnostics;
 using scrilla.Data;
 using DapperExtensions;
+using Dapper;
 
 namespace scrilla.Services
 {
@@ -30,7 +31,17 @@ namespace scrilla.Services
 		
 		public ServiceResult<IEnumerable<Account>> GetAllAccounts()
 		{
-			return GetAllEntity<Account>();
+			return base.GetAllEntity<Account>();
+		}
+
+		public ServiceResult<IEnumerable<AccountGroup>> GetAllAccountGroups()
+		{
+			return base.GetAllEntity<AccountGroup>();
+		}
+
+		public ServiceResult<IEnumerable<AccountNameMap>> GetAllAccountNameMaps()
+		{
+			return base.GetAllEntity<AccountNameMap>();
 		}
 
 
@@ -65,9 +76,9 @@ namespace scrilla.Services
 			{
 				Name = name,
 				InitialBalance = initialBalance,
-				DefaultCategoryId = defaultCategoryId,
 				Balance = initialBalance,
 				BalanceTimestamp = DateTime.Now,
+				DefaultCategoryId = defaultCategoryId,
 				AccountGroupId = accountGroupId
 			};
 
@@ -92,6 +103,31 @@ namespace scrilla.Services
 			_db.Insert<AccountGroup>(accountGroup);
 
 			result.Result = accountGroup;
+			return result;
+		}
+
+		public ServiceResult<AccountNameMap> AddAccountNameMap(int accountId, string name)
+		{
+			var result = new ServiceResult<AccountNameMap>();
+
+			var accountResult = GetAccount(accountId);
+			if (accountResult.HasErrors)
+			{
+				result.AddErrors(accountResult);
+				return result;
+			}
+
+			var accountNameMap = new AccountNameMap()
+			{
+				AccountId = accountId,
+				Name = name
+			};
+
+			// TODO check for existing mappings?
+
+			_db.Insert<AccountNameMap>(accountNameMap);
+
+			result.Result = accountNameMap;
 			return result;
 		}
 
@@ -125,6 +161,89 @@ namespace scrilla.Services
 			}
 
 			result.Result = deletionResult;
+			return result;
+		}
+
+
+		public ServiceResult<Account> UpdateAccount(int accountId, Filter<string> name = null, Filter<decimal> initialBalance = null, Filter<int?> defaultCategoryId = null, Filter<int?> accountGroupId = null)
+		{
+			var result = new ServiceResult<Account>();
+
+			// does account exist?
+			var accountResult = GetAccount(accountId);
+			if (accountResult.HasErrors)
+			{
+				result.AddErrors(accountResult);
+				return result;
+			}
+
+			var account = accountResult.Result;
+
+			if (name != null)
+				account.Name = name.Object;
+
+			if (initialBalance != null)
+				account.InitialBalance = initialBalance.Object;
+
+			if (defaultCategoryId != null)
+			{
+				// does category exist?
+				if (defaultCategoryId.Object.HasValue)
+				{
+					var categoryResult = _categoryService.GetCategory(defaultCategoryId.Object.Value);
+					if (categoryResult.HasErrors)
+					{
+						result.AddErrors(categoryResult);
+						return result;
+					}
+				}
+
+				account.DefaultCategoryId = defaultCategoryId.Object;
+			}
+
+			if (accountGroupId != null)
+			{
+				// does account group exist?
+				if (accountGroupId.Object.HasValue)
+				{
+					var accountGroupResult = GetAccountGroup(accountGroupId.Object.Value);
+					if (accountGroupResult.HasErrors)
+					{
+						result.AddErrors(accountGroupResult);
+						return result;
+					}
+				}
+
+				account.AccountGroupId = accountGroupId.Object;
+			}
+
+			_db.Update<Account>(account);
+
+			UpdateAccountBalances();
+
+			result.Result = account;
+			return result;
+		}
+
+		public ServiceResult<bool> UpdateAccountBalances()
+		{
+			var result = new ServiceResult<bool>();
+
+			var updateResult = _db.Connection.Execute(@"
+;WITH balances AS
+(
+	SELECT a.Id as AccountId, COALESCE(SUM(t.Amount), 0) as TransactionSum
+	FROM Account a
+	LEFT JOIN [Transaction] t on t.AccountId = a.Id
+	GROUP BY a.Id
+)
+
+UPDATE a
+SET a.Balance = a.InitialBalance + b.TransactionSum, a.BalanceTimestamp = GETDATE()
+FROM Account a
+JOIN balances b on b.AccountId = a.Id");
+
+			result.Result = true;
 			return result;
 		}
 	}
