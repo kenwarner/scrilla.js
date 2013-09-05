@@ -12,6 +12,14 @@
   @this.TimeScript(Links.Bundles.Styles.site, Styles.Render(Links.Bundles.Styles.site))
 </head>
 <body>
+  <nav class="navbar navbar-fixed-top">
+    <div class="container">
+      <ul class="nav navbar-nav">
+        <li>@MVC.Account.Accounts()</li>
+      </ul>
+    </div>
+  </nav>
+
   @RenderBody()
 
   @this.TimeScript(Links.Bundles.Scripts.jquery, Scripts.Render(Links.Bundles.Scripts.jquery))

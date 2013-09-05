@@ -26,7 +26,7 @@ public static class MVC
 {
     static readonly HelpPageClass s_HelpPage = new HelpPageClass();
     public static HelpPageClass HelpPage { get { return s_HelpPage; } }
-    public static scrilla.js.Web.Controllers.HomeController Home = new scrilla.js.Web.Controllers.T4MVC_HomeController();
+    public static scrilla.js.Web.Controllers.AccountController Account = new scrilla.js.Web.Controllers.T4MVC_AccountController();
     public static T4MVC.SharedController Shared = new T4MVC.SharedController();
 }
 
