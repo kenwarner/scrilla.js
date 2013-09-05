@@ -89,6 +89,11 @@ namespace Links
             public static readonly string bootstrap_min_css = Url("bootstrap.min.css");
         }
     
+        public static readonly string chosen_sprite_png = Url("chosen-sprite.png");
+        public static readonly string chosen_sprite_2x_png = Url("chosen-sprite@2x.png");
+        public static readonly string chosen_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/chosen.min.css") ? Url("chosen.min.css") : Url("chosen.css");
+             
+        public static readonly string chosen_min_css = Url("chosen.min.css");
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public static class fonts {
             private const string URLPATH = "~/Content/fonts";
@@ -112,6 +117,8 @@ namespace Links
         public static readonly string _references_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/_references.min.js") ? Url("_references.min.js") : Url("_references.js");
         public static readonly string bootstrap_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/bootstrap.min.js") ? Url("bootstrap.min.js") : Url("bootstrap.js");
         public static readonly string bootstrap_min_js = Url("bootstrap.min.js");
+        public static readonly string chosen_jquery_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/chosen.jquery.min.js") ? Url("chosen.jquery.min.js") : Url("chosen.jquery.js");
+        public static readonly string chosen_jquery_min_js = Url("chosen.jquery.min.js");
         public static readonly string jquery_2_0_3_intellisense_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery-2.0.3.intellisense.min.js") ? Url("jquery-2.0.3.intellisense.min.js") : Url("jquery-2.0.3.intellisense.js");
         public static readonly string jquery_2_0_3_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery-2.0.3.min.js") ? Url("jquery-2.0.3.min.js") : Url("jquery-2.0.3.js");
         public static readonly string jquery_2_0_3_min_js = Url("jquery-2.0.3.min.js");
