@@ -5,6 +5,8 @@ using System.Text;
 using scrilla.Services;
 using System.Data.SqlClient;
 using System.Configuration;
+using Castle.Windsor;
+using Castle.Windsor.Installer;
 
 namespace scrilla.Data.SeedConsole
 {
@@ -21,11 +23,12 @@ namespace scrilla.Data.SeedConsole
 	{
 		public void Initialize(string filename)
 		{
-			throw new NotImplementedException();
-			//IAccountService accountService = new AccountService(();
-			//TransactionImporter importer = new TransactionImporter();
-
-			//importer.Import(filename);
+			using (var container = new WindsorContainer())
+			{
+				container.Install(FromAssembly.Containing<ServicesInstaller>());
+				var importService = container.Resolve<ITransactionImportService>();
+				importService.Import(filename);
+			}
 		}
 	}
 }

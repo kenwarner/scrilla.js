@@ -44,6 +44,12 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Castle.Core">
+      <HintPath>..\packages\Castle.Core.3.2.0\lib\net45\Castle.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.Windsor">
+      <HintPath>..\packages\Castle.Windsor.3.2.1\lib\net45\Castle.Windsor.dll</HintPath>
+    </Reference>
     <Reference Include="CsvHelper">
       <HintPath>..\packages\CsvHelper.2.2.2\lib\net40-client\CsvHelper.dll</HintPath>
     </Reference>
@@ -80,7 +86,8 @@
       <Link>Properties\GlobalAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="ServiceResult.cs" />
-    <Compile Include="TransactionImporter.cs" />
+    <Compile Include="ServicesInstaller.cs" />
+    <Compile Include="TransactionImportService.cs" />
     <Compile Include="TransactionService.cs" />
     <Compile Include="VendorService.cs" />
   </ItemGroup>
