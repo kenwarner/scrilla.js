@@ -81,6 +81,7 @@
     <Compile Include="ICategoryService.cs" />
     <Compile Include="ITransactionService.cs" />
     <Compile Include="IVendorService.cs" />
+    <Compile Include="Models\AccountsModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="..\GlobalAssemblyInfo.cs">
       <Link>Properties\GlobalAssemblyInfo.cs</Link>

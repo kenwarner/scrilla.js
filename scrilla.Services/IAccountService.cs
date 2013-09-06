@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using scrilla.Data;
+using scrilla.Services.Models;
 
 namespace scrilla.Services
 {
@@ -29,5 +30,8 @@ namespace scrilla.Services
 
 		ServiceResult<Account> UpdateAccount(int accountId, Filter<string> name = null, Filter<decimal> initialBalance = null, Filter<int?> defaultCategoryId = null, Filter<int?> accountGroupId = null);
 		ServiceResult<bool> UpdateAccountBalances();
+
+
+		ServiceResult<AccountsModel> GetAccounts(DateTime from, DateTime to);
 	}
 }

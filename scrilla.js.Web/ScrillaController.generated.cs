@@ -25,9 +25,6 @@ namespace scrilla.js.Web.Controllers
     public partial class ScrillaController
     {
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public ScrillaController() { }
-
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         protected ScrillaController(Dummy d) { }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]

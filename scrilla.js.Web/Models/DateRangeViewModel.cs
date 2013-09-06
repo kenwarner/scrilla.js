@@ -7,6 +7,9 @@ namespace scrilla.js.Web.Models
 {
 	public class DateRangeViewModel
 	{
+		public DateRangeViewModel(DateTime? from = null, DateTime? to = null)
+			: this(from.ToString(), to.ToString()) { }
+
 		public DateRangeViewModel(string from = null, string to = null)
 		{
 			DateTime fromDate;

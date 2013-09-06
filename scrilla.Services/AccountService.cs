@@ -6,6 +6,7 @@ using System.Diagnostics;
 using scrilla.Data;
 using DapperExtensions;
 using Dapper;
+using scrilla.Services.Models;
 
 namespace scrilla.Services
 {
@@ -244,6 +245,17 @@ FROM Account a
 JOIN balances b on b.AccountId = a.Id");
 
 			result.Result = true;
+			return result;
+		}
+
+
+		public ServiceResult<AccountsModel> GetAccounts(DateTime from, DateTime to)
+		{
+			var result = new ServiceResult<AccountsModel>();
+
+			var model = new AccountsModel();
+
+			result.Result = model;
 			return result;
 		}
 	}
