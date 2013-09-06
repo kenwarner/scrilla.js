@@ -26,7 +26,7 @@ public static class MVC
 {
     static readonly HelpPageClass s_HelpPage = new HelpPageClass();
     public static HelpPageClass HelpPage { get { return s_HelpPage; } }
-    public static scrilla.js.Web.Controllers.AccountController Account = new scrilla.js.Web.Controllers.T4MVC_AccountController();
+    public static scrilla.js.Web.Controllers.ScrillaController Scrilla = new scrilla.js.Web.Controllers.T4MVC_ScrillaController();
     public static T4MVC.SharedController Shared = new T4MVC.SharedController();
 }
 
@@ -105,8 +105,10 @@ namespace Links
             public static readonly string glyphicons_halflings_regular_woff = Url("glyphicons-halflings-regular.woff");
         }
     
+        public static readonly string site_less = Url("site.less");
         public static readonly string site_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/site.min.css") ? Url("site.min.css") : Url("site.css");
              
+        public static readonly string site_min_css = Url("site.min.css");
     }
 
     [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
