@@ -1,4 +1,5 @@
 ﻿using AttributeRouting.Web.Mvc;
+using scrilla.js.Web.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,9 +12,11 @@ namespace scrilla.js.Web.Controllers
     {
 		[GET("", ActionPrecedence = 1)]
 		[GET("Accounts")]
-		public virtual ActionResult Accounts()
+		public virtual ActionResult Accounts(string from = null, string to = null)
         {
-            return View();
+			var model = new AccountsViewModel(from, to);
+
+            return View(model);
         }
 
 		[GET("Transactions")]

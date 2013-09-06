@@ -193,6 +193,8 @@
     <Compile Include="HelpPage.SharedController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\AccountsViewModel.cs" />
+    <Compile Include="Models\DateRangeViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ScrillaController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>

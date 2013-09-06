@@ -6,7 +6,7 @@
   @this.InitClientTimings()
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Scrilla</title>
+  <title>@(ViewBag.Title ?? "Scrilla")</title>
   @this.TimeScript(Links.Bundles.Styles.bootstrap, Styles.Render(Links.Bundles.Styles.bootstrap))
   @this.TimeScript(Links.Bundles.Styles.bootstrapTheme, Styles.Render(Links.Bundles.Styles.bootstrapTheme))
   @this.TimeScript(Links.Bundles.Styles.site, Styles.Render(Links.Bundles.Styles.site))

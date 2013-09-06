@@ -1,5 +1,7 @@
-﻿@{
-    ViewBag.Title = "Accounts";
+﻿@model scrilla.js.Web.Models.AccountsViewModel
+
+@{
+  ViewBag.Title = "Accounts from " + Model.ToString();
 }
 
-<h3>Accounts</h3>
+<h3>@ViewBag.Title</h3>
