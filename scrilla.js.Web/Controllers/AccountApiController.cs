@@ -24,7 +24,24 @@ namespace scrilla.js.Web.Controllers
         public virtual HttpResponseMessage Accounts(DateTime? from = null, DateTime? to = null)
         {
 			var model = new DateRangeViewModel(from, to); // fill in defaults if null
-			return Request.CreateResponse(HttpStatusCode.OK, _accountService.GetAccounts(model.From, model.To));
+			return Request.CreateResponse<AccountsModel>(_accountService.GetAccounts(model.From, model.To));
         }
     }
+}
+
+namespace System.Net.Http
+{
+	public static class ServiceResultExtensions
+	{
+		public static HttpResponseMessage CreateResponse<T>(this HttpRequestMessage request, ServiceResult<T> result)
+		{
+			if (result.HasErrors && result.ErrorMessages.Any(x => x.Key == ErrorType.Security))
+				return request.CreateResponse(HttpStatusCode.Unauthorized, result.ErrorMessages);
+
+			if (result.HasErrors && result.ErrorMessages.Any(x => x.Key == ErrorType.NotFound))
+				return request.CreateResponse(HttpStatusCode.NotFound, result.ErrorMessages);
+
+			return request.CreateResponse(HttpStatusCode.OK, result.Result);
+		}
+	}   
 }
