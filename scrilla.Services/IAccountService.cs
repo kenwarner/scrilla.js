@@ -32,6 +32,6 @@ namespace scrilla.Services
 		ServiceResult<bool> UpdateAccountBalances();
 
 
-		ServiceResult<AccountsModel> GetAccounts(DateTime from, DateTime to);
+		ServiceResult<AccountBalancesModel> GetAccountBalances(DateTime? from = null, DateTime? to = null);
 	}
 }

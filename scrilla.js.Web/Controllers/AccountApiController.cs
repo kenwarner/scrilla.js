@@ -20,11 +20,10 @@ namespace scrilla.js.Web.Controllers
 			_accountService = accountService;
 		}
 
-		[GET("api/accounts"), HttpGet]
+		[GET("api/accounts/balances"), HttpGet]
         public virtual HttpResponseMessage Accounts(DateTime? from = null, DateTime? to = null)
         {
-			var model = new DateRangeViewModel(from, to); // fill in defaults if null
-			return Request.CreateResponse<AccountsModel>(_accountService.GetAccounts(model.From, model.To));
+			return Request.CreateResponse<AccountBalancesModel>(_accountService.GetAccountBalances(from, to));
         }
     }
 }

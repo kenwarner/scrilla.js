@@ -249,11 +249,59 @@ JOIN balances b on b.AccountId = a.Id");
 		}
 
 
-		public ServiceResult<AccountsModel> GetAccounts(DateTime from, DateTime to)
+		public ServiceResult<AccountBalancesModel> GetAccountBalances(DateTime? from = null, DateTime? to = null)
 		{
-			var result = new ServiceResult<AccountsModel>();
+			var result = new ServiceResult<AccountBalancesModel>();
 
-			var model = new AccountsModel();
+			var sql = @"
+WITH MonthlyAccountDiffs AS
+(
+SELECT a.Id AS AccountId, DATEADD(MONTH, MONTH(t.Timestamp), DATEADD(YEAR, YEAR(t.Timestamp)-1900, 0)) AS [Month], sum(t.Amount) AS MonthTransactionTotal
+FROM Account a
+LEFT JOIN [Transaction] t ON t.AccountId = a.Id
+GROUP BY a.Id, DATEADD(MONTH, MONTH(t.Timestamp), DATEADD(YEAR, YEAR(t.Timestamp)-1900, 0))
+)
+SELECT
+	ag.*,
+	'' as split,
+	a.Id, a.Name, a.InitialBalance, a.Balance, a.BalanceTimestamp,
+	(SELECT COUNT(*) FROM [Transaction] t JOIN Subtransaction st ON st.TransactionId = t.Id WHERE t.AccountId = md.AccountId and st.CategoryId is null) AS UncategorizedTransactionCount,
+	'' as split,
+	a.Id as AccountId,
+	md.Month, md.MonthTransactionTotal,
+	(SELECT SUM(md2.MonthTransactionTotal) FROM MonthlyAccountDiffs md2 WHERE md2.AccountId = a.Id AND md2.Month <= md.Month) AS MonthEndBalance
+FROM MonthlyAccountDiffs md
+JOIN Account a ON a.Id = md.AccountId
+LEFT JOIN AccountGroup ag ON ag.Id = a.AccountGroupId";
+
+			var balances = _db.Connection.Query<AccountBalancesModel.AccountGroupModel, AccountBalancesModel.AccountModel, AccountBalancesModel.AccountBalanceModel, Tuple<AccountBalancesModel.AccountGroupModel, AccountBalancesModel.AccountModel, AccountBalancesModel.AccountBalanceModel>>(
+				sql, (agm, am, abm) => new Tuple<AccountBalancesModel.AccountGroupModel, AccountBalancesModel.AccountModel, AccountBalancesModel.AccountBalanceModel>(agm, am, abm),
+				splitOn: "split");
+
+			var accountGroups = balances
+				.GroupBy(x => x.Item1.Id)
+				.Select(x => x.First().Item1)
+				.OrderBy(x => x.DisplayOrder);
+
+			foreach (var accountGroup in accountGroups)
+			{
+				accountGroup.Accounts = balances
+					.Where(x => x.Item1.Id == accountGroup.Id)
+					.GroupBy(x => x.Item2.Id)
+					.Select(x => x.First().Item2)
+					.OrderBy(x => x.Name);
+
+				foreach (var account in accountGroup.Accounts)
+				{
+					account.AccountBalances = balances
+						.Where(x => x.Item2.Id == account.Id)
+						.Select(x => x.Item3)
+						.OrderBy(x => x.Month);
+				}
+			}
+
+			var model = new AccountBalancesModel();
+			model.AddRange(accountGroups);
 
 			result.Result = model;
 			return result;

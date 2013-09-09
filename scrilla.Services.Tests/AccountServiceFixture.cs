@@ -332,7 +332,7 @@ namespace scrilla.Services.Tests
 		public void GetAccountBalances_RealData()
 		{
 			// act
-			_sut.GetAccountBalances();
+			var result = _sut.GetAccountBalances();
 
 			// assert
 		}
