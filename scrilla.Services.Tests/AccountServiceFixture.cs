@@ -323,4 +323,18 @@ namespace scrilla.Services.Tests
 		}
 
 	}
+
+	public class AccountServiceRealDataFixture : BaseFixture<AccountService>
+	{
+		public AccountServiceRealDataFixture() : base("RealDataConnectionString") { }
+
+		[Fact]
+		public void GetAccountBalances_RealData()
+		{
+			// act
+			_sut.GetAccountBalances();
+
+			// assert
+		}
+	}
 }

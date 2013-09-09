@@ -19,14 +19,36 @@ namespace scrilla.Services.Tests
 		protected Fixture _fixture;
 		protected SqlConnection _sqlConnection;
 
+		/// <summary>
+		/// Create a fixture using a newly created database
+		/// </summary>
 		public BaseFixture()
 		{
 			CreateTestDatabase();
 
-			var connectionString = ConfigurationManager.ConnectionStrings["TestsConnectionString"].ConnectionString;
+			OpenConnection("TestsConnectionString");
+			CreateFixture();
+		}
+
+		/// <summary>
+		/// Create a fixture using an existing database
+		/// </summary>
+		/// <param name="connectionStringName">The name of the connection string</param>
+		public BaseFixture(string connectionStringName)
+		{
+			OpenConnection(connectionStringName);
+			CreateFixture();
+		}
+
+		private void OpenConnection(string connectionStringName)
+		{
+			var connectionString = ConfigurationManager.ConnectionStrings[connectionStringName].ConnectionString;
 			_sqlConnection = new SqlConnection(connectionString);
 			_sqlConnection.Open();
+		}
 
+		private void CreateFixture()
+		{
 			_fixture = new Fixture();
 			_fixture.Inject<IDatabase>(new Db(_sqlConnection));
 
