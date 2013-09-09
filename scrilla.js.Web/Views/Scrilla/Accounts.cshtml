@@ -35,6 +35,13 @@
               @Html.ActionLink(account.Name, MVC.Scrilla.Transactions(account.Id))
             </td>
             <td class="balance" title="Current as of @account.BalanceTimestamp">@account.Balance.ToCurrency()</td>
+            @for (DateTime cur = Model.DateRange.ToMonth; cur >= Model.DateRange.FromMonth; cur = cur.AddMonths(-1))
+            {
+              var balance = account.AccountBalances.SingleOrDefault(x => x.Month == cur);
+              var amount = balance == null ? 0M : balance.MonthEndBalance;
+              var amountClass = (amount == 0M ? "amount-zero" : (amount > 0M ? "amount-positive" : "amount-negative"));
+              <td>@Html.ActionLink(amount.ToCurrency(), MVC.Scrilla.Transactions(account.Id, null, null, cur.ToUrlDate(), cur.AddMonths(1).AddDays(-1).ToUrlDate()), new { @class = @amountClass })</td>
+            }
           </tr>
         }
       </tbody>
