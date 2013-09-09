@@ -22,8 +22,9 @@ namespace scrilla.js.Web.Controllers
 		[GET("Accounts")]
 		public virtual ActionResult Accounts(string from = null, string to = null)
         {
-			var model = new AccountsViewModel(from, to);
-
+			var model = new AccountsViewModel();
+			model.DateRange = new DateRangeViewModel(from, to);
+			model.AccountsBalances = _accountService.GetAccountBalances(model.DateRange.From, model.DateRange.To).Result;
             return View(model);
         }
 

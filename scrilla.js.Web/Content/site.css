@@ -4,3 +4,28 @@
 .profiler-results {
   top: 51px !important;
 }
+a {
+  color: #000000;
+  text-decoration: none;
+}
+a:hover {
+  color: #666666;
+  text-decoration: none;
+}
+.label-info {
+  background-color: #DDE8E8;
+  margin-left: 4px ;
+  margin-top: 2px;
+}
+.label-info a {
+  color: #666666;
+}
+.label-info a:hover {
+  color: #bbbbbb;
+}
+.panel-group {
+  margin-bottom: 15px;
+}
+.accordion-toggle {
+  cursor: pointer;
+}

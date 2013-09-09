@@ -1,7 +1,47 @@
-﻿body {
+﻿@black: #000;
+@superduperdarkgray: #333;
+@superdarkgray: #666;
+@darkgray: #999;
+@gray: #BBB;
+@lightgray: #CCC;
+@superlightgray: #DDD;
+@superduperlightgray: #EEE;
+
+
+body {
 	padding-top: 50px;
 }
 
 .profiler-results {
 	top: 51px !important;
+}
+
+a {
+	color: @black;
+	text-decoration: none;
+}
+a:hover { 
+	color: @superdarkgray;
+	text-decoration: none;
+}
+
+.label-info {
+	background-color: #DDE8E8;
+	margin-left: 4px ;
+	margin-top: 2px;
+
+	a {
+		color: @superdarkgray;
+	}
+	a:hover {
+		color: @gray;
+	}
+}
+
+.panel-group {
+	margin-bottom: 15px;
+}
+
+.accordion-toggle {
+	cursor: pointer;
 }
