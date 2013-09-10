@@ -257,6 +257,22 @@
     <Content Include="Content\fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\site.less" />
     <None Include="scripts\jquery-2.0.3.intellisense.js" />
+    <Content Include="scripts\angular-bootstrap-prettify.js" />
+    <Content Include="scripts\angular-bootstrap-prettify.min.js" />
+    <Content Include="scripts\angular-bootstrap.js" />
+    <Content Include="scripts\angular-bootstrap.min.js" />
+    <Content Include="scripts\angular-cookies.js" />
+    <Content Include="scripts\angular-cookies.min.js" />
+    <Content Include="scripts\angular-loader.js" />
+    <Content Include="scripts\angular-loader.min.js" />
+    <Content Include="scripts\angular-mocks.js" />
+    <Content Include="scripts\angular-resource.js" />
+    <Content Include="scripts\angular-resource.min.js" />
+    <Content Include="scripts\angular-sanitize.js" />
+    <Content Include="scripts\angular-sanitize.min.js" />
+    <Content Include="scripts\angular-scenario.js" />
+    <Content Include="scripts\angular.js" />
+    <Content Include="scripts\angular.min.js" />
     <Content Include="scripts\bootstrap.js" />
     <Content Include="scripts\bootstrap.min.js" />
     <Content Include="scripts\chosen.jquery.js" />
@@ -292,6 +308,7 @@
     <Content Include="Views\Scrilla\Bills.cshtml" />
     <Content Include="Views\Scrilla\Bill.cshtml" />
     <Content Include="Views\Scrilla\Budget.cshtml" />
+    <Content Include="Views\Scrilla\Accounts.ng.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="images\" />

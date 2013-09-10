@@ -117,6 +117,22 @@ namespace Links
         public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
         public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
         public static readonly string _references_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/_references.min.js") ? Url("_references.min.js") : Url("_references.js");
+        public static readonly string angular_bootstrap_prettify_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/angular-bootstrap-prettify.min.js") ? Url("angular-bootstrap-prettify.min.js") : Url("angular-bootstrap-prettify.js");
+        public static readonly string angular_bootstrap_prettify_min_js = Url("angular-bootstrap-prettify.min.js");
+        public static readonly string angular_bootstrap_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/angular-bootstrap.min.js") ? Url("angular-bootstrap.min.js") : Url("angular-bootstrap.js");
+        public static readonly string angular_bootstrap_min_js = Url("angular-bootstrap.min.js");
+        public static readonly string angular_cookies_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/angular-cookies.min.js") ? Url("angular-cookies.min.js") : Url("angular-cookies.js");
+        public static readonly string angular_cookies_min_js = Url("angular-cookies.min.js");
+        public static readonly string angular_loader_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/angular-loader.min.js") ? Url("angular-loader.min.js") : Url("angular-loader.js");
+        public static readonly string angular_loader_min_js = Url("angular-loader.min.js");
+        public static readonly string angular_mocks_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/angular-mocks.min.js") ? Url("angular-mocks.min.js") : Url("angular-mocks.js");
+        public static readonly string angular_resource_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/angular-resource.min.js") ? Url("angular-resource.min.js") : Url("angular-resource.js");
+        public static readonly string angular_resource_min_js = Url("angular-resource.min.js");
+        public static readonly string angular_sanitize_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/angular-sanitize.min.js") ? Url("angular-sanitize.min.js") : Url("angular-sanitize.js");
+        public static readonly string angular_sanitize_min_js = Url("angular-sanitize.min.js");
+        public static readonly string angular_scenario_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/angular-scenario.min.js") ? Url("angular-scenario.min.js") : Url("angular-scenario.js");
+        public static readonly string angular_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/angular.min.js") ? Url("angular.min.js") : Url("angular.js");
+        public static readonly string angular_min_js = Url("angular.min.js");
         public static readonly string bootstrap_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/bootstrap.min.js") ? Url("bootstrap.min.js") : Url("bootstrap.js");
         public static readonly string bootstrap_min_js = Url("bootstrap.min.js");
         public static readonly string chosen_jquery_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/chosen.jquery.min.js") ? Url("chosen.jquery.min.js") : Url("chosen.jquery.js");

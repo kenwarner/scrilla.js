@@ -25,7 +25,7 @@ namespace scrilla.js.Web.Controllers
 			var model = new AccountsViewModel();
 			model.DateRange = new DateRangeViewModel(from, to);
 			model.AccountsBalances = _accountService.GetAccountBalances(model.DateRange.From, model.DateRange.To).Result;
-            return View(model);
+            return View(MVC.Scrilla.Views.Accounts_ng, model);
         }
 
 		[GET("Transactions")]

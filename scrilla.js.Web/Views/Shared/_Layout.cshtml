@@ -41,6 +41,7 @@
 
   @this.TimeScript(Links.Bundles.Scripts.jquery, Scripts.Render(Links.Bundles.Scripts.jquery))
   @this.TimeScript(Links.Bundles.Scripts.bootstrap, Scripts.Render(Links.Bundles.Scripts.bootstrap))
+  @this.TimeScript(Links.Bundles.Scripts.angular, Scripts.Render(Links.Bundles.Scripts.angular))
   @MiniProfiler.RenderIncludes(position: RenderPosition.Right, showTrivial: true, showTimeWithChildren: true, showControls: true, useExistingjQuery: true)
 
   @RenderSection("scripts", required: false)

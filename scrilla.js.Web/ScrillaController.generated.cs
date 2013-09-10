@@ -174,6 +174,7 @@ namespace scrilla.js.Web.Controllers
             public class _ViewNamesClass
             {
                 public readonly string Accounts = "Accounts";
+                public readonly string Accounts_ng = "Accounts.ng";
                 public readonly string Bill = "Bill";
                 public readonly string Bills = "Bills";
                 public readonly string Budget = "Budget";
@@ -184,6 +185,7 @@ namespace scrilla.js.Web.Controllers
                 public readonly string Vendors = "Vendors";
             }
             public readonly string Accounts = "~/Views/Scrilla/Accounts.cshtml";
+            public readonly string Accounts_ng = "~/Views/Scrilla/Accounts.ng.cshtml";
             public readonly string Bill = "~/Views/Scrilla/Bill.cshtml";
             public readonly string Bills = "~/Views/Scrilla/Bills.cshtml";
             public readonly string Budget = "~/Views/Scrilla/Budget.cshtml";
