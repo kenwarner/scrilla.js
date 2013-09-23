@@ -35,13 +35,14 @@
     </div>
   </nav>
 
-  <div class="container pull-left">
+  <div class="container pull-left" ng-app>
     @RenderBody()
   </div>
 
   @this.TimeScript(Links.Bundles.Scripts.jquery, Scripts.Render(Links.Bundles.Scripts.jquery))
   @this.TimeScript(Links.Bundles.Scripts.bootstrap, Scripts.Render(Links.Bundles.Scripts.bootstrap))
   @this.TimeScript(Links.Bundles.Scripts.angular, Scripts.Render(Links.Bundles.Scripts.angular))
+  @this.TimeScript(Links.Bundles.Scripts.app, Scripts.Render(Links.Bundles.Scripts.app))
   @MiniProfiler.RenderIncludes(position: RenderPosition.Right, showTrivial: true, showTimeWithChildren: true, showControls: true, useExistingjQuery: true)
 
   @RenderSection("scripts", required: false)

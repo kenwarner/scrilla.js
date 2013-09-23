@@ -14,7 +14,7 @@ namespace scrilla.js.Web
 			bundles.Add(new StyleBundle(Links.Bundles.Styles.site)
 				.Include(Links.Content.site_css));
 
-			bundles.Add(new ScriptBundle(Links.Bundles.Scripts.jquery, "//code.jquery.com/jquery-2.0.3.js") { CdnFallbackExpression = "window.jQuery" }
+			bundles.Add(new ScriptBundle(Links.Bundles.Scripts.jquery, "//code.jquery.com/jquery-2.0.3.min.js") { CdnFallbackExpression = "window.jQuery" }
 				.Include(Links.scripts.jquery_2_0_3_js));
 			bundles.Add(new ScriptBundle(Links.Bundles.Scripts.chosen)
 				.Include(Links.scripts.chosen_jquery_js));
@@ -26,6 +26,8 @@ namespace scrilla.js.Web
 				.Include(Links.scripts.angular_loader_js)
 				.Include(Links.scripts.angular_resource_js)
 				.Include(Links.scripts.angular_sanitize_js));
+			bundles.Add(new ScriptBundle(Links.Bundles.Scripts.app)
+				.IncludeDirectory(Links.app.Url(), "*.js", true));
 		}
 	}
 }
@@ -40,6 +42,7 @@ namespace Links
 			public static readonly string bootstrap = "~/bundles/scripts/bootstrap";
 			public static readonly string chosen = "~/bundles/scripts/chosen";
 			public static readonly string angular = "~/bundles/scripts/angular";
+			public static readonly string app = "~/bundles/scripts/app";
 		}
 		public static partial class Styles
 		{

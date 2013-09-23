@@ -1,47 +1,8 @@
-﻿@model scrilla.js.Web.Models.AccountsViewModel
-@{
-  ViewBag.Title = "Accounts from " + Model.DateRange.ToString();
-}
-<h3>@ViewBag.Title</h3>
-@foreach (var group in Model.AccountsBalances)
-{
-  var accountGroup = String.Format("accountGroup{0}", group.Id);
-  var accountBalances = String.Format("accountBalances{0}", group.Id);
-
-  <section class="panel-group" id="@accountGroup">
+﻿<div ng-controller="AccountCtrl">
+  <h3>title goes here...</h3>
+  <section ng-repeat="group in model" class="panel-group">
     <div class="panel panel-default">
-      <div class="panel-heading accordion-toggle" data-toggle="collapse" data-parent="#@accountGroup" href="#@accountBalances">@group.Name</div>
-      <table id="@accountBalances" class="table table-hover table-bordered table-condensed panel-collapse collapse@(group.IsActive ? " in" : "")">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th class="table-column-frozen">Balance</th>
-            @for (DateTime cur = Model.DateRange.ToMonth; cur >= Model.DateRange.FromMonth; cur = cur.AddMonths(-1))
-            {
-              <th title="@cur.ToString("MMMM yyyy")">@Html.ActionLink(cur.ToString("MMMM"), MVC.Scrilla.Accounts(cur.ToUrlDate(), cur.AddMonths(1).AddDays(-1).ToUrlDate()))</th>
-            }
-          </tr>
-        </thead>
-        <tbody>
-          @foreach (var account in group.Accounts)
-          {
-            <tr>
-              <td>
-                <span class="label label-info pull-right">@Html.ActionLink(account.UncategorizedTransactionCount.ToString(), MVC.Scrilla.Transactions(account.Id, null, "none"), new { title = String.Format("{0} has {1} uncategorized transactions", account.Name, account.UncategorizedTransactionCount) })</span>
-                @Html.ActionLink(account.Name, MVC.Scrilla.Transactions(account.Id))
-              </td>
-              <td class="table-column-frozen" title="Current as of @account.BalanceTimestamp">@account.Balance.ToCurrency()</td>
-              @for (DateTime cur = Model.DateRange.ToMonth; cur >= Model.DateRange.FromMonth; cur = cur.AddMonths(-1))
-              {
-                var balance = account.AccountBalances.SingleOrDefault(x => x.Month == cur);
-                var amount = balance == null ? 0M : balance.MonthEndBalance;
-                var amountClass = (amount == 0M ? "amount-zero" : (amount > 0M ? "amount-positive" : "amount-negative"));
-                <td>@Html.ActionLink(amount.ToCurrency(), MVC.Scrilla.Transactions(account.Id, null, null, cur.ToUrlDate(), cur.AddMonths(1).AddDays(-1).ToUrlDate()), new { @class = @amountClass })</td>
-              }
-            </tr>
-          }
-        </tbody>
-      </table>
+      <div class="panel-heading accordion-toggle" data-toggle="collapse" data-parent="#accountGroup{{group.id}}" href="#accountBalances{{group.id}}">{{group.name}}</div>
     </div>
   </section>
-}
+</div>

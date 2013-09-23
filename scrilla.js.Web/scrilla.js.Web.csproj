@@ -223,6 +223,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="app\controllers\AccountController.js" />
     <Content Include="Areas\HelpPage\HelpPage.css" />
     <Content Include="Content\bootstrap\bootstrap-theme.css" />
     <Content Include="Content\bootstrap\bootstrap-theme.min.css" />
@@ -273,6 +274,7 @@
     <Content Include="scripts\angular-scenario.js" />
     <Content Include="scripts\angular.js" />
     <Content Include="scripts\angular.min.js" />
+    <Content Include="app\app.js" />
     <Content Include="scripts\bootstrap.js" />
     <Content Include="scripts\bootstrap.min.js" />
     <Content Include="scripts\chosen.jquery.js" />
@@ -311,6 +313,10 @@
     <Content Include="Views\Scrilla\Accounts.ng.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="app\directives\" />
+    <Folder Include="app\filters\" />
+    <Folder Include="app\services\" />
+    <Folder Include="app\views\" />
     <Folder Include="images\" />
   </ItemGroup>
   <ItemGroup>

@@ -1,6 +1,9 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Web.Http;
 
 namespace scrilla.js.Web
@@ -23,6 +26,19 @@ namespace scrilla.js.Web
 			// To disable tracing in your application, please comment out or remove the following line of code
 			// For more information, refer to: http://www.asp.net/web-api
 			config.EnableSystemDiagnosticsTracing();
+
+			//config.Formatters.JsonFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("text/html")); // sends json by default in browser
+
+			SetJsonCamelCasingAsDefault();
+		}
+
+		private static void SetJsonCamelCasingAsDefault()
+		{
+			var formatters = GlobalConfiguration.Configuration.Formatters;
+			var jsonFormatter = formatters.JsonFormatter;
+			var settings = jsonFormatter.SerializerSettings;
+			settings.Formatting = Formatting.Indented;
+			settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
 		}
 	}
 }
