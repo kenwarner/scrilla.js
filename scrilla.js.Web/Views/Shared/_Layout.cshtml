@@ -8,8 +8,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>@(ViewBag.Title ?? "Scrilla")</title>
   @this.TimeScript(Links.Bundles.Styles.bootstrap, Styles.Render(Links.Bundles.Styles.bootstrap))
-  @this.TimeScript(Links.Bundles.Styles.bootstrapTheme, Styles.Render(Links.Bundles.Styles.bootstrapTheme))
-  @this.TimeScript(Links.Bundles.Styles.site, Styles.Render(Links.Bundles.Styles.site))
+  @this.TimeScript(Links.Bundles.Styles.chosen, Styles.Render(Links.Bundles.Styles.chosen))
+  @this.TimeScript(Links.Bundles.Styles.app, Styles.Render(Links.Bundles.Styles.app))
 </head>
 <body>
   <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -40,8 +40,9 @@
   </div>
 
   @this.TimeScript(Links.Bundles.Scripts.jquery, Scripts.Render(Links.Bundles.Scripts.jquery))
+  @this.TimeScript(Links.Bundles.Scripts.chosen, Scripts.Render(Links.Bundles.Scripts.chosen))
   @this.TimeScript(Links.Bundles.Scripts.bootstrap, Scripts.Render(Links.Bundles.Scripts.bootstrap))
-  @this.TimeScript(Links.Bundles.Scripts.angular, Scripts.Render(Links.Bundles.Scripts.angular))
+  @this.TimeScript(Links.Bundles.Scripts.angularjs, Scripts.Render(Links.Bundles.Scripts.angularjs))
   @this.TimeScript(Links.Bundles.Scripts.app, Scripts.Render(Links.Bundles.Scripts.app))
   @MiniProfiler.RenderIncludes(position: RenderPosition.Right, showTrivial: true, showTimeWithChildren: true, showControls: true, useExistingjQuery: true)
 

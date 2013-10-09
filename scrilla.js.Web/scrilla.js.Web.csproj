@@ -173,7 +173,6 @@
   <ItemGroup>
     <Compile Include="App_Start\AttributeRoutingConfig.cs" />
     <Compile Include="App_Start\AttributeRoutingHttpConfig.cs" />
-    <Compile Include="App_Start\BootstrapBundleConfig.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\CompositionConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
@@ -225,23 +224,23 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="app\styles\app.css">
+      <DependentUpon>app.less</DependentUpon>
+    </Content>
+    <Content Include="app\styles\app.min.css">
+      <DependentUpon>app.less</DependentUpon>
+    </Content>
     <Content Include="app\controllers\AccountController.js" />
     <Content Include="Areas\HelpPage\HelpPage.css" />
-    <Content Include="Content\bootstrap\bootstrap-theme.css" />
-    <Content Include="Content\bootstrap\bootstrap-theme.min.css" />
-    <Content Include="Content\bootstrap\bootstrap.css" />
-    <Content Include="Content\bootstrap\bootstrap.min.css" />
-    <Content Include="Content\chosen-sprite%402x.png" />
-    <Content Include="Content\chosen-sprite.png" />
-    <Content Include="Content\chosen.css" />
-    <Content Include="Content\chosen.min.css" />
-    <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
-    <Content Include="Content\site.css">
-      <DependentUpon>site.less</DependentUpon>
-    </Content>
-    <Content Include="Content\site.min.css">
-      <DependentUpon>site.less</DependentUpon>
-    </Content>
+    <Content Include="lib\bootstrap-3.0.0\bootstrap-theme.css" />
+    <Content Include="lib\bootstrap-3.0.0\bootstrap-theme.min.css" />
+    <Content Include="lib\bootstrap-3.0.0\bootstrap.css" />
+    <Content Include="lib\bootstrap-3.0.0\bootstrap.min.css" />
+    <Content Include="lib\chosen-1.0.0\chosen-sprite%402x.png" />
+    <Content Include="lib\chosen-1.0.0\chosen-sprite.png" />
+    <Content Include="lib\chosen-1.0.0\chosen.css" />
+    <Content Include="lib\chosen-1.0.0\chosen.min.css" />
+    <Content Include="lib\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Areas\HelpPage\Views\Web.config" />
@@ -255,34 +254,24 @@
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\HelpPageApiModel.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ApiGroup.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\Api.cshtml" />
-    <Content Include="Content\fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="Content\fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="Content\fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="Content\site.less" />
-    <None Include="scripts\jquery-2.0.3.intellisense.js" />
+    <Content Include="lib\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="lib\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="lib\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="app\styles\app.less" />
+    <None Include="lib\jquery-2.0.3\jquery-2.0.3.intellisense.js" />
     <Content Include="app\app.js" />
-    <Content Include="scripts\angular-bootstrap-prettify.js" />
-    <Content Include="scripts\angular-bootstrap-prettify.min.js" />
-    <Content Include="scripts\angular-bootstrap.js" />
-    <Content Include="scripts\angular-bootstrap.min.js" />
-    <Content Include="scripts\angular-cookies.js" />
-    <Content Include="scripts\angular-cookies.min.js" />
-    <Content Include="scripts\angular-loader.js" />
-    <Content Include="scripts\angular-loader.min.js" />
-    <Content Include="scripts\angular-mocks.js" />
-    <Content Include="scripts\angular-resource.js" />
-    <Content Include="scripts\angular-resource.min.js" />
-    <Content Include="scripts\angular-sanitize.js" />
-    <Content Include="scripts\angular-sanitize.min.js" />
-    <Content Include="scripts\angular-scenario.js" />
-    <Content Include="scripts\angular.js" />
-    <Content Include="scripts\angular.min.js" />
-    <Content Include="scripts\bootstrap.js" />
-    <Content Include="scripts\bootstrap.min.js" />
-    <Content Include="scripts\chosen.jquery.js" />
-    <Content Include="scripts\chosen.jquery.min.js" />
-    <Content Include="scripts\jquery-2.0.3.js" />
-    <Content Include="scripts\jquery-2.0.3.min.js" />
+    <Content Include="lib\angularjs-1.0.8\angular-resource.js" />
+    <Content Include="lib\angularjs-1.0.8\angular-resource.min.js" />
+    <Content Include="lib\angularjs-1.0.8\angular-sanitize.js" />
+    <Content Include="lib\angularjs-1.0.8\angular-sanitize.min.js" />
+    <Content Include="lib\angularjs-1.0.8\angular.js" />
+    <Content Include="lib\angularjs-1.0.8\angular.min.js" />
+    <Content Include="lib\bootstrap-3.0.0\bootstrap.js" />
+    <Content Include="lib\bootstrap-3.0.0\bootstrap.min.js" />
+    <Content Include="lib\chosen-1.0.0\chosen.jquery.js" />
+    <Content Include="lib\chosen-1.0.0\chosen.jquery.min.js" />
+    <Content Include="lib\jquery-2.0.3\jquery-2.0.3.js" />
+    <Content Include="lib\jquery-2.0.3\jquery-2.0.3.min.js" />
     <None Include="T4MVC.tt.settings.xml" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -292,13 +281,12 @@
       <DependentUpon>Web.config</DependentUpon>
     </Content>
     <Content Include="Areas\HelpPage\Views\_ViewStart.cshtml" />
-    <Content Include="scripts\_references.js" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <None Include="T4MVC.tt.hooks.t4" />
-    <Content Include="scripts\jquery-2.0.3.min.map" />
+    <Content Include="lib\jquery-2.0.3\jquery-2.0.3.min.map" />
     <Content Include="Views\Scrilla\Accounts.cshtml" />
     <Content Include="Views\Scrilla\Transactions.cshtml" />
     <Content Include="Views\Scrilla\Categories.cshtml" />
@@ -319,7 +307,6 @@
     <Folder Include="app\filters\" />
     <Folder Include="app\services\" />
     <Folder Include="app\views\" />
-    <Folder Include="images\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">

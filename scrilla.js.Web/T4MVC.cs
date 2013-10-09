@@ -107,6 +107,17 @@ namespace Links
         }
     
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public static class styles {
+            private const string URLPATH = "~/app/styles";
+            public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
+            public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
+            public static readonly string app_less = Url("app.less");
+            public static readonly string app_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/app.min.css") ? Url("app.min.css") : Url("app.css");
+                 
+            public static readonly string app_min_css = Url("app.min.css");
+        }
+    
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public static class views {
             private const string URLPATH = "~/app/views";
             public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
@@ -116,13 +127,26 @@ namespace Links
     }
 
     [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-    public static class Content {
-        private const string URLPATH = "~/Content";
+    public static class lib {
+        private const string URLPATH = "~/lib";
         public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
         public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public static class bootstrap {
-            private const string URLPATH = "~/Content/bootstrap";
+        public static class angularjs_1_0_8 {
+            private const string URLPATH = "~/lib/angularjs-1.0.8";
+            public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
+            public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
+            public static readonly string angular_resource_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/angular-resource.min.js") ? Url("angular-resource.min.js") : Url("angular-resource.js");
+            public static readonly string angular_resource_min_js = Url("angular-resource.min.js");
+            public static readonly string angular_sanitize_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/angular-sanitize.min.js") ? Url("angular-sanitize.min.js") : Url("angular-sanitize.js");
+            public static readonly string angular_sanitize_min_js = Url("angular-sanitize.min.js");
+            public static readonly string angular_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/angular.min.js") ? Url("angular.min.js") : Url("angular.js");
+            public static readonly string angular_min_js = Url("angular.min.js");
+        }
+    
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public static class bootstrap_3_0_0 {
+            private const string URLPATH = "~/lib/bootstrap-3.0.0";
             public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
             public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
             public static readonly string bootstrap_theme_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/bootstrap-theme.min.css") ? Url("bootstrap-theme.min.css") : Url("bootstrap-theme.css");
@@ -130,17 +154,28 @@ namespace Links
             public static readonly string bootstrap_theme_min_css = Url("bootstrap-theme.min.css");
             public static readonly string bootstrap_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/bootstrap.min.css") ? Url("bootstrap.min.css") : Url("bootstrap.css");
                  
+            public static readonly string bootstrap_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/bootstrap.min.js") ? Url("bootstrap.min.js") : Url("bootstrap.js");
             public static readonly string bootstrap_min_css = Url("bootstrap.min.css");
+            public static readonly string bootstrap_min_js = Url("bootstrap.min.js");
         }
     
-        public static readonly string chosen_sprite_png = Url("chosen-sprite.png");
-        public static readonly string chosen_sprite_2x_png = Url("chosen-sprite@2x.png");
-        public static readonly string chosen_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/chosen.min.css") ? Url("chosen.min.css") : Url("chosen.css");
-             
-        public static readonly string chosen_min_css = Url("chosen.min.css");
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public static class chosen_1_0_0 {
+            private const string URLPATH = "~/lib/chosen-1.0.0";
+            public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
+            public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
+            public static readonly string chosen_sprite_png = Url("chosen-sprite.png");
+            public static readonly string chosen_sprite_2x_png = Url("chosen-sprite@2x.png");
+            public static readonly string chosen_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/chosen.min.css") ? Url("chosen.min.css") : Url("chosen.css");
+                 
+            public static readonly string chosen_jquery_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/chosen.jquery.min.js") ? Url("chosen.jquery.min.js") : Url("chosen.jquery.js");
+            public static readonly string chosen_jquery_min_js = Url("chosen.jquery.min.js");
+            public static readonly string chosen_min_css = Url("chosen.min.css");
+        }
+    
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public static class fonts {
-            private const string URLPATH = "~/Content/fonts";
+            private const string URLPATH = "~/lib/fonts";
             public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
             public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
             public static readonly string glyphicons_halflings_regular_eot = Url("glyphicons-halflings-regular.eot");
@@ -149,49 +184,17 @@ namespace Links
             public static readonly string glyphicons_halflings_regular_woff = Url("glyphicons-halflings-regular.woff");
         }
     
-        public static readonly string site_less = Url("site.less");
-        public static readonly string site_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/site.min.css") ? Url("site.min.css") : Url("site.css");
-             
-        public static readonly string site_min_css = Url("site.min.css");
-    }
-
-    [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-    public static class scripts {
-        private const string URLPATH = "~/scripts";
-        public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
-        public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-        public static readonly string _references_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/_references.min.js") ? Url("_references.min.js") : Url("_references.js");
-        public static readonly string angular_bootstrap_prettify_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/angular-bootstrap-prettify.min.js") ? Url("angular-bootstrap-prettify.min.js") : Url("angular-bootstrap-prettify.js");
-        public static readonly string angular_bootstrap_prettify_min_js = Url("angular-bootstrap-prettify.min.js");
-        public static readonly string angular_bootstrap_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/angular-bootstrap.min.js") ? Url("angular-bootstrap.min.js") : Url("angular-bootstrap.js");
-        public static readonly string angular_bootstrap_min_js = Url("angular-bootstrap.min.js");
-        public static readonly string angular_cookies_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/angular-cookies.min.js") ? Url("angular-cookies.min.js") : Url("angular-cookies.js");
-        public static readonly string angular_cookies_min_js = Url("angular-cookies.min.js");
-        public static readonly string angular_loader_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/angular-loader.min.js") ? Url("angular-loader.min.js") : Url("angular-loader.js");
-        public static readonly string angular_loader_min_js = Url("angular-loader.min.js");
-        public static readonly string angular_mocks_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/angular-mocks.min.js") ? Url("angular-mocks.min.js") : Url("angular-mocks.js");
-        public static readonly string angular_resource_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/angular-resource.min.js") ? Url("angular-resource.min.js") : Url("angular-resource.js");
-        public static readonly string angular_resource_min_js = Url("angular-resource.min.js");
-        public static readonly string angular_sanitize_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/angular-sanitize.min.js") ? Url("angular-sanitize.min.js") : Url("angular-sanitize.js");
-        public static readonly string angular_sanitize_min_js = Url("angular-sanitize.min.js");
-        public static readonly string angular_scenario_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/angular-scenario.min.js") ? Url("angular-scenario.min.js") : Url("angular-scenario.js");
-        public static readonly string angular_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/angular.min.js") ? Url("angular.min.js") : Url("angular.js");
-        public static readonly string angular_min_js = Url("angular.min.js");
-        public static readonly string bootstrap_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/bootstrap.min.js") ? Url("bootstrap.min.js") : Url("bootstrap.js");
-        public static readonly string bootstrap_min_js = Url("bootstrap.min.js");
-        public static readonly string chosen_jquery_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/chosen.jquery.min.js") ? Url("chosen.jquery.min.js") : Url("chosen.jquery.js");
-        public static readonly string chosen_jquery_min_js = Url("chosen.jquery.min.js");
-        public static readonly string jquery_2_0_3_intellisense_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery-2.0.3.intellisense.min.js") ? Url("jquery-2.0.3.intellisense.min.js") : Url("jquery-2.0.3.intellisense.js");
-        public static readonly string jquery_2_0_3_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery-2.0.3.min.js") ? Url("jquery-2.0.3.min.js") : Url("jquery-2.0.3.js");
-        public static readonly string jquery_2_0_3_min_js = Url("jquery-2.0.3.min.js");
-        public static readonly string jquery_2_0_3_min_map = Url("jquery-2.0.3.min.map");
-    }
-
-    [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-    public static class images {
-        private const string URLPATH = "~/images";
-        public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
-        public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public static class jquery_2_0_3 {
+            private const string URLPATH = "~/lib/jquery-2.0.3";
+            public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
+            public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
+            public static readonly string jquery_2_0_3_intellisense_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery-2.0.3.intellisense.min.js") ? Url("jquery-2.0.3.intellisense.min.js") : Url("jquery-2.0.3.intellisense.js");
+            public static readonly string jquery_2_0_3_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery-2.0.3.min.js") ? Url("jquery-2.0.3.min.js") : Url("jquery-2.0.3.js");
+            public static readonly string jquery_2_0_3_min_js = Url("jquery-2.0.3.min.js");
+            public static readonly string jquery_2_0_3_min_map = Url("jquery-2.0.3.min.map");
+        }
+    
     }
 
     [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
