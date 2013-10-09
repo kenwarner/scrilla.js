@@ -82,6 +82,7 @@ namespace Links
             private const string URLPATH = "~/app/controllers";
             public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
             public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
+            public static readonly string AccountController_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/AccountController.min.js") ? Url("AccountController.min.js") : Url("AccountController.js");
         }
     
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -210,8 +211,7 @@ internal static class T4MVCHelpers {
     //      return "http://localhost" + path + "?foo=bar";
     private static string ProcessVirtualPathDefault(string virtualPath) {
         // The path that comes in starts with ~/ and must first be made absolute
-        //string path = VirtualPathUtility.ToAbsolute(virtualPath);
-		string path = VirtualPathUtility.ToAppRelative(virtualPath);
+        string path = VirtualPathUtility.ToAbsolute(virtualPath);
         
         // Add your own modifications here before returning the path
         return path;
