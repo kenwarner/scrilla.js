@@ -95,6 +95,7 @@ namespace scrilla.js.Web.Controllers
         {
             public readonly string from = ("from").ToLowerInvariant();
             public readonly string to = ("to").ToLowerInvariant();
+            public readonly string view = ("view").ToLowerInvariant();
         }
         static readonly ActionParamsClass_Transactions s_params_Transactions = new ActionParamsClass_Transactions();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -202,14 +203,15 @@ namespace scrilla.js.Web.Controllers
     {
         public T4MVC_ScrillaController() : base(Dummy.Instance) { }
 
-        partial void AccountsOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, string from, string to);
+        partial void AccountsOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, string from, string to, string view);
 
-        public override System.Web.Mvc.ActionResult Accounts(string from, string to)
+        public override System.Web.Mvc.ActionResult Accounts(string from, string to, string view)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Accounts);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "from", from);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "to", to);
-            AccountsOverride(callInfo, from, to);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "view", view);
+            AccountsOverride(callInfo, from, to, view);
             return callInfo;
         }
 

@@ -231,6 +231,12 @@
       <DependentUpon>app.less</DependentUpon>
     </Content>
     <Content Include="app\controllers\AccountController.js" />
+    <Content Include="app\styles\bootstrap-theme.css">
+      <DependentUpon>bootstrap-theme.less</DependentUpon>
+    </Content>
+    <Content Include="app\styles\bootstrap-theme.min.css">
+      <DependentUpon>bootstrap-theme.less</DependentUpon>
+    </Content>
     <Content Include="Areas\HelpPage\HelpPage.css" />
     <Content Include="lib\bootstrap-3.0.0\bootstrap-theme.css" />
     <Content Include="lib\bootstrap-3.0.0\bootstrap-theme.min.css" />
@@ -258,6 +264,7 @@
     <Content Include="lib\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="lib\fonts\glyphicons-halflings-regular.eot" />
     <Content Include="app\styles\app.less" />
+    <Content Include="app\styles\bootstrap-theme.less" />
     <None Include="lib\jquery-2.0.3\jquery-2.0.3.intellisense.js" />
     <Content Include="app\app.js" />
     <Content Include="lib\angularjs-1.0.8\angular-resource.js" />

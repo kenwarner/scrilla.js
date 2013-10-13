@@ -24,9 +24,9 @@ namespace scrilla.js.Web
 		private readonly IWindsorContainer _container;
 
 		public WebApiApplication()
-        {
+		{
 			_container = new WindsorContainer();
-        }
+		}
 
 		protected void Application_Start()
 		{
@@ -39,7 +39,7 @@ namespace scrilla.js.Web
 			RouteConfig.RegisterRoutes(RouteTable.Routes);
 			BundleConfig.RegisterBundles(BundleTable.Bundles);
 
-			// BundleTable.EnableOptimizations = true;
+			BundleTable.EnableOptimizations = true;
 		}
 
 		private void SetControllerComposition()

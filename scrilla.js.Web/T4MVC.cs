@@ -115,6 +115,10 @@ namespace Links
             public static readonly string app_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/app.min.css") ? Url("app.min.css") : Url("app.css");
                  
             public static readonly string app_min_css = Url("app.min.css");
+            public static readonly string bootstrap_theme_less = Url("bootstrap-theme.less");
+            public static readonly string bootstrap_theme_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/bootstrap-theme.min.css") ? Url("bootstrap-theme.min.css") : Url("bootstrap-theme.css");
+                 
+            public static readonly string bootstrap_theme_min_css = Url("bootstrap-theme.min.css");
         }
     
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -214,7 +218,8 @@ internal static class T4MVCHelpers {
     //      return "http://localhost" + path + "?foo=bar";
     private static string ProcessVirtualPathDefault(string virtualPath) {
         // The path that comes in starts with ~/ and must first be made absolute
-        string path = VirtualPathUtility.ToAbsolute(virtualPath);
+        //string path = VirtualPathUtility.ToAbsolute(virtualPath);
+		string path = VirtualPathUtility.ToAppRelative(virtualPath);
         
         // Add your own modifications here before returning the path
         return path;

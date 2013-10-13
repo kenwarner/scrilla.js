@@ -11,8 +11,8 @@ using System.Web.Http;
 
 namespace scrilla.js.Web.Controllers
 {
-    public partial class AccountApiController : ApiController
-    {
+	public partial class AccountApiController : ApiController
+	{
 		private readonly IAccountService _accountService;
 
 		public AccountApiController(IAccountService accountService)
@@ -21,11 +21,11 @@ namespace scrilla.js.Web.Controllers
 		}
 
 		[GET("api/accounts/balances"), HttpGet]
-        public virtual HttpResponseMessage Accounts(DateTime? from = null, DateTime? to = null)
-        {
+		public virtual HttpResponseMessage Accounts(DateTime? from = null, DateTime? to = null)
+		{
 			return Request.CreateResponse<AccountBalancesModel>(_accountService.GetAccountBalances(from, to));
-        }
-    }
+		}
+	}
 }
 
 namespace System.Net.Http
@@ -42,5 +42,5 @@ namespace System.Net.Http
 
 			return request.CreateResponse(HttpStatusCode.OK, result.Result);
 		}
-	}   
+	}
 }
