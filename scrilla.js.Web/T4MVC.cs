@@ -24,21 +24,12 @@ using T4MVC;
 [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
 public static class MVC
 {
-    static readonly HelpPageClass s_HelpPage = new HelpPageClass();
-    public static HelpPageClass HelpPage { get { return s_HelpPage; } }
     public static scrilla.js.Web.Controllers.ScrillaController Scrilla = new scrilla.js.Web.Controllers.T4MVC_ScrillaController();
     public static T4MVC.SharedController Shared = new T4MVC.SharedController();
 }
 
 namespace T4MVC
 {
-    [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-    public class HelpPageClass
-    {
-        public readonly string Name = "helppage";
-        public scrilla.js.Web.Areas.HelpPage.Controllers.HelpController Help = new scrilla.js.Web.Areas.HelpPage.Controllers.T4MVC_HelpController();
-        public T4MVC.HelpPage.SharedController Shared = new T4MVC.HelpPage.SharedController();
-    }
 }
 
 namespace T4MVC
