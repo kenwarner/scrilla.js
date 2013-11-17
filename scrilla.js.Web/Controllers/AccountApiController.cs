@@ -1,5 +1,4 @@
-﻿using AttributeRouting.Web.Http;
-using scrilla.js.Web.Models;
+﻿using scrilla.js.Web.Models;
 using scrilla.Services;
 using scrilla.Services.Models;
 using System;
@@ -20,7 +19,7 @@ namespace scrilla.js.Web.Controllers
 			_accountService = accountService;
 		}
 
-		[GET("api/accounts/balances"), HttpGet]
+		[Route("api/accounts/balances")]
 		public virtual HttpResponseMessage Accounts(DateTime? from = null, DateTime? to = null)
 		{
 			var dateRange = new DateRangeModel(from, to);

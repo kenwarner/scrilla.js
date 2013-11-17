@@ -1,5 +1,4 @@
-﻿using AttributeRouting.Web.Mvc;
-using scrilla.js.Web.Models;
+﻿using scrilla.js.Web.Models;
 using scrilla.Services;
 using scrilla.Services.Models;
 using System;
@@ -19,8 +18,8 @@ namespace scrilla.js.Web.Controllers
 			_accountService = accountService;
 		}
 
-		[GET("", ActionPrecedence = 1)]
-		[GET("Accounts")]
+		[Route("")]
+		[Route("Accounts")]
 		public virtual ActionResult Accounts(string from = null, string to = null, string view = "ng")
 		{
 			view = view.Equals("ng") ? MVC.Scrilla.Views.Accounts_ng : MVC.Scrilla.Views.Accounts;
@@ -32,49 +31,49 @@ namespace scrilla.js.Web.Controllers
 			return View(view, model);
 		}
 
-		[GET("Transactions")]
+		[Route("Transactions")]
 		public virtual ActionResult Transactions(int? accountId = null, string vendorId = "", string categoryId = "", string from = null, string to = null)
 		{
 			return View();
 		}
 
-		[GET("Categories")]
+		[Route("Categories")]
 		public virtual ActionResult Categories(int? accountId = null, string from = null, string to = null, string transfers = "")
 		{
 			return View();
 		}
 
-		[GET("Category/{categoryId}")]
+		[Route("Category/{categoryId}")]
 		public virtual ActionResult Category(int categoryId)
 		{
 			return View();
 		}
 
-		[GET("Vendors")]
+		[Route("Vendors")]
 		public virtual ActionResult Vendors(string from = null, string to = null)
 		{
 			return View();
 		}
 
-		[GET("Vendor/{vendorId}")]
+		[Route("Vendor/{vendorId}")]
 		public virtual ActionResult Vendor(int vendorId)
 		{
 			return View();
 		}
 
-		[GET("Bills")]
+		[Route("Bills")]
 		public virtual ActionResult Bills()
 		{
 			return View();
 		}
 
-		[GET("Bill/{billId}")]
+		[Route("Bill/{billId}")]
 		public virtual ActionResult Bill(int billId)
 		{
 			return View();
 		}
 
-		[GET("Budget")]
+		[Route("Budget")]
 		public virtual ActionResult Budget(int? accountId = null, string month = null, string from = null, string to = null)
 		{
 			return View();

@@ -34,12 +34,12 @@ namespace scrilla.js.Web
 			SetControllerComposition();
 
 			AreaRegistration.RegisterAllAreas();
-			WebApiConfig.Register(GlobalConfiguration.Configuration);
+			GlobalConfiguration.Configure(WebApiConfig.Register);
 			FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
 			RouteConfig.RegisterRoutes(RouteTable.Routes);
 			BundleConfig.RegisterBundles(BundleTable.Bundles);
 
-			BundleTable.EnableOptimizations = true;
+			BundleTable.EnableOptimizations = false;
 		}
 
 		private void SetControllerComposition()

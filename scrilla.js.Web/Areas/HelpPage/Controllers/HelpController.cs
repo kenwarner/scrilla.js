@@ -24,6 +24,7 @@ namespace scrilla.js.Web.Areas.HelpPage.Controllers
 
 		public virtual ActionResult Index()
         {
+            ViewBag.DocumentationProvider = Configuration.Services.GetDocumentationProvider();
             return View(Configuration.Services.GetApiExplorer().ApiDescriptions);
         }
 
