@@ -1,12 +1,12 @@
 ﻿@model scrilla.js.Web.Models.AccountsViewModel
 
 @{
-  ViewBag.Title = "Accounts from " + Model.DateRange.ToString();
+  ViewBag.Title = "Accounts from " + Model.DateRange.RangeSummary;
 }
 
 <h3>@ViewBag.Title</h3>
 
-@foreach (var group in Model.AccountsBalances)
+@foreach (var group in Model.AccountBalances)
 {
   var accountGroup = String.Format("accountGroup{0}", group.Id);
   var accountBalances = String.Format("accountBalances{0}", group.Id);
