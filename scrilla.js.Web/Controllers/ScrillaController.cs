@@ -1,6 +1,7 @@
 ﻿using AttributeRouting.Web.Mvc;
 using scrilla.js.Web.Models;
 using scrilla.Services;
+using scrilla.Services.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,7 @@ using System.Web.Mvc;
 namespace scrilla.js.Web.Controllers
 {
 	public partial class ScrillaController : Controller
-    {
+	{
 		private readonly IAccountService _accountService;
 
 		public ScrillaController(IAccountService accountService)
@@ -20,13 +21,16 @@ namespace scrilla.js.Web.Controllers
 
 		[GET("", ActionPrecedence = 1)]
 		[GET("Accounts")]
-		public virtual ActionResult Accounts(string from = null, string to = null)
-        {
-			var model = new AccountsViewModel();
-			model.DateRange = new DateRangeViewModel(from, to);
-			model.AccountsBalances = _accountService.GetAccountBalances(model.DateRange.From, model.DateRange.To).Result;
-            return View(MVC.Scrilla.Views.Accounts_ng, model);
-        }
+		public virtual ActionResult Accounts(string from = null, string to = null, string view = "ng")
+		{
+			view = view.Equals("ng") ? MVC.Scrilla.Views.Accounts_ng : MVC.Scrilla.Views.Accounts;
+
+			var dateRange = new DateRangeModel(from, to);
+			var accountBalancesModel = _accountService.GetAccountBalances(dateRange.From, dateRange.To).Result;
+			var model = new AccountsViewModel() { AccountBalances = accountBalancesModel.AccountBalances, DateRange = accountBalancesModel.DateRange };
+
+			return View(view, model);
+		}
 
 		[GET("Transactions")]
 		public virtual ActionResult Transactions(int? accountId = null, string vendorId = "", string categoryId = "", string from = null, string to = null)
@@ -75,5 +79,5 @@ namespace scrilla.js.Web.Controllers
 		{
 			return View();
 		}
-    }
+	}
 }
