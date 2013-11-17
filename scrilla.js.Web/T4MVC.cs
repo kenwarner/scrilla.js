@@ -97,6 +97,7 @@ namespace Links
             private const string URLPATH = "~/app/filters";
             public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
             public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
+            public static readonly string dateRangeFilters_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/dateRangeFilters.min.js") ? Url("dateRangeFilters.min.js") : Url("dateRangeFilters.js");
         }
     
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -136,16 +137,13 @@ namespace Links
         public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
         public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public static class angularjs_1_0_8 {
-            private const string URLPATH = "~/lib/angularjs-1.0.8";
+        public static class angularjs_1_2_1 {
+            private const string URLPATH = "~/lib/angularjs-1.2.1";
             public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
             public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-            public static readonly string angular_resource_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/angular-resource.min.js") ? Url("angular-resource.min.js") : Url("angular-resource.js");
-            public static readonly string angular_resource_min_js = Url("angular-resource.min.js");
-            public static readonly string angular_sanitize_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/angular-sanitize.min.js") ? Url("angular-sanitize.min.js") : Url("angular-sanitize.js");
-            public static readonly string angular_sanitize_min_js = Url("angular-sanitize.min.js");
             public static readonly string angular_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/angular.min.js") ? Url("angular.min.js") : Url("angular.js");
             public static readonly string angular_min_js = Url("angular.min.js");
+            public static readonly string angular_min_js_map = Url("angular.min.js.map");
         }
     
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -197,6 +195,16 @@ namespace Links
             public static readonly string jquery_2_0_3_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery-2.0.3.min.js") ? Url("jquery-2.0.3.min.js") : Url("jquery-2.0.3.js");
             public static readonly string jquery_2_0_3_min_js = Url("jquery-2.0.3.min.js");
             public static readonly string jquery_2_0_3_min_map = Url("jquery-2.0.3.min.map");
+        }
+    
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public static class underscore_1_5_2 {
+            private const string URLPATH = "~/lib/underscore-1.5.2";
+            public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
+            public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
+            public static readonly string underscore_min_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/underscore-min.min.js") ? Url("underscore-min.min.js") : Url("underscore-min.js");
+            public static readonly string underscore_min_map = Url("underscore-min.map");
+            public static readonly string underscore_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/underscore.min.js") ? Url("underscore.min.js") : Url("underscore.js");
         }
     
     }
