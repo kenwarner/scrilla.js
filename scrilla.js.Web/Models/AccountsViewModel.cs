@@ -6,12 +6,8 @@ using System.Web;
 
 namespace scrilla.js.Web.Models
 {
-	public class AccountsViewModel
+	public class AccountsViewModel : AccountBalancesModel
 	{
-		public DateRangeViewModel DateRange { get; set; }
-
-		public AccountBalancesModel AccountsBalances { get; set; }
-
 		public string AccountGroupClass(AccountBalancesModel.AccountGroupModel accountGroupModel)
 		{
 			return "account-group" + (accountGroupModel.IsActive ? "" : " inactive");

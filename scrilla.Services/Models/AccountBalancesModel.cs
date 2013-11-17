@@ -7,8 +7,12 @@ using System.Threading.Tasks;
 
 namespace scrilla.Services.Models
 {
-	public class AccountBalancesModel : List<AccountBalancesModel.AccountGroupModel>
+	public class AccountBalancesModel
 	{
+		public DateRangeModel DateRange { get; set; }
+
+		public IEnumerable<AccountBalancesModel.AccountGroupModel> AccountBalances { get; set; }
+
 		public class AccountGroupModel
 		{
 			public int Id { get; set; }

@@ -301,7 +301,8 @@ LEFT JOIN AccountGroup ag ON ag.Id = a.AccountGroupId";
 			}
 
 			var model = new AccountBalancesModel();
-			model.AddRange(accountGroups);
+			model.DateRange = new DateRangeModel(from, to);
+			model.AccountBalances = accountGroups;
 
 			result.Result = model;
 			return result;
