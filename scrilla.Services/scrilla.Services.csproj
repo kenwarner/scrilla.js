@@ -83,6 +83,7 @@
     <Compile Include="ITransactionService.cs" />
     <Compile Include="IVendorService.cs" />
     <Compile Include="Models\AccountBalancesModel.cs" />
+    <Compile Include="Models\DateRangeModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="..\GlobalAssemblyInfo.cs">
       <Link>Properties\GlobalAssemblyInfo.cs</Link>

@@ -1,16 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace scrilla.js.Web.Models
+namespace scrilla.Services.Models
 {
-	public class DateRangeViewModel
+	public class DateRangeModel
 	{
-		public DateRangeViewModel(DateTime? from = null, DateTime? to = null)
+		public DateRangeModel(DateTime? from = null, DateTime? to = null)
 			: this(from.ToString(), to.ToString()) { }
 
-		public DateRangeViewModel(string from = null, string to = null)
+		public DateRangeModel(string from = null, string to = null)
 		{
 			DateTime fromDate;
 			if (DateTime.TryParse(from, out fromDate))
@@ -68,6 +69,24 @@ namespace scrilla.js.Web.Models
 			var now = DateTime.Now;
 			return new DateTime(now.Year, now.Month, 1).AddMonths(2).AddDays(-1);
 		}
+
+		public IEnumerable<DateTime> Months
+		{
+			get
+			{
+				var months = new List<DateTime>();
+				for (var month = FromMonth; month <= ToMonth; month = month.AddMonths(1))
+					months.Add(month);
+
+				return months;
+			}
+		}
+
+		public string RangeSummary
+		{
+			get { return this.ToString(); }
+		}
+
 		public override string ToString()
 		{
 			return From.ToString("MMMM yyyy") + " to " + To.ToString("MMMM yyyy");

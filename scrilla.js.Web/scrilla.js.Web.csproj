@@ -208,7 +208,6 @@
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountsViewModel.cs" />
-    <Compile Include="Models\DateRangeViewModel.cs" />
     <Compile Include="Models\ExtensionMethods.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ScrillaController.generated.cs">
@@ -224,6 +223,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="app\filters\dateRangeFilters.js" />
     <Content Include="app\styles\app.css">
       <DependentUpon>app.less</DependentUpon>
     </Content>
@@ -238,6 +238,8 @@
       <DependentUpon>bootstrap-theme.less</DependentUpon>
     </Content>
     <Content Include="Areas\HelpPage\HelpPage.css" />
+    <Content Include="lib\angularjs-1.2.1\angular.js" />
+    <Content Include="lib\angularjs-1.2.1\angular.min.js" />
     <Content Include="lib\bootstrap-3.0.0\bootstrap-theme.css" />
     <Content Include="lib\bootstrap-3.0.0\bootstrap-theme.min.css" />
     <Content Include="lib\bootstrap-3.0.0\bootstrap.css" />
@@ -265,21 +267,19 @@
     <Content Include="lib\fonts\glyphicons-halflings-regular.eot" />
     <Content Include="app\styles\app.less" />
     <Content Include="app\styles\bootstrap-theme.less" />
+    <Content Include="lib\angularjs-1.2.1\angular.min.js.map" />
     <None Include="lib\jquery-2.0.3\jquery-2.0.3.intellisense.js" />
     <Content Include="app\app.js" />
-    <Content Include="lib\angularjs-1.0.8\angular-resource.js" />
-    <Content Include="lib\angularjs-1.0.8\angular-resource.min.js" />
-    <Content Include="lib\angularjs-1.0.8\angular-sanitize.js" />
-    <Content Include="lib\angularjs-1.0.8\angular-sanitize.min.js" />
-    <Content Include="lib\angularjs-1.0.8\angular.js" />
-    <Content Include="lib\angularjs-1.0.8\angular.min.js" />
     <Content Include="lib\bootstrap-3.0.0\bootstrap.js" />
     <Content Include="lib\bootstrap-3.0.0\bootstrap.min.js" />
     <Content Include="lib\chosen-1.0.0\chosen.jquery.js" />
     <Content Include="lib\chosen-1.0.0\chosen.jquery.min.js" />
     <Content Include="lib\jquery-2.0.3\jquery-2.0.3.js" />
     <Content Include="lib\jquery-2.0.3\jquery-2.0.3.min.js" />
+    <Content Include="lib\underscore-1.5.2\underscore-min.map" />
     <None Include="T4MVC.tt.settings.xml" />
+    <Content Include="lib\underscore-1.5.2\underscore-min.js" />
+    <Content Include="lib\underscore-1.5.2\underscore.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -311,7 +311,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="app\directives\" />
-    <Folder Include="app\filters\" />
     <Folder Include="app\services\" />
     <Folder Include="app\views\" />
   </ItemGroup>
