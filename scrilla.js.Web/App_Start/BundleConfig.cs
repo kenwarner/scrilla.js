@@ -14,8 +14,13 @@ namespace scrilla.js.Web
 			bundles.Add(new StyleBundle(Links.Bundles.Styles.chosen).IncludeDirectory(VirtualPathUtility.ToAppRelative(Links.lib.chosen_1_0_0.Url()), "*.css", false));
 
 			bundles.Add(new ScriptBundle(Links.Bundles.Scripts.app).IncludeDirectory(VirtualPathUtility.ToAppRelative(Links.app.Url()), "*.js", true));
+
 			bundles.Add(new ScriptBundle(Links.Bundles.Scripts.angularjs, "//ajax.googleapis.com/ajax/libs/angularjs/1.2.1/angular.min.js") { CdnFallbackExpression = "window.angular" }
-				.IncludeDirectory(VirtualPathUtility.ToAppRelative(Links.lib.angularjs_1_2_1.Url()), "*.js", false));
+				.Include(VirtualPathUtility.ToAppRelative(Links.lib.angularjs_1_2_1.angular_js))
+				.Include(VirtualPathUtility.ToAppRelative(Links.lib.angularjs_1_2_1.angular_route_js)));
+			bundles.Add(new ScriptBundle(Links.Bundles.Scripts.angularjsResource, "//ajax.googleapis.com/ajax/libs/angularjs/1.2.1/angular-resource.min.js") { CdnFallbackExpression = "window.angular.$resource" }
+				.Include(VirtualPathUtility.ToAppRelative(Links.lib.angularjs_1_2_1.angular_resource_js)));
+
 			bundles.Add(new ScriptBundle(Links.Bundles.Scripts.bootstrap, "//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js") { CdnFallbackExpression = "$.fn.button" }
 				.IncludeDirectory(VirtualPathUtility.ToAppRelative(Links.lib.bootstrap_3_0_0.Url()), "*.js", false));
 			bundles.Add(new ScriptBundle(Links.Bundles.Scripts.chosen)
@@ -44,6 +49,7 @@ namespace Links
 		{
 			public static readonly string app = "~/bundles/scripts/app";
 			public static readonly string angularjs = "~/bundles/scripts/angularjs";
+			public static readonly string angularjsResource = "~/bundles/scripts/angularjs-resource";
 			public static readonly string bootstrap = "~/bundles/scripts/bootstrap";
 			public static readonly string chosen = "~/bundles/scripts/chosen";
 			public static readonly string jquery = "~/bundles/scripts/jquery";
