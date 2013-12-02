@@ -19,7 +19,7 @@ namespace scrilla.js.Web.Controllers
 		}
 
 		[Route("")]
-		[Route("Accounts")]
+		[Route("accounts")]
 		public virtual ActionResult Accounts(string from = null, string to = null, string view = "ng")
 		{
 			view = view.Equals("ng") ? MVC.Scrilla.Views.Accounts_ng : MVC.Scrilla.Views.Accounts;
@@ -31,31 +31,31 @@ namespace scrilla.js.Web.Controllers
 			return View(view, model);
 		}
 
-		[Route("Transactions")]
+		[Route("transactions")]
 		public virtual ActionResult Transactions(int? accountId = null, string vendorId = "", string categoryId = "", string from = null, string to = null)
 		{
 			return View();
 		}
 
-		[Route("Categories")]
+		[Route("categories")]
 		public virtual ActionResult Categories(int? accountId = null, string from = null, string to = null, string transfers = "")
 		{
 			return View();
 		}
 
-		[Route("Category/{categoryId}")]
+		[Route("category/{categoryId}")]
 		public virtual ActionResult Category(int categoryId)
 		{
 			return View();
 		}
 
-		[Route("Vendors")]
+		[Route("vendors")]
 		public virtual ActionResult Vendors(string from = null, string to = null)
 		{
 			return View();
 		}
 
-		[Route("Vendor/{vendorId}")]
+		[Route("vendor/{vendorId}")]
 		public virtual ActionResult Vendor(int vendorId)
 		{
 			return View();
@@ -67,13 +67,13 @@ namespace scrilla.js.Web.Controllers
 			return View();
 		}
 
-		[Route("Bill/{billId}")]
+		[Route("bill/{billId}")]
 		public virtual ActionResult Bill(int billId)
 		{
 			return View();
 		}
 
-		[Route("Budget")]
+		[Route("budget")]
 		public virtual ActionResult Budget(int? accountId = null, string month = null, string from = null, string to = null)
 		{
 			return View();
