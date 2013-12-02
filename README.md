@@ -5,11 +5,12 @@ Scrilla is a web application I made to solve a problem I had:
 - But I don't love how mint.com makes me use that data - I have a particular way of maintaining a budget for my household and a particular set of views into my financial life that I like to be able to see.
 
 It was also a good opportunity to explore a few technologies:
-- ASP.NET MVC 4
-- Javascript MVC frameworks
-- FluentMigrator
-- Entity Framework Code First
-- Dapper
+- [ASP.NET MVC 5](http://www.asp.net/mvc/tutorials/mvc-5)
+- [ASP.NET Web API](http://www.asp.net/web-api)
+- [ASP.NET Web Optimization Framework](http://aspnetoptimization.codeplex.com/)
+- [Dapper](https://github.com/SamSaffron/dapper-dot-net)
+- [AngularJS](http://angularjs.org/)
+- [Bootstrap 3](http://getbootstrap.com/)
 
 To use locally:
 - Add `127.0.0.1  scrilla.js` to your C:\Windows\System32\drivers\etc\hosts file to enable local access from http://scrilla.js/
