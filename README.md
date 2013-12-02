@@ -14,7 +14,7 @@ It was also a good opportunity to explore a few technologies:
 To use locally:
 - Add `127.0.0.1  scrilla.js` to your C:\Windows\System32\drivers\etc\hosts file to enable local access from http://scrilla.js/
 - Run `\CreateScrillaWebsite.bat` to create the IIS site and app pool
-- After building the solution, run `\scrilla.Data.Migrations\dev\scratch.bat` to create the local database along with permissions for IIS AppPool\scrilla.Web
+- After building the solution, run `\scrilla.Data.Migrations\dev\scratch.bat` to create the local database along with permissions for IIS AppPool\scrilla.js.Web
 - Log in to your mint.com account and then go to https://wwws.mint.com/transactionDownload.event to initiate a full csv download of your account transactions
 - Navigate to http://scrilla.js/ and upload your transaction file
 - Do budget stuff!
