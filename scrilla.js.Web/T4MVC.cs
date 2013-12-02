@@ -74,6 +74,8 @@ namespace Links
             public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
             public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
             public static readonly string AccountController_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/AccountController.min.js") ? Url("AccountController.min.js") : Url("AccountController.js");
+            public static readonly string TransactionController_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/TransactionController.min.js") ? Url("TransactionController.min.js") : Url("TransactionController.js");
+            public static readonly string VendorController_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/VendorController.min.js") ? Url("VendorController.min.js") : Url("VendorController.js");
         }
     
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -96,6 +98,7 @@ namespace Links
             private const string URLPATH = "~/app/services";
             public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
             public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
+            public static readonly string AccountService_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/AccountService.min.js") ? Url("AccountService.min.js") : Url("AccountService.js");
         }
     
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -132,6 +135,12 @@ namespace Links
             private const string URLPATH = "~/lib/angularjs-1.2.1";
             public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
             public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
+            public static readonly string angular_resource_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/angular-resource.min.js") ? Url("angular-resource.min.js") : Url("angular-resource.js");
+            public static readonly string angular_resource_min_js = Url("angular-resource.min.js");
+            public static readonly string angular_resource_min_js_map = Url("angular-resource.min.js.map");
+            public static readonly string angular_route_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/angular-route.min.js") ? Url("angular-route.min.js") : Url("angular-route.js");
+            public static readonly string angular_route_min_js = Url("angular-route.min.js");
+            public static readonly string angular_route_min_js_map = Url("angular-route.min.js.map");
             public static readonly string angular_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/angular.min.js") ? Url("angular.min.js") : Url("angular.js");
             public static readonly string angular_min_js = Url("angular.min.js");
             public static readonly string angular_min_js_map = Url("angular.min.js.map");

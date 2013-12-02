@@ -175,7 +175,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="app\controllers\TransactionController.js" />
+    <Content Include="app\controllers\VendorController.js" />
     <Content Include="app\filters\dateRangeFilters.js" />
+    <Content Include="app\services\AccountService.js" />
     <Content Include="app\styles\app.css">
       <DependentUpon>app.less</DependentUpon>
     </Content>
@@ -189,6 +192,10 @@
     <Content Include="app\styles\bootstrap-theme.min.css">
       <DependentUpon>bootstrap-theme.less</DependentUpon>
     </Content>
+    <Content Include="lib\angularjs-1.2.1\angular-resource.js" />
+    <Content Include="lib\angularjs-1.2.1\angular-resource.min.js" />
+    <Content Include="lib\angularjs-1.2.1\angular-route.js" />
+    <Content Include="lib\angularjs-1.2.1\angular-route.min.js" />
     <Content Include="lib\angularjs-1.2.1\angular.js" />
     <Content Include="lib\angularjs-1.2.1\angular.min.js" />
     <Content Include="lib\bootstrap-3.0.0\bootstrap-theme.css" />
@@ -208,6 +215,8 @@
     <Content Include="app\styles\app.less" />
     <Content Include="app\styles\bootstrap-theme.less" />
     <Content Include="lib\angularjs-1.2.1\angular.min.js.map" />
+    <Content Include="lib\angularjs-1.2.1\angular-resource.min.js.map" />
+    <Content Include="lib\angularjs-1.2.1\angular-route.min.js.map" />
     <None Include="lib\jquery-2.0.3\jquery-2.0.3.intellisense.js" />
     <Content Include="app\app.js" />
     <Content Include="lib\bootstrap-3.0.0\bootstrap.js" />
@@ -250,7 +259,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="app\directives\" />
-    <Folder Include="app\services\" />
     <Folder Include="app\views\" />
   </ItemGroup>
   <ItemGroup>

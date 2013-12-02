@@ -1,8 +1,6 @@
-﻿var scrillaApp = angular.module('scrillaApp', []);
+﻿scrilla.controllers.controller('AccountController', ['$scope', '$location', 'AccountService', function ($scope, $location, AccountService) {
+	$scope.from = $location.search().from;
+	$scope.to = $location.search().to;
 
-scrillaApp.controller('AccountCtrl', ['$scope', '$http', 
-	function AccountCtrl($scope, $http) {
-		$http.get('/api/accounts/balances').success(function (data) {
-			$scope.model = data;
-		});
-	}]);
+	$scope.model = AccountService.balances({ from: $scope.from, to: $scope.to });
+}]);
