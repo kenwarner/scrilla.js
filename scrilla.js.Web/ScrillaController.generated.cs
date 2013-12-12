@@ -71,7 +71,9 @@ namespace scrilla.js.Web.Controllers
             public _ViewNamesClass ViewNames { get { return s_ViewNames; } }
             public class _ViewNamesClass
             {
+                public readonly string App = "App";
             }
+            public readonly string App = "~/Views/Scrilla/App.cshtml";
         }
     }
 
