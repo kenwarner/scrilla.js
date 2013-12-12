@@ -150,8 +150,8 @@ namespace Links
         }
     
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public static class bootstrap_3_0_0 {
-            private const string URLPATH = "~/lib/bootstrap-3.0.0";
+        public static class bootstrap_3_0_3 {
+            private const string URLPATH = "~/lib/bootstrap-3.0.3";
             public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
             public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
             public static readonly string bootstrap_theme_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/bootstrap-theme.min.css") ? Url("bootstrap-theme.min.css") : Url("bootstrap-theme.css");

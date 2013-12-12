@@ -10,7 +10,7 @@ namespace scrilla.js.Web
 		{
 			bundles.UseCdn = true;
 			bundles.Add(new StyleBundle(Links.Bundles.Styles.app).IncludeDirectory(VirtualPathUtility.ToAppRelative(Links.app.styles.Url()), "*.css", false));
-			bundles.Add(new StyleBundle(Links.Bundles.Styles.bootstrap).IncludeDirectory(VirtualPathUtility.ToAppRelative(Links.lib.bootstrap_3_0_0.Url()), "*.css", false));
+			bundles.Add(new StyleBundle(Links.Bundles.Styles.bootstrap).IncludeDirectory(VirtualPathUtility.ToAppRelative(Links.lib.bootstrap_3_0_3.Url()), "*.css", false));
 			bundles.Add(new StyleBundle(Links.Bundles.Styles.chosen).IncludeDirectory(VirtualPathUtility.ToAppRelative(Links.lib.chosen_1_0_0.Url()), "*.css", false));
 
 			bundles.Add(new ScriptBundle(Links.Bundles.Scripts.app).IncludeDirectory(VirtualPathUtility.ToAppRelative(Links.app.Url()), "*.js", true));
@@ -21,8 +21,8 @@ namespace scrilla.js.Web
 			bundles.Add(new ScriptBundle(Links.Bundles.Scripts.angularjsResource, "//ajax.googleapis.com/ajax/libs/angularjs/1.2.4/angular-resource.min.js") { CdnFallbackExpression = "window.angular.$resource" }
 				.Include(VirtualPathUtility.ToAppRelative(Links.lib.angularjs_1_2_4.angular_resource_js)));
 
-			bundles.Add(new ScriptBundle(Links.Bundles.Scripts.bootstrap, "//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js") { CdnFallbackExpression = "$.fn.button" }
-				.IncludeDirectory(VirtualPathUtility.ToAppRelative(Links.lib.bootstrap_3_0_0.Url()), "*.js", false));
+			bundles.Add(new ScriptBundle(Links.Bundles.Scripts.bootstrap, "//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js") { CdnFallbackExpression = "$.fn.button" }
+				.IncludeDirectory(VirtualPathUtility.ToAppRelative(Links.lib.bootstrap_3_0_3.Url()), "*.js", false));
 			bundles.Add(new ScriptBundle(Links.Bundles.Scripts.chosen)
 				.IncludeDirectory(VirtualPathUtility.ToAppRelative(Links.lib.chosen_1_0_0.Url()), "*.js", false));
 			bundles.Add(new ScriptBundle(Links.Bundles.Scripts.jquery, "//code.jquery.com/jquery-2.0.3.min.js") { CdnFallbackExpression = "window.jQuery" }

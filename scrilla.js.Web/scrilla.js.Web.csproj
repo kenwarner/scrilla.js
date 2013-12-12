@@ -202,10 +202,12 @@
     <Content Include="lib\angularjs-1.2.4\angular-route.min.js" />
     <Content Include="lib\angularjs-1.2.4\angular.js" />
     <Content Include="lib\angularjs-1.2.4\angular.min.js" />
-    <Content Include="lib\bootstrap-3.0.0\bootstrap-theme.css" />
-    <Content Include="lib\bootstrap-3.0.0\bootstrap-theme.min.css" />
-    <Content Include="lib\bootstrap-3.0.0\bootstrap.css" />
-    <Content Include="lib\bootstrap-3.0.0\bootstrap.min.css" />
+    <Content Include="lib\bootstrap-3.0.3\bootstrap-theme.css" />
+    <Content Include="lib\bootstrap-3.0.3\bootstrap-theme.min.css" />
+    <Content Include="lib\bootstrap-3.0.3\bootstrap.css" />
+    <Content Include="lib\bootstrap-3.0.3\bootstrap.js" />
+    <Content Include="lib\bootstrap-3.0.3\bootstrap.min.css" />
+    <Content Include="lib\bootstrap-3.0.3\bootstrap.min.js" />
     <Content Include="lib\chosen-1.0.0\chosen-sprite%402x.png" />
     <Content Include="lib\chosen-1.0.0\chosen-sprite.png" />
     <Content Include="lib\chosen-1.0.0\chosen.css" />
@@ -223,8 +225,6 @@
     <Content Include="lib\angularjs-1.2.4\angular.min.js.map" />
     <None Include="lib\jquery-2.0.3\jquery-2.0.3.intellisense.js" />
     <Content Include="app\app.js" />
-    <Content Include="lib\bootstrap-3.0.0\bootstrap.js" />
-    <Content Include="lib\bootstrap-3.0.0\bootstrap.min.js" />
     <Content Include="lib\chosen-1.0.0\chosen.jquery.js" />
     <Content Include="lib\chosen-1.0.0\chosen.jquery.min.js" />
     <Content Include="lib\jquery-2.0.3\jquery-2.0.3.js" />
