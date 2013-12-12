@@ -1,5 +1,5 @@
 ﻿<div ng-controller="AccountController">
-	<h3 ng-show="model" ng-bind-template="Accounts from {{model.dateRange.rangeSummary}}"></h3>
+	<h3 ng-show="model.dateRange" ng-bind-template="Accounts from {{model.dateRange.rangeSummary}}"></h3>
 	<section ng-repeat="group in model.accountBalances" class="panel-group">
 		<div class="panel panel-default">
 			<div class="panel-heading accordion-toggle" data-toggle="collapse" data-parent="#accountGroup{{group.id}}" href="#accountBalances{{group.id}}" ng-bind="group.name"></div>
