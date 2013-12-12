@@ -41,24 +41,6 @@ namespace scrilla.js.Web.Controllers
             return RedirectToRoutePermanent(callInfo.RouteValueDictionary);
         }
 
-        [NonAction]
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public virtual System.Web.Mvc.ActionResult Category()
-        {
-            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Category);
-        }
-        [NonAction]
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public virtual System.Web.Mvc.ActionResult Vendor()
-        {
-            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Vendor);
-        }
-        [NonAction]
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public virtual System.Web.Mvc.ActionResult Bill()
-        {
-            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Bill);
-        }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ScrillaController Actions { get { return MVC.Scrilla; } }
@@ -75,95 +57,10 @@ namespace scrilla.js.Web.Controllers
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionNamesClass
         {
-            public readonly string Accounts = ("Accounts").ToLowerInvariant();
-            public readonly string Transactions = ("Transactions").ToLowerInvariant();
-            public readonly string Categories = ("Categories").ToLowerInvariant();
-            public readonly string Category = ("Category").ToLowerInvariant();
-            public readonly string Vendors = ("Vendors").ToLowerInvariant();
-            public readonly string Vendor = ("Vendor").ToLowerInvariant();
-            public readonly string Bills = ("Bills").ToLowerInvariant();
-            public readonly string Bill = ("Bill").ToLowerInvariant();
-            public readonly string Budget = ("Budget").ToLowerInvariant();
+            public readonly string App = ("App").ToLowerInvariant();
         }
 
 
-        static readonly ActionParamsClass_Accounts s_params_Accounts = new ActionParamsClass_Accounts();
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public ActionParamsClass_Accounts AccountsParams { get { return s_params_Accounts; } }
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public class ActionParamsClass_Accounts
-        {
-            public readonly string from = ("from").ToLowerInvariant();
-            public readonly string to = ("to").ToLowerInvariant();
-            public readonly string view = ("view").ToLowerInvariant();
-        }
-        static readonly ActionParamsClass_Transactions s_params_Transactions = new ActionParamsClass_Transactions();
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public ActionParamsClass_Transactions TransactionsParams { get { return s_params_Transactions; } }
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public class ActionParamsClass_Transactions
-        {
-            public readonly string accountId = ("accountId").ToLowerInvariant();
-            public readonly string vendorId = ("vendorId").ToLowerInvariant();
-            public readonly string categoryId = ("categoryId").ToLowerInvariant();
-            public readonly string from = ("from").ToLowerInvariant();
-            public readonly string to = ("to").ToLowerInvariant();
-        }
-        static readonly ActionParamsClass_Categories s_params_Categories = new ActionParamsClass_Categories();
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public ActionParamsClass_Categories CategoriesParams { get { return s_params_Categories; } }
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public class ActionParamsClass_Categories
-        {
-            public readonly string accountId = ("accountId").ToLowerInvariant();
-            public readonly string from = ("from").ToLowerInvariant();
-            public readonly string to = ("to").ToLowerInvariant();
-            public readonly string transfers = ("transfers").ToLowerInvariant();
-        }
-        static readonly ActionParamsClass_Category s_params_Category = new ActionParamsClass_Category();
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public ActionParamsClass_Category CategoryParams { get { return s_params_Category; } }
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public class ActionParamsClass_Category
-        {
-            public readonly string categoryId = ("categoryId").ToLowerInvariant();
-        }
-        static readonly ActionParamsClass_Vendors s_params_Vendors = new ActionParamsClass_Vendors();
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public ActionParamsClass_Vendors VendorsParams { get { return s_params_Vendors; } }
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public class ActionParamsClass_Vendors
-        {
-            public readonly string from = ("from").ToLowerInvariant();
-            public readonly string to = ("to").ToLowerInvariant();
-        }
-        static readonly ActionParamsClass_Vendor s_params_Vendor = new ActionParamsClass_Vendor();
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public ActionParamsClass_Vendor VendorParams { get { return s_params_Vendor; } }
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public class ActionParamsClass_Vendor
-        {
-            public readonly string vendorId = ("vendorId").ToLowerInvariant();
-        }
-        static readonly ActionParamsClass_Bill s_params_Bill = new ActionParamsClass_Bill();
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public ActionParamsClass_Bill BillParams { get { return s_params_Bill; } }
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public class ActionParamsClass_Bill
-        {
-            public readonly string billId = ("billId").ToLowerInvariant();
-        }
-        static readonly ActionParamsClass_Budget s_params_Budget = new ActionParamsClass_Budget();
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public ActionParamsClass_Budget BudgetParams { get { return s_params_Budget; } }
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public class ActionParamsClass_Budget
-        {
-            public readonly string accountId = ("accountId").ToLowerInvariant();
-            public readonly string month = ("month").ToLowerInvariant();
-            public readonly string from = ("from").ToLowerInvariant();
-            public readonly string to = ("to").ToLowerInvariant();
-        }
         static readonly ViewsClass s_views = new ViewsClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ViewsClass Views { get { return s_views; } }
@@ -174,27 +71,7 @@ namespace scrilla.js.Web.Controllers
             public _ViewNamesClass ViewNames { get { return s_ViewNames; } }
             public class _ViewNamesClass
             {
-                public readonly string Accounts = "Accounts";
-                public readonly string Accounts_ng = "Accounts.ng";
-                public readonly string Bill = "Bill";
-                public readonly string Bills = "Bills";
-                public readonly string Budget = "Budget";
-                public readonly string Categories = "Categories";
-                public readonly string Category = "Category";
-                public readonly string Transactions = "Transactions";
-                public readonly string Vendor = "Vendor";
-                public readonly string Vendors = "Vendors";
             }
-            public readonly string Accounts = "~/Views/Scrilla/Accounts.cshtml";
-            public readonly string Accounts_ng = "~/Views/Scrilla/Accounts.ng.cshtml";
-            public readonly string Bill = "~/Views/Scrilla/Bill.cshtml";
-            public readonly string Bills = "~/Views/Scrilla/Bills.cshtml";
-            public readonly string Budget = "~/Views/Scrilla/Budget.cshtml";
-            public readonly string Categories = "~/Views/Scrilla/Categories.cshtml";
-            public readonly string Category = "~/Views/Scrilla/Category.cshtml";
-            public readonly string Transactions = "~/Views/Scrilla/Transactions.cshtml";
-            public readonly string Vendor = "~/Views/Scrilla/Vendor.cshtml";
-            public readonly string Vendors = "~/Views/Scrilla/Vendors.cshtml";
         }
     }
 
@@ -203,105 +80,12 @@ namespace scrilla.js.Web.Controllers
     {
         public T4MVC_ScrillaController() : base(Dummy.Instance) { }
 
-        partial void AccountsOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, string from, string to, string view);
+        partial void AppOverride(T4MVC_System_Web_Mvc_ActionResult callInfo);
 
-        public override System.Web.Mvc.ActionResult Accounts(string from, string to, string view)
+        public override System.Web.Mvc.ActionResult App()
         {
-            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Accounts);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "from", from);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "to", to);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "view", view);
-            AccountsOverride(callInfo, from, to, view);
-            return callInfo;
-        }
-
-        partial void TransactionsOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, int? accountId, string vendorId, string categoryId, string from, string to);
-
-        public override System.Web.Mvc.ActionResult Transactions(int? accountId, string vendorId, string categoryId, string from, string to)
-        {
-            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Transactions);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "accountId", accountId);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "vendorId", vendorId);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "categoryId", categoryId);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "from", from);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "to", to);
-            TransactionsOverride(callInfo, accountId, vendorId, categoryId, from, to);
-            return callInfo;
-        }
-
-        partial void CategoriesOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, int? accountId, string from, string to, string transfers);
-
-        public override System.Web.Mvc.ActionResult Categories(int? accountId, string from, string to, string transfers)
-        {
-            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Categories);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "accountId", accountId);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "from", from);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "to", to);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "transfers", transfers);
-            CategoriesOverride(callInfo, accountId, from, to, transfers);
-            return callInfo;
-        }
-
-        partial void CategoryOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, int categoryId);
-
-        public override System.Web.Mvc.ActionResult Category(int categoryId)
-        {
-            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Category);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "categoryId", categoryId);
-            CategoryOverride(callInfo, categoryId);
-            return callInfo;
-        }
-
-        partial void VendorsOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, string from, string to);
-
-        public override System.Web.Mvc.ActionResult Vendors(string from, string to)
-        {
-            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Vendors);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "from", from);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "to", to);
-            VendorsOverride(callInfo, from, to);
-            return callInfo;
-        }
-
-        partial void VendorOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, int vendorId);
-
-        public override System.Web.Mvc.ActionResult Vendor(int vendorId)
-        {
-            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Vendor);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "vendorId", vendorId);
-            VendorOverride(callInfo, vendorId);
-            return callInfo;
-        }
-
-        partial void BillsOverride(T4MVC_System_Web_Mvc_ActionResult callInfo);
-
-        public override System.Web.Mvc.ActionResult Bills()
-        {
-            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Bills);
-            BillsOverride(callInfo);
-            return callInfo;
-        }
-
-        partial void BillOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, int billId);
-
-        public override System.Web.Mvc.ActionResult Bill(int billId)
-        {
-            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Bill);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "billId", billId);
-            BillOverride(callInfo, billId);
-            return callInfo;
-        }
-
-        partial void BudgetOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, int? accountId, string month, string from, string to);
-
-        public override System.Web.Mvc.ActionResult Budget(int? accountId, string month, string from, string to)
-        {
-            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Budget);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "accountId", accountId);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "month", month);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "from", from);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "to", to);
-            BudgetOverride(callInfo, accountId, month, from, to);
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.App);
+            AppOverride(callInfo);
             return callInfo;
         }
 

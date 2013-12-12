@@ -24,18 +24,19 @@
       </div>
       <div class="navbar-collapse collapse" style="height: 1px;">
         <ul class="nav navbar-nav">
-          <li>@Html.ActionLink("Accounts", MVC.Scrilla.Accounts())</li>
-          <li>@Html.ActionLink("Transactions", MVC.Scrilla.Transactions())</li>
-          <li>@Html.ActionLink("Vendors", MVC.Scrilla.Vendors())</li>
-          <li>@Html.ActionLink("Categories", MVC.Scrilla.Categories())</li>
-          <li>@Html.ActionLink("Bills", MVC.Scrilla.Bills())</li>
-          <li>@Html.ActionLink("Budget", MVC.Scrilla.Budget())</li>
+          <li><a href="/">Accounts</a></li>
+          <li><a href="/transactions">Transactions</a></li>
+          <li><a href="/vendors">Vendors</a></li>
+          <li><a href="/categories">Categories</a></li>
+          <li><a href="/bills">Bills</a></li>
+          <li><a href="/budget">Budget</a></li>
         </ul>
-      </div><!--/.nav-collapse -->
+      </div>
     </div>
   </nav>
 
   <div class="container pull-left" ng-app="scrillaApp">
+    <div ng-view></div>
     @RenderBody()
   </div>
 

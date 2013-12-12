@@ -192,6 +192,9 @@
     <Content Include="app\styles\bootstrap-theme.min.css">
       <DependentUpon>bootstrap-theme.less</DependentUpon>
     </Content>
+    <Content Include="app\views\vendors.html" />
+    <Content Include="app\views\transactions.html" />
+    <Content Include="app\views\accounts.html" />
     <Content Include="lib\angularjs-1.2.1\angular-resource.js" />
     <Content Include="lib\angularjs-1.2.1\angular-resource.min.js" />
     <Content Include="lib\angularjs-1.2.1\angular-route.js" />
@@ -242,24 +245,14 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <None Include="T4MVC.tt.hooks.t4" />
     <Content Include="lib\jquery-2.0.3\jquery-2.0.3.min.map" />
-    <Content Include="Views\Scrilla\Accounts.cshtml" />
-    <Content Include="Views\Scrilla\Transactions.cshtml" />
-    <Content Include="Views\Scrilla\Categories.cshtml" />
-    <Content Include="Views\Scrilla\Category.cshtml" />
-    <Content Include="Views\Scrilla\Vendors.cshtml" />
-    <Content Include="Views\Scrilla\Vendor.cshtml" />
-    <Content Include="Views\Scrilla\Bills.cshtml" />
-    <Content Include="Views\Scrilla\Bill.cshtml" />
-    <Content Include="Views\Scrilla\Budget.cshtml" />
-    <Content Include="Views\Scrilla\Accounts.ng.cshtml" />
     <None Include="T4MVC.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>T4MVC.cs</LastGenOutput>
     </None>
+    <Content Include="Views\Scrilla\App.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="app\directives\" />
-    <Folder Include="app\views\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">

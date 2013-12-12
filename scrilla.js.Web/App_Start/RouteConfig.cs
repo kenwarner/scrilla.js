@@ -13,6 +13,12 @@ namespace scrilla.js.Web
 		{
 			routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
+			routes.MapRoute(
+				name: "Default",
+				url: "*",
+				result: MVC.Scrilla.App()
+			);
+
 			routes.MapMvcAttributeRoutes();
 		}
 	}

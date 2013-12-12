@@ -1,0 +1,28 @@
+﻿<div ng-controller="AccountController">
+	<h3 ng-show="model" ng-bind-template="Accounts from {{model.dateRange.rangeSummary}}"></h3>
+	<section ng-repeat="group in model.accountBalances" class="panel-group">
+		<div class="panel panel-default">
+			<div class="panel-heading accordion-toggle" data-toggle="collapse" data-parent="#accountGroup{{group.id}}" href="#accountBalances{{group.id}}" ng-bind="group.name"></div>
+			<table id="accountBalances{{group.id}}" class="table table-hover table-bordered table-condensed panel-collapse collapse" ng-class="{'in': group.isActive}">
+				<thead>
+					<tr>
+						<th>Name</th>
+						<th class="table-column-frozen">Balance</th>
+						<th ng-repeat="month in model.dateRange.months.sort().reverse()" title="{{month | date:'MMMM yyyy'}}">
+							<a ng-bind="month | date:'MMMM'" href="/"></a>
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="account in group.accounts">
+						<td>
+							<span class="label label-info pull-right"><a href="/" ng-bind="account.uncategorizedTransactionCount" title="{{account.name}} has {{account.uncategorizedTransactionCount}} uncategorized transactions"></a></span>
+							<a href="/" ng-bind="account.name"></a>
+						</td>
+						<td class="table-column-frozen" title="Current as of {{account.balanceTimestamp}}" ng-bind="account.balance | currency"></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</section>
+</div>

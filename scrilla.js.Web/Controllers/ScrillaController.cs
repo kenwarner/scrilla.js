@@ -18,6 +18,20 @@ namespace scrilla.js.Web.Controllers
 			_accountService = accountService;
 		}
 
+
+		[Route("")]
+		[Route("accounts")]
+		[Route("transactions")]
+		[Route("vendors")]
+		[Route("categories")]
+		[Route("bills")]
+		[Route("budget")]
+		public virtual ActionResult App()
+		{
+			return View();
+		}
+
+		/*
 		[Route("")]
 		[Route("accounts")]
 		public virtual ActionResult Accounts(string from = null, string to = null, string view = "ng")
@@ -78,5 +92,7 @@ namespace scrilla.js.Web.Controllers
 		{
 			return View();
 		}
+		
+		 */
 	}
 }

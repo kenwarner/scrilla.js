@@ -121,6 +121,9 @@ namespace Links
             private const string URLPATH = "~/app/views";
             public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
             public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
+            public static readonly string accounts_html = Url("accounts.html");
+            public static readonly string transactions_html = Url("transactions.html");
+            public static readonly string vendors_html = Url("vendors.html");
         }
     
     }
