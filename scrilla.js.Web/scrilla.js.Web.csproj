@@ -233,6 +233,7 @@
     <None Include="T4MVC.tt.settings.xml" />
     <Content Include="lib\underscore-1.5.2\underscore-min.js" />
     <Content Include="lib\underscore-1.5.2\underscore.js" />
+    <None Include="Scripts\_references.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
