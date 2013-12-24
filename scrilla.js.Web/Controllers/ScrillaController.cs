@@ -31,20 +31,17 @@ namespace scrilla.js.Web.Controllers
 			return View();
 		}
 
-		/*
-		[Route("")]
-		[Route("accounts")]
-		public virtual ActionResult Accounts(string from = null, string to = null, string view = "ng")
+		[Route("legacy/accounts")]
+		public virtual ActionResult Accounts(string from = null, string to = null)
 		{
-			view = view.Equals("ng") ? MVC.Scrilla.Views.Accounts_ng : MVC.Scrilla.Views.Accounts;
-
 			var dateRange = new DateRangeModel(from, to);
 			var accountBalancesModel = _accountService.GetAccountBalances(dateRange.From, dateRange.To).Result;
 			var model = new AccountsViewModel() { AccountBalances = accountBalancesModel.AccountBalances, DateRange = accountBalancesModel.DateRange };
 
-			return View(view, model);
+			return View(MVC.Scrilla.Views.Accounts, model);
 		}
 
+		/*
 		[Route("transactions")]
 		public virtual ActionResult Transactions(int? accountId = null, string vendorId = "", string categoryId = "", string from = null, string to = null)
 		{

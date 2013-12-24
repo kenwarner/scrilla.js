@@ -58,9 +58,19 @@ namespace scrilla.js.Web.Controllers
         public class ActionNamesClass
         {
             public readonly string App = ("App").ToLowerInvariant();
+            public readonly string Accounts = ("Accounts").ToLowerInvariant();
         }
 
 
+        static readonly ActionParamsClass_Accounts s_params_Accounts = new ActionParamsClass_Accounts();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_Accounts AccountsParams { get { return s_params_Accounts; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_Accounts
+        {
+            public readonly string from = ("from").ToLowerInvariant();
+            public readonly string to = ("to").ToLowerInvariant();
+        }
         static readonly ViewsClass s_views = new ViewsClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ViewsClass Views { get { return s_views; } }
@@ -71,8 +81,10 @@ namespace scrilla.js.Web.Controllers
             public _ViewNamesClass ViewNames { get { return s_ViewNames; } }
             public class _ViewNamesClass
             {
+                public readonly string Accounts = "Accounts";
                 public readonly string App = "App";
             }
+            public readonly string Accounts = "~/Views/Scrilla/Accounts.cshtml";
             public readonly string App = "~/Views/Scrilla/App.cshtml";
         }
     }
@@ -88,6 +100,17 @@ namespace scrilla.js.Web.Controllers
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.App);
             AppOverride(callInfo);
+            return callInfo;
+        }
+
+        partial void AccountsOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, string from, string to);
+
+        public override System.Web.Mvc.ActionResult Accounts(string from, string to)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Accounts);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "from", from);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "to", to);
+            AccountsOverride(callInfo, from, to);
             return callInfo;
         }
 

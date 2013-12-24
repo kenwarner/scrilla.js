@@ -252,6 +252,7 @@
       <LastGenOutput>T4MVC.cs</LastGenOutput>
     </None>
     <Content Include="Views\Scrilla\App.cshtml" />
+    <Content Include="Views\Scrilla\Accounts.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="app\directives\" />
