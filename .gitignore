@@ -41,7 +41,7 @@ _ReSharper*/
 [Bb]uild/
 
 #WebStorm
-*/.idea
+**/.idea
 
 #Subversion files
 .svn
