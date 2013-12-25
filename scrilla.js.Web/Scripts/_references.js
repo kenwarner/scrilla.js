@@ -14,3 +14,4 @@
 /// <reference path="../app/app.js" />
 /// <reference path="../app/filters/duringmonthsfilter.js" />
 /// <reference path="../app/filters/parenlesscurrencyfilter.js" />
+/// <reference path="../lib/ng-grid-2.0.7/ng-grid-2.0.7.js" />

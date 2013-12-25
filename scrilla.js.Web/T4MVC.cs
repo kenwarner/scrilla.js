@@ -90,7 +90,8 @@ namespace Links
             private const string URLPATH = "~/app/filters";
             public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
             public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-            public static readonly string dateRangeFilters_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/dateRangeFilters.min.js") ? Url("dateRangeFilters.min.js") : Url("dateRangeFilters.js");
+            public static readonly string duringMonthsFilter_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/duringMonthsFilter.min.js") ? Url("duringMonthsFilter.min.js") : Url("duringMonthsFilter.js");
+            public static readonly string parenlessCurrencyFilter_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/parenlessCurrencyFilter.min.js") ? Url("parenlessCurrencyFilter.min.js") : Url("parenlessCurrencyFilter.js");
         }
     
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -198,6 +199,18 @@ namespace Links
             public static readonly string jquery_2_0_3_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery-2.0.3.min.js") ? Url("jquery-2.0.3.min.js") : Url("jquery-2.0.3.js");
             public static readonly string jquery_2_0_3_min_js = Url("jquery-2.0.3.min.js");
             public static readonly string jquery_2_0_3_min_map = Url("jquery-2.0.3.min.map");
+        }
+    
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public static class ng_grid_2_0_7 {
+            private const string URLPATH = "~/lib/ng-grid-2.0.7";
+            public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
+            public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
+            public static readonly string ng_grid_2_0_7_debug_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/ng-grid-2.0.7.debug.min.js") ? Url("ng-grid-2.0.7.debug.min.js") : Url("ng-grid-2.0.7.debug.js");
+            public static readonly string ng_grid_2_0_7_min_js = Url("ng-grid-2.0.7.min.js");
+            public static readonly string ng_grid_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/ng-grid.min.css") ? Url("ng-grid.min.css") : Url("ng-grid.css");
+                 
+            public static readonly string ng_grid_min_css = Url("ng-grid.min.css");
         }
     
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]

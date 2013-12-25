@@ -16,14 +16,24 @@ namespace scrilla.js.Web
 
 		private static void RegisterStyleBundles(BundleCollection bundles)
 		{
-			bundles.Add(new StyleBundle(Links.Bundles.Styles.app).IncludeDirectory(VirtualPathUtility.ToAppRelative(Links.app.styles.Url()), "*.css", false));
-			bundles.Add(new StyleBundle(Links.Bundles.Styles.bootstrap).IncludeDirectory(VirtualPathUtility.ToAppRelative(Links.lib.bootstrap_3_0_3.Url()), "*.css", false));
-			bundles.Add(new StyleBundle(Links.Bundles.Styles.chosen).IncludeDirectory(VirtualPathUtility.ToAppRelative(Links.lib.chosen_1_0_0.Url()), "*.css", false));
+			bundles.Add(new StyleBundle(Links.Bundles.Styles.app)
+				.IncludeDirectory(VirtualPathUtility.ToAppRelative(Links.app.styles.Url()), "*.css", false));
+
+			bundles.Add(new StyleBundle(Links.Bundles.Styles.bootstrap)
+				.Include(VirtualPathUtility.ToAppRelative(Links.lib.bootstrap_3_0_3.bootstrap_css))
+				.Include(VirtualPathUtility.ToAppRelative(Links.lib.bootstrap_3_0_3.bootstrap_theme_css)));
+
+			bundles.Add(new StyleBundle(Links.Bundles.Styles.chosen)
+				.Include(VirtualPathUtility.ToAppRelative(Links.lib.chosen_1_0_0.chosen_css)));
+
+			bundles.Add(new StyleBundle(Links.Bundles.Styles.ngGrid)
+				.Include(VirtualPathUtility.ToAppRelative(Links.lib.ng_grid_2_0_7.ng_grid_css)));
 		}
 
 		private static void RegisterScriptBundles(BundleCollection bundles)
 		{
-			bundles.Add(new ScriptBundle(Links.Bundles.Scripts.app).IncludeDirectory(VirtualPathUtility.ToAppRelative(Links.app.Url()), "*.js", true));
+			bundles.Add(new ScriptBundle(Links.Bundles.Scripts.app)
+				.IncludeDirectory(VirtualPathUtility.ToAppRelative(Links.app.Url()), "*.js", true));
 
 			bundles.Add(new ScriptBundle(Links.Bundles.Scripts.angularjs,
 				"//ajax.googleapis.com/ajax/libs/angularjs/1.2.4/angular.min.js") { CdnFallbackExpression = "window.angular" }
@@ -65,6 +75,7 @@ namespace Links
 			public static readonly string app = "~/bundles/styles/app";
 			public static readonly string bootstrap = "~/bundles/styles/bootstrap";
 			public static readonly string chosen = "~/bundles/styles/chosen";
+			public static readonly string ngGrid = "~/bundles/styles/ng-grid";
 		}
 
 		public static partial class Scripts
@@ -76,6 +87,7 @@ namespace Links
 			public static readonly string bootstrap = "~/bundles/scripts/bootstrap";
 			public static readonly string chosen = "~/bundles/scripts/chosen";
 			public static readonly string jquery = "~/bundles/scripts/jquery";
+			public static readonly string ngGrid = "~/bundles/scripts/ng-grid";
 			public static readonly string underscore = "~/bundles/scripts/underscore";
 		}
 	}

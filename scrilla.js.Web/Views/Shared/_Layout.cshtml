@@ -9,6 +9,7 @@
   <title>@(ViewBag.Title ?? "Scrilla")</title>
   @this.TimeScript(Links.Bundles.Styles.bootstrap, Styles.Render(Links.Bundles.Styles.bootstrap))
   @this.TimeScript(Links.Bundles.Styles.chosen, Styles.Render(Links.Bundles.Styles.chosen))
+  @this.TimeScript(Links.Bundles.Styles.ngGrid, Styles.Render(Links.Bundles.Styles.ngGrid))
   @this.TimeScript(Links.Bundles.Styles.app, Styles.Render(Links.Bundles.Styles.app))
 </head>
 <body>
@@ -47,6 +48,7 @@
   @this.TimeScript(Links.Bundles.Scripts.angularjs, Scripts.Render(Links.Bundles.Scripts.angularjs))
   @this.TimeScript(Links.Bundles.Scripts.angularjsRoute, Scripts.Render(Links.Bundles.Scripts.angularjsRoute))
   @this.TimeScript(Links.Bundles.Scripts.angularjsResource, Scripts.Render(Links.Bundles.Scripts.angularjsResource))
+  @this.TimeScript(Links.Bundles.Scripts.ngGrid, Scripts.Render(Links.Bundles.Scripts.ngGrid))
   @this.TimeScript(Links.Bundles.Scripts.app, Scripts.Render(Links.Bundles.Scripts.app))
   @MiniProfiler.RenderIncludes(position: RenderPosition.Right, showTrivial: true, showTimeWithChildren: true, showControls: true, useExistingjQuery: true)
 
