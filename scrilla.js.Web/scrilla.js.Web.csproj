@@ -179,6 +179,7 @@
     <Content Include="app\controllers\TransactionController.js" />
     <Content Include="app\controllers\VendorController.js" />
     <Content Include="app\filters\duringMonthsFilter.js" />
+    <Content Include="app\filters\parenlessCurrencyFilter.js" />
     <Content Include="app\services\AccountService.js" />
     <Content Include="app\styles\app.css">
       <DependentUpon>app.less</DependentUpon>

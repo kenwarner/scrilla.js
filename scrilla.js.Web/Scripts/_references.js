@@ -13,3 +13,4 @@
 /// <reference path="../app/services/accountservice.js" />
 /// <reference path="../app/app.js" />
 /// <reference path="../app/filters/duringmonthsfilter.js" />
+/// <reference path="../app/filters/parenlesscurrencyfilter.js" />
