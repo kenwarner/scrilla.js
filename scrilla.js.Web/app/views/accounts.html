@@ -9,7 +9,7 @@
 						<th>Name</th>
 						<th class="table-column-frozen">Balance</th>
 						<th ng-repeat="month in model.data.dateRange.months.sort().reverse()" title="{{month | date:'MMMM yyyy'}}">
-							<a ng-bind="month | date:'MMMM'" href="/"></a>
+							<a ng-bind="month | date:'MMMM'" href="/?from={{month | date:'yyyy-MM-dd'}}&to={{DateRangeService.lastDayOfMonth(month) | date:'yyyy-MM-dd'}}"></a>
 						</th>
 					</tr>
 				</thead>

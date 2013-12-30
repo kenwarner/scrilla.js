@@ -8,8 +8,8 @@
 	var defaultTo = new Date(now.getFullYear(), now.getMonth() + 1, 1);
 
 	var UrlToDate = function (dateString) {
-		var dateArray = dateString.split("-");
-		return new Date(dateArray[0], dateArray[1] - 1, dateArray[2]);
+		var dateArray = dateString.match(/(\d{4})-(\d{2})-(\d{2})/);
+		return new Date(dateArray[1], dateArray[2] - 1, dateArray[3]);
 	};
 
 	return {
@@ -89,6 +89,11 @@
 
 		toUrlFormat: function (date) {
 			return $filter('date')(date, 'yyyy-MM-dd');
+		},
+
+		lastDayOfMonth: function (strDate) {
+			var date = UrlToDate(strDate);
+			return new Date(date.getFullYear(), date.getMonth() + 1, 0);
 		}
 	};
 }]);
