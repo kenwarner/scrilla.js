@@ -26,6 +26,10 @@ namespace scrilla.js.Web
 			bundles.Add(new StyleBundle(Links.Bundles.Styles.chosen)
 				.Include(VirtualPathUtility.ToAppRelative(Links.lib.chosen_1_0_0.chosen_css)));
 
+			bundles.Add(new StyleBundle(Links.Bundles.Styles.jqRangeSlider)
+				.Include(VirtualPathUtility.ToAppRelative(Links.lib.jQRangeSlider_5_5_0.css.classic_css))
+				.Include(VirtualPathUtility.ToAppRelative(Links.lib.jquery_ui_1_10_3.css.smoothness.jquery_ui_1_10_3_custom_css)));
+
 			bundles.Add(new StyleBundle(Links.Bundles.Styles.ngGrid)
 				.Include(VirtualPathUtility.ToAppRelative(Links.lib.ng_grid_2_0_7.ng_grid_css)));
 		}
@@ -59,6 +63,10 @@ namespace scrilla.js.Web
 				"//code.jquery.com/jquery-2.0.3.min.js") { CdnFallbackExpression = "window.jQuery" }
 				.Include(VirtualPathUtility.ToAppRelative(Links.lib.jquery_2_0_3.jquery_2_0_3_js)));
 
+			bundles.Add(new ScriptBundle(Links.Bundles.Scripts.jqRangeSlider)
+				.Include(VirtualPathUtility.ToAppRelative(Links.lib.jQRangeSlider_5_5_0.jQDateRangeSlider_withRuler_min_js))
+				.Include(VirtualPathUtility.ToAppRelative(Links.lib.jquery_ui_1_10_3.js.jquery_ui_1_10_3_custom_js)));
+
 			bundles.Add(new ScriptBundle(Links.Bundles.Scripts.ngGrid)
 				.Include(VirtualPathUtility.ToAppRelative(Links.lib.ng_grid_2_0_7.ng_grid_2_0_7_debug_js)));
 
@@ -78,6 +86,7 @@ namespace Links
 			public static readonly string app = "~/bundles/styles/app";
 			public static readonly string bootstrap = "~/bundles/styles/bootstrap";
 			public static readonly string chosen = "~/bundles/styles/chosen";
+			public static readonly string jqRangeSlider = "~/bundles/styles/jq-range-slider";
 			public static readonly string ngGrid = "~/bundles/styles/ng-grid";
 		}
 
@@ -90,8 +99,23 @@ namespace Links
 			public static readonly string bootstrap = "~/bundles/scripts/bootstrap";
 			public static readonly string chosen = "~/bundles/scripts/chosen";
 			public static readonly string jquery = "~/bundles/scripts/jquery";
+			public static readonly string jqRangeSlider = "~/bundles/scripts/jq-range-slider";
 			public static readonly string ngGrid = "~/bundles/scripts/ng-grid";
 			public static readonly string underscore = "~/bundles/scripts/underscore";
+
+			public static readonly string[] scrilla = 
+			{
+				Scripts.jquery,
+				Scripts.underscore,
+				Scripts.chosen,
+				Scripts.bootstrap,
+				Scripts.angularjs,
+				Scripts.angularjsRoute,
+				Scripts.angularjsResource,
+				Scripts.jqRangeSlider,
+				Scripts.ngGrid,
+				Scripts.app
+			};
 		}
 	}
 }
