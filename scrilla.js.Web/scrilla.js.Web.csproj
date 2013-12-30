@@ -178,9 +178,11 @@
   <ItemGroup>
     <Content Include="app\controllers\TransactionController.js" />
     <Content Include="app\controllers\VendorController.js" />
+    <Content Include="app\directives\dateRangeSlider.js" />
     <Content Include="app\filters\duringMonthsFilter.js" />
     <Content Include="app\filters\parenlessCurrencyFilter.js" />
     <Content Include="app\services\AccountService.js" />
+    <Content Include="app\services\DateRangeService.js" />
     <Content Include="app\styles\app.css">
       <DependentUpon>app.less</DependentUpon>
     </Content>
@@ -224,12 +226,51 @@
     <Content Include="lib\angularjs-1.2.4\angular-resource.min.js.map" />
     <Content Include="lib\angularjs-1.2.4\angular-route.min.js.map" />
     <Content Include="lib\angularjs-1.2.4\angular.min.js.map" />
+    <None Include="lib\jQRangeSlider-5.5.0\Readme.md" />
     <None Include="lib\jquery-2.0.3\jquery-2.0.3.intellisense.js" />
     <Content Include="app\app.js" />
     <Content Include="lib\chosen-1.0.0\chosen.jquery.js" />
     <Content Include="lib\chosen-1.0.0\chosen.jquery.min.js" />
+    <Content Include="lib\jQRangeSlider-5.5.0\css\classic-min.css" />
+    <Content Include="lib\jQRangeSlider-5.5.0\css\classic.css" />
+    <Content Include="lib\jQRangeSlider-5.5.0\css\icons-classic\label.png" />
+    <Content Include="lib\jQRangeSlider-5.5.0\css\icons-classic\resultset_next.png" />
+    <Content Include="lib\jQRangeSlider-5.5.0\css\icons-classic\resultset_previous.png" />
+    <Content Include="lib\jQRangeSlider-5.5.0\css\iThing-min.css" />
+    <Content Include="lib\jQRangeSlider-5.5.0\css\iThing.css" />
+    <None Include="lib\jQRangeSlider-5.5.0\GPL-License.txt" />
+    <Content Include="lib\jQRangeSlider-5.5.0\jQAllRangeSliders-min.js" />
+    <Content Include="lib\jQRangeSlider-5.5.0\jQAllRangeSliders-withRuler-min.js" />
+    <Content Include="lib\jQRangeSlider-5.5.0\jQDateRangeSlider-min.js" />
+    <Content Include="lib\jQRangeSlider-5.5.0\jQDateRangeSlider-withRuler-min.js" />
+    <Content Include="lib\jQRangeSlider-5.5.0\jQEditRangeSlider-min.js" />
+    <Content Include="lib\jQRangeSlider-5.5.0\jQEditRangeSlider-withRuler-min.js" />
+    <Content Include="lib\jQRangeSlider-5.5.0\jQRangeSlider-min.js" />
+    <Content Include="lib\jQRangeSlider-5.5.0\jQRangeSlider-withRuler-min.js" />
+    <None Include="lib\jQRangeSlider-5.5.0\lib\jquery.mousewheel.license.txt" />
+    <Content Include="lib\jQRangeSlider-5.5.0\lib\jquery.mousewheel.min.js" />
+    <None Include="lib\jQRangeSlider-5.5.0\MIT-License.txt" />
     <Content Include="lib\jquery-2.0.3\jquery-2.0.3.js" />
     <Content Include="lib\jquery-2.0.3\jquery-2.0.3.min.js" />
+    <Content Include="lib\jquery-ui-1.10.3\css\smoothness\images\animated-overlay.gif" />
+    <Content Include="lib\jquery-ui-1.10.3\css\smoothness\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="lib\jquery-ui-1.10.3\css\smoothness\images\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="lib\jquery-ui-1.10.3\css\smoothness\images\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <Content Include="lib\jquery-ui-1.10.3\css\smoothness\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="lib\jquery-ui-1.10.3\css\smoothness\images\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="lib\jquery-ui-1.10.3\css\smoothness\images\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <Content Include="lib\jquery-ui-1.10.3\css\smoothness\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="lib\jquery-ui-1.10.3\css\smoothness\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="lib\jquery-ui-1.10.3\css\smoothness\images\ui-icons_222222_256x240.png" />
+    <Content Include="lib\jquery-ui-1.10.3\css\smoothness\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="lib\jquery-ui-1.10.3\css\smoothness\images\ui-icons_454545_256x240.png" />
+    <Content Include="lib\jquery-ui-1.10.3\css\smoothness\images\ui-icons_888888_256x240.png" />
+    <Content Include="lib\jquery-ui-1.10.3\css\smoothness\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="lib\jquery-ui-1.10.3\css\smoothness\jquery-ui-1.10.3.custom.css" />
+    <Content Include="lib\jquery-ui-1.10.3\css\smoothness\jquery-ui-1.10.3.custom.min.css" />
+    <Content Include="lib\jquery-ui-1.10.3\js\jquery-1.9.1.js" />
+    <Content Include="lib\jquery-ui-1.10.3\js\jquery-ui-1.10.3.custom.js" />
+    <Content Include="lib\jquery-ui-1.10.3\js\jquery-ui-1.10.3.custom.min.js" />
     <Content Include="lib\ng-grid-2.0.7\ng-grid-2.0.7.debug.js" />
     <Content Include="lib\ng-grid-2.0.7\ng-grid-2.0.7.min.js" />
     <Content Include="lib\ng-grid-2.0.7\ng-grid.css" />
@@ -259,9 +300,7 @@
     <Content Include="Views\Scrilla\App.cshtml" />
     <Content Include="Views\Scrilla\Accounts.cshtml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="app\directives\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="packages.config">
       <SubType>Designer</SubType>
