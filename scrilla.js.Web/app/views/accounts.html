@@ -16,8 +16,8 @@
 				<tbody>
 					<tr ng-repeat="account in group.accounts">
 						<td>
-							<span class="label label-info pull-right"><a href="/" ng-bind="account.uncategorizedTransactionCount" title="{{account.name}} has {{account.uncategorizedTransactionCount}} uncategorized transactions"></a></span>
-							<a href="/" ng-bind="account.name"></a>
+							<span class="label label-info pull-right"><a href="/transactions?accountId={{account.id}}&categoryId=none" ng-bind="account.uncategorizedTransactionCount" title="{{account.name}} has {{account.uncategorizedTransactionCount}} uncategorized transactions"></a></span>
+							<a href="/transactions?accountId={{account.id}}" ng-bind="account.name"></a>
 						</td>
 						<td class="table-column-frozen" title="Current as of {{account.balanceTimestamp}}" ng-bind="account.balance | parenlessCurrency"></td>
 						<td ng-repeat="balance in account.accountBalances | duringMonths:model.data.dateRange.months track by $index" ng-bind="(isNaN(balance.monthEndBalance) ? 0.00 : balance.monthEndBalance) | parenlessCurrency" ng-class="{'amount-zero' : isNaN(balance.monthEndBalance), 'amount-positive' : balance.monthEndBalance > 0, 'amount-negative' : balance.monthEndBalance < 0}"></td>
