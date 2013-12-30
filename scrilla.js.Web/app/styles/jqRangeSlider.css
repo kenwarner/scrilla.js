@@ -4,6 +4,7 @@
 
 .ui-rangeSlider .ui-ruler-tick-inner {
     padding-top: 3px;
+    margin-left: -12px;
 }
 
 .ui-rangeSlider .ui-rangeSlider-container {
@@ -20,11 +21,6 @@
 
 .ui-rangeSlider .ui-rangeSlider-handle {
     height: 8px;
-    /*width: 18px;*/
+    width: 10px;
     margin-bottom: -4px;
-}
-
-.ui-rangeSlider .ui-rangeSlider-rightHandle {
-    /*margin-left:0px !important;*/
-    /*margin-right: -20px;*/
 }
