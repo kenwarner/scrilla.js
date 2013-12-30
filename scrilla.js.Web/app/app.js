@@ -20,5 +20,17 @@ scrilla.app.config(['$locationProvider', '$routeProvider',
 				templateUrl: '/app/views/vendors.html',
 			});
 
-
 	}]);
+
+
+scrilla.app.run(['$rootScope', '$route', '$log', 'DateRangeService',
+	function ($rootScope, $route, $log, DateRangeService) {
+		$log.info('starting app');
+		DateRangeService.init();
+
+		$rootScope.$on('$routeChangeStart', function (ev, next, current) {
+			$log.info('route change');
+			DateRangeService.init();
+		});
+	}
+]);
