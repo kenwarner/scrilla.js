@@ -1,10 +1,11 @@
 ﻿scrilla.services.factory('DateRangeService', ['$location', '$filter', '$document', '$log', function ($location, $filter, $document, $log) {
 	var from, to;
-	var min = new Date(2013, 0, 1);
-	var max = new Date(2013, 11, 31);
+	var now = new Date();
+	var min = new Date(2012, 5, 1);
+	var max = new Date(now.getFullYear(), now.getMonth() + 5, 1, 0, 0, 1);
 
-	var defaultFrom = new Date(2013, 1, 1);
-	var defaultTo = new Date(2013, 10, 1);
+	var defaultFrom = new Date(now.getFullYear(), now.getMonth() - 4, 1);
+	var defaultTo = new Date(now.getFullYear(), now.getMonth() + 1, 1);
 
 	var UrlToDate = function (dateString) {
 		var dateArray = dateString.split("-");
@@ -21,23 +22,35 @@
 			this.setFrom(locationFrom ? UrlToDate(locationFrom) : defaultFrom);
 			this.setTo(locationTo ? UrlToDate(locationTo) : defaultTo);
 
-			$log.info('DateRangeService initialized with: ' + from + ',' + to);
+			if ($location.search().from != this.toUrlFormat(from)) {
+				$log.info('resetting ?from = ' + this.toUrlFormat(from));
+				$location.search('from', this.toUrlFormat(from));
+			}
+
+			if ($location.search().to != this.toUrlFormat(to)) {
+				$log.info('resetting ?to = ' + this.toUrlFormat(to));
+				$location.search('to', this.toUrlFormat(to));
+			}
+
+			$log.info('DateRangeService initialized with: ' + this.toUrlFormat(from) + ' - ' + this.toUrlFormat(to));
 		},
 
 		setFrom: function (val) {
-			if (from !== val) {
+			if (!from || from.valueOf() != val.valueOf()) {
 				$log.info('setting from = ' + val);
-
 				from = val;
+
+				$log.info('setting ?from = ' + this.toUrlFormat(from));
 				$location.search('from', this.toUrlFormat(from));
 			}
 		},
 
 		setTo: function (val) {
-			if (to !== val) {
+			if (!to || to.valueOf() != val.valueOf()) {
 				$log.info('setting to = ' + val);
-
 				to = val;
+
+				$log.info('setting ?to = ' + this.toUrlFormat(to));
 				$location.search('to', this.toUrlFormat(to));
 			}
 		},
@@ -68,6 +81,10 @@
 
 		getMax: function () {
 			return max;
+		},
+
+		summary: function() {
+			return $filter('date')(from, 'MMMM yyyy') + ' to ' + $filter('date')(to, 'MMMM yyyy');
 		},
 
 		toUrlFormat: function (date) {
