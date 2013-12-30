@@ -196,6 +196,12 @@
     <Content Include="app\styles\bootstrap-theme.min.css">
       <DependentUpon>bootstrap-theme.less</DependentUpon>
     </Content>
+    <Content Include="app\styles\jqRangeSlider.css">
+      <DependentUpon>jqRangeSlider.less</DependentUpon>
+    </Content>
+    <Content Include="app\styles\jqRangeSlider.min.css">
+      <DependentUpon>jqRangeSlider.less</DependentUpon>
+    </Content>
     <Content Include="app\views\vendors.html" />
     <Content Include="app\views\transactions.html" />
     <Content Include="app\views\accounts.html" />
@@ -226,6 +232,7 @@
     <Content Include="lib\angularjs-1.2.4\angular-resource.min.js.map" />
     <Content Include="lib\angularjs-1.2.4\angular-route.min.js.map" />
     <Content Include="lib\angularjs-1.2.4\angular.min.js.map" />
+    <Content Include="app\styles\jqRangeSlider.less" />
     <None Include="lib\jQRangeSlider-5.5.0\Readme.md" />
     <None Include="lib\jquery-2.0.3\jquery-2.0.3.intellisense.js" />
     <Content Include="app\app.js" />

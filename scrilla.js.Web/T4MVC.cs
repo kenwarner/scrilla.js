@@ -83,6 +83,7 @@ namespace Links
             private const string URLPATH = "~/app/directives";
             public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
             public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
+            public static readonly string dateRangeSlider_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/dateRangeSlider.min.js") ? Url("dateRangeSlider.min.js") : Url("dateRangeSlider.js");
         }
     
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -100,6 +101,7 @@ namespace Links
             public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
             public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
             public static readonly string AccountService_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/AccountService.min.js") ? Url("AccountService.min.js") : Url("AccountService.js");
+            public static readonly string DateRangeService_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/DateRangeService.min.js") ? Url("DateRangeService.min.js") : Url("DateRangeService.js");
         }
     
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -115,6 +117,10 @@ namespace Links
             public static readonly string bootstrap_theme_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/bootstrap-theme.min.css") ? Url("bootstrap-theme.min.css") : Url("bootstrap-theme.css");
                  
             public static readonly string bootstrap_theme_min_css = Url("bootstrap-theme.min.css");
+            public static readonly string jqRangeSlider_less = Url("jqRangeSlider.less");
+            public static readonly string jqRangeSlider_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jqRangeSlider.min.css") ? Url("jqRangeSlider.min.css") : Url("jqRangeSlider.css");
+                 
+            public static readonly string jqRangeSlider_min_css = Url("jqRangeSlider.min.css");
         }
     
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
