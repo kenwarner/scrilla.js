@@ -1,7 +1,7 @@
 ﻿@using StackExchange.Profiling;
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="scrillaApp">
 <head>
   @this.InitClientTimings()
   <meta charset="utf-8" />
@@ -9,6 +9,7 @@
   <title>@(ViewBag.Title ?? "Scrilla")</title>
   @this.TimeScript(Links.Bundles.Styles.bootstrap, Styles.Render(Links.Bundles.Styles.bootstrap))
   @this.TimeScript(Links.Bundles.Styles.chosen, Styles.Render(Links.Bundles.Styles.chosen))
+  @this.TimeScript(Links.Bundles.Styles.jqRangeSlider, Styles.Render(Links.Bundles.Styles.jqRangeSlider))
   @this.TimeScript(Links.Bundles.Styles.ngGrid, Styles.Render(Links.Bundles.Styles.ngGrid))
   @this.TimeScript(Links.Bundles.Styles.app, Styles.Render(Links.Bundles.Styles.app))
 </head>
@@ -36,22 +37,30 @@
     </div>
   </nav>
 
-  <div class="container pull-left" ng-app="scrillaApp">
-    <div class="pull-left" ng-view></div>
-    @RenderBody()
+  <div class="container pull-left">
+    <div class="row"><date-range-slider class="col-xs-6" style="margin-top:40px;margin-bottom:10px;"></date-range-slider></div>
+    <div class="pull-left">
+      <div ng-view></div>
+      @RenderBody()
+    </div>
   </div>
 
-  @this.TimeScript(Links.Bundles.Scripts.jquery, Scripts.Render(Links.Bundles.Scripts.jquery))
-  @this.TimeScript(Links.Bundles.Scripts.underscore, Scripts.Render(Links.Bundles.Scripts.underscore))
-  @this.TimeScript(Links.Bundles.Scripts.chosen, Scripts.Render(Links.Bundles.Scripts.chosen))
-  @this.TimeScript(Links.Bundles.Scripts.bootstrap, Scripts.Render(Links.Bundles.Scripts.bootstrap))
-  @this.TimeScript(Links.Bundles.Scripts.angularjs, Scripts.Render(Links.Bundles.Scripts.angularjs))
-  @this.TimeScript(Links.Bundles.Scripts.angularjsRoute, Scripts.Render(Links.Bundles.Scripts.angularjsRoute))
-  @this.TimeScript(Links.Bundles.Scripts.angularjsResource, Scripts.Render(Links.Bundles.Scripts.angularjsResource))
-  @this.TimeScript(Links.Bundles.Scripts.ngGrid, Scripts.Render(Links.Bundles.Scripts.ngGrid))
-  @this.TimeScript(Links.Bundles.Scripts.app, Scripts.Render(Links.Bundles.Scripts.app))
-  @MiniProfiler.RenderIncludes(position: RenderPosition.Right, showTrivial: true, showTimeWithChildren: true, showControls: true, useExistingjQuery: true)
+  <div>
+    @System.Web.Optimization.Scripts.Render(Links.Bundles.Scripts.scrilla)
+    @*@this.TimeScript(Links.Bundles.Scripts.jquery, System.Web.Optimization.Scripts.Render(Links.Bundles.Scripts.jquery))*@
+    @*@this.TimeScript(Links.Bundles.Scripts.underscore, System.Web.Optimization.Scripts.Render(Links.Bundles.Scripts.underscore))*@
+    @*@this.TimeScript(Links.Bundles.Scripts.chosen, System.Web.Optimization.Scripts.Render(Links.Bundles.Scripts.chosen))*@
+    @*@this.TimeScript(Links.Bundles.Scripts.bootstrap, System.Web.Optimization.Scripts.Render(Links.Bundles.Scripts.bootstrap))*@
+    @*@this.TimeScript(Links.Bundles.Scripts.angularjs, System.Web.Optimization.Scripts.Render(Links.Bundles.Scripts.angularjs))*@
+    @*@this.TimeScript(Links.Bundles.Scripts.angularjsRoute, System.Web.Optimization.Scripts.Render(Links.Bundles.Scripts.angularjsRoute))*@
+    @*@this.TimeScript(Links.Bundles.Scripts.angularjsResource, System.Web.Optimization.Scripts.Render(Links.Bundles.Scripts.angularjsResource))*@
+    @*@this.TimeScript(Links.Bundles.Scripts.jqRangeSlider, System.Web.Optimization.Scripts.Render(Links.Bundles.Scripts.jqRangeSlider))*@
+    @*@this.TimeScript(Links.Bundles.Scripts.ngGrid, System.Web.Optimization.Scripts.Render(Links.Bundles.Scripts.ngGrid))*@
+    @*@this.TimeScript(Links.Bundles.Scripts.app, System.Web.Optimization.Scripts.Render(Links.Bundles.Scripts.app))*@
 
-  @RenderSection("scripts", required: false)
+    @*@MiniProfiler.RenderIncludes(position: RenderPosition.Right, showTrivial: true, showTimeWithChildren: true, showControls: true, useExistingjQuery: true)*@
+
+    @RenderSection("scripts", required: false)
+  </div>
 </body>
 </html>

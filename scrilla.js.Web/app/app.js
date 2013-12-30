@@ -12,14 +12,20 @@ scrilla.app.config(['$locationProvider', '$routeProvider',
 		$routeProvider
 			.when('/', {
 				controller: 'AccountController',
-				templateUrl: '/app/views/accounts.html'
+				templateUrl: '/app/views/accounts.html',
 			})
 			.when('/transactions', {
 				controller: 'TransactionController',
-				templateUrl: '/app/views/transactions.html'
+				templateUrl: '/app/views/transactions.html',
 			})
 			.when('/vendors', {
 				controller: 'VendorController',
-				templateUrl: '/app/views/vendors.html'
+				templateUrl: '/app/views/vendors.html',
 			});
 	}]);
+
+scrilla.app.run(['DateRangeService',
+	function (DateRangeService) {
+		DateRangeService.init();
+	}
+]);

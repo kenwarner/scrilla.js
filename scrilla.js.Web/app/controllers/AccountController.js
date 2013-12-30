@@ -1,12 +1,29 @@
-﻿scrilla.controllers.controller('AccountController', ['$scope', '$location', '$document', '$filter', 'AccountService', function ($scope, $location, $document, $filter, AccountService) {
+﻿scrilla.controllers.controller('AccountController', ['$scope', '$log', 'DateRangeService', 'AccountService', function ($scope, $log, DateRangeService, AccountService) {
 	$scope.isNaN = isNaN;
-	$scope.from = $location.search().from;
-	$scope.to = $location.search().to;
+	$scope.DateRangeService = DateRangeService;
+	$scope.model = {};
 
-	$scope.model = AccountService.balances({ from: $scope.from, to: $scope.to });
-	$scope.model.$promise.then(function (result) {
-		$scope.model = result;
-		$scope.summary = "Accounts from " + $scope.model.dateRange.rangeSummary;
-		$document.prop('title', $scope.summary);
-	});
+	$scope.$watch('DateRangeService', function(newValue, oldValue, scope) {
+		$log.info('AccountController watched DateRangeService');
+
+		UpdateModel();
+	}, true);
+
+	var UpdateModel = function () {
+		var dateRange = $scope.DateRangeService.getDateRange();
+		$log.info('AccountController updating model: ' + dateRange)
+
+		var p = AccountService.balances({
+			from: $scope.DateRangeService.toUrlFormat(dateRange.from),
+			to: $scope.DateRangeService.toUrlFormat(dateRange.to)
+		});
+
+		p.$promise.then(function (result) {
+			$log.info('account balances received');
+
+			$scope.model = result;
+			$scope.model.summary = "Accounts from " + result.dateRange.rangeSummary;
+		});
+
+	};
 }]);
