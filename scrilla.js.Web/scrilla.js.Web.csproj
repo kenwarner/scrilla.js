@@ -179,6 +179,7 @@
     <Content Include="app\controllers\TransactionController.js" />
     <Content Include="app\controllers\VendorController.js" />
     <Content Include="app\directives\dateRangeSlider.js" />
+    <Content Include="app\directives\summary.js" />
     <Content Include="app\filters\duringMonthsFilter.js" />
     <Content Include="app\filters\parenlessCurrencyFilter.js" />
     <Content Include="app\services\AccountService.js" />

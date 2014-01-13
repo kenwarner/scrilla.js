@@ -26,5 +26,6 @@
 /// <reference path="../lib/jquery-ui-1.10.3/js/jquery-1.9.1.js" />
 /// <reference path="../lib/jquery-ui-1.10.3/js/jquery-ui-1.10.3.custom.js" />
 /// <reference path="../app/directives/daterangeslider.js" />
-/// <reference path="../lib/jqrangeslider-5.5.0/lib/jquery.mousewheel.js" />
 /// <reference path="../app/services/daterangeservice.js" />
+/// <reference path="../app/directives/summary.js" />
+/// <reference path="../lib/jqrangeslider-5.5.0/lib/jquery.mousewheel.js" />

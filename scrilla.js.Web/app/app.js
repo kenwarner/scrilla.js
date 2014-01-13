@@ -26,10 +26,13 @@ scrilla.app.config(['$locationProvider', '$routeProvider',
 scrilla.app.run(['$rootScope', '$route', '$log', 'DateRangeService',
 	function ($rootScope, $route, $log, DateRangeService) {
 		$log.info('starting app');
+		$rootScope.DateRangeService = DateRangeService;
+
 		DateRangeService.init();
 
 		$rootScope.$on('$routeChangeStart', function (ev, next, current) {
-			$log.info('route change');
+			$log.info('route change: ' + next.originalPath);
+
 			DateRangeService.init();
 		});
 	}

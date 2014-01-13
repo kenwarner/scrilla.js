@@ -1,8 +1,7 @@
 ﻿scrilla.controllers.controller('AccountController', ['$scope', '$log', 'DateRangeService', 'AccountService', function ($scope, $log, DateRangeService, AccountService) {
 	$scope.isNaN = isNaN;
 	$scope.DateRangeService = DateRangeService;
-	$scope.model = {};
-	$scope.model.summary = $scope.DateRangeService.summary();
+	$scope.model;
 
 	$scope.$watch('DateRangeService', function (newValue, oldValue, scope) {
 		$log.info('AccountController watched DateRangeService');
@@ -20,7 +19,7 @@
 
 		p.$promise.then(function (result) {
 			$log.info('account balances received\n');
-			$scope.model.data = result;
+			$scope.model = result;
 		});
 
 	};

@@ -1,6 +1,5 @@
 ﻿<div ng-controller="AccountController">
-  <h3 ng-bind-template="Accounts from {{model.summary}}"></h3>
-	<section ng-repeat="group in model.data.accountBalances" class="panel-group">
+	<section ng-repeat="group in model.accountBalances" class="panel-group">
 		<div class="panel panel-default">
 			<div class="panel-heading accordion-toggle" data-toggle="collapse" data-parent="#accountGroup{{group.id}}" href="#accountBalances{{group.id}}" ng-bind="group.name"></div>
 			<table id="accountBalances{{group.id}}" class="table table-hover table-bordered table-condensed panel-collapse collapse" ng-class="{'in': group.isActive}">
@@ -8,7 +7,7 @@
 					<tr>
 						<th>Name</th>
 						<th class="table-column-frozen">Balance</th>
-						<th ng-repeat="month in model.data.dateRange.months.sort().reverse()" title="{{month | date:'MMMM yyyy'}}">
+						<th ng-repeat="month in model.dateRange.months.sort().reverse()" title="{{month | date:'MMMM yyyy'}}">
 							<a ng-bind="month | date:'MMMM'" href="/?from={{month | date:'yyyy-MM-dd'}}&to={{DateRangeService.lastDayOfMonth(month) | date:'yyyy-MM-dd'}}"></a>
 						</th>
 					</tr>
@@ -20,7 +19,7 @@
 							<a href="/transactions?accountId={{account.id}}" ng-bind="account.name"></a>
 						</td>
 						<td class="table-column-frozen" title="Current as of {{account.balanceTimestamp}}" ng-bind="account.balance | parenlessCurrency"></td>
-						<td ng-repeat="balance in account.accountBalances | duringMonths:model.data.dateRange.months track by $index" ng-bind="(isNaN(balance.monthEndBalance) ? 0.00 : balance.monthEndBalance) | parenlessCurrency" ng-class="{'amount-zero' : isNaN(balance.monthEndBalance), 'amount-positive' : balance.monthEndBalance > 0, 'amount-negative' : balance.monthEndBalance < 0}"></td>
+						<td ng-repeat="balance in account.accountBalances | duringMonths:model.dateRange.months track by $index" ng-bind="(isNaN(balance.monthEndBalance) ? 0.00 : balance.monthEndBalance) | parenlessCurrency" ng-class="{'amount-zero' : isNaN(balance.monthEndBalance), 'amount-positive' : balance.monthEndBalance > 0, 'amount-negative' : balance.monthEndBalance < 0}"></td>
 					</tr>
 				</tbody>
 			</table>
