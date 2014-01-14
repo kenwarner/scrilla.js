@@ -1,5 +1,4 @@
 ﻿scrilla.controllers.controller('AccountController', ['$scope', '$log', 'DateRangeService', 'AccountService', function ($scope, $log, DateRangeService, AccountService) {
-	$scope.isNaN = isNaN;
 	$scope.DateRangeService = DateRangeService;
 	$scope.model;
 

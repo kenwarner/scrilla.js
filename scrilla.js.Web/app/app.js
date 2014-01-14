@@ -26,6 +26,8 @@ scrilla.app.config(['$locationProvider', '$routeProvider',
 scrilla.app.run(['$rootScope', '$route', '$log', 'DateRangeService',
 	function ($rootScope, $route, $log, DateRangeService) {
 		$log.info('starting app');
+
+		$rootScope.isNaN = isNaN;
 		$rootScope.DateRangeService = DateRangeService;
 
 		DateRangeService.init();
