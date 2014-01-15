@@ -84,6 +84,7 @@ namespace Links
             public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
             public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
             public static readonly string dateRangeSlider_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/dateRangeSlider.min.js") ? Url("dateRangeSlider.min.js") : Url("dateRangeSlider.js");
+            public static readonly string summary_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/summary.min.js") ? Url("summary.min.js") : Url("summary.js");
         }
     
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -102,6 +103,7 @@ namespace Links
             public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
             public static readonly string AccountService_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/AccountService.min.js") ? Url("AccountService.min.js") : Url("AccountService.js");
             public static readonly string DateRangeService_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/DateRangeService.min.js") ? Url("DateRangeService.min.js") : Url("DateRangeService.js");
+            public static readonly string TransactionService_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/TransactionService.min.js") ? Url("TransactionService.min.js") : Url("TransactionService.js");
         }
     
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -121,6 +123,10 @@ namespace Links
             public static readonly string jqRangeSlider_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jqRangeSlider.min.css") ? Url("jqRangeSlider.min.css") : Url("jqRangeSlider.css");
                  
             public static readonly string jqRangeSlider_min_css = Url("jqRangeSlider.min.css");
+            public static readonly string ngGrid_less = Url("ngGrid.less");
+            public static readonly string ngGrid_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/ngGrid.min.css") ? Url("ngGrid.min.css") : Url("ngGrid.css");
+                 
+            public static readonly string ngGrid_min_css = Url("ngGrid.min.css");
         }
     
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -321,6 +327,7 @@ namespace Links
             public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
             public static readonly string ng_grid_2_0_7_debug_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/ng-grid-2.0.7.debug.min.js") ? Url("ng-grid-2.0.7.debug.min.js") : Url("ng-grid-2.0.7.debug.js");
             public static readonly string ng_grid_2_0_7_min_js = Url("ng-grid-2.0.7.min.js");
+            public static readonly string ng_grid_flexible_height_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/ng-grid-flexible-height.min.js") ? Url("ng-grid-flexible-height.min.js") : Url("ng-grid-flexible-height.js");
             public static readonly string ng_grid_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/ng-grid.min.css") ? Url("ng-grid.min.css") : Url("ng-grid.css");
                  
             public static readonly string ng_grid_min_css = Url("ng-grid.min.css");

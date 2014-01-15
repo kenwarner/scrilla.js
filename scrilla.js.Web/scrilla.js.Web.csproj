@@ -184,6 +184,7 @@
     <Content Include="app\filters\parenlessCurrencyFilter.js" />
     <Content Include="app\services\AccountService.js" />
     <Content Include="app\services\DateRangeService.js" />
+    <Content Include="app\services\TransactionService.js" />
     <Content Include="app\styles\app.css">
       <DependentUpon>app.less</DependentUpon>
     </Content>
@@ -202,6 +203,12 @@
     </Content>
     <Content Include="app\styles\jqRangeSlider.min.css">
       <DependentUpon>jqRangeSlider.less</DependentUpon>
+    </Content>
+    <Content Include="app\styles\ngGrid.css">
+      <DependentUpon>ngGrid.less</DependentUpon>
+    </Content>
+    <Content Include="app\styles\ngGrid.min.css">
+      <DependentUpon>ngGrid.less</DependentUpon>
     </Content>
     <Content Include="app\views\vendors.html" />
     <Content Include="app\views\transactions.html" />
@@ -234,6 +241,7 @@
     <Content Include="lib\angularjs-1.2.4\angular-route.min.js.map" />
     <Content Include="lib\angularjs-1.2.4\angular.min.js.map" />
     <Content Include="app\styles\jqRangeSlider.less" />
+    <Content Include="app\styles\ngGrid.less" />
     <None Include="lib\jQRangeSlider-5.5.0\Readme.md" />
     <None Include="lib\jquery-2.0.3\jquery-2.0.3.intellisense.js" />
     <Content Include="app\app.js" />
@@ -281,6 +289,7 @@
     <Content Include="lib\jquery-ui-1.10.3\js\jquery-ui-1.10.3.custom.min.js" />
     <Content Include="lib\ng-grid-2.0.7\ng-grid-2.0.7.debug.js" />
     <Content Include="lib\ng-grid-2.0.7\ng-grid-2.0.7.min.js" />
+    <Content Include="lib\ng-grid-2.0.7\ng-grid-flexible-height.js" />
     <Content Include="lib\ng-grid-2.0.7\ng-grid.css" />
     <Content Include="lib\ng-grid-2.0.7\ng-grid.min.css" />
     <Content Include="lib\underscore-1.5.2\underscore-min.map" />
@@ -321,6 +330,10 @@
     <ProjectReference Include="..\scrilla.Data.Dapper\scrilla.Data.Dapper.csproj">
       <Project>{14237860-e43c-4294-9235-81c6c4173773}</Project>
       <Name>scrilla.Data.Dapper</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\scrilla.Data\scrilla.Data.csproj">
+      <Project>{a286dbc0-e497-4542-a0fa-80177d61faef}</Project>
+      <Name>scrilla.Data</Name>
     </ProjectReference>
     <ProjectReference Include="..\scrilla.Services\scrilla.Services.csproj">
       <Project>{34156e2e-a2ce-418d-8aec-e4e6a92fb215}</Project>

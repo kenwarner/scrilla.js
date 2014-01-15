@@ -1,4 +1,5 @@
-﻿using scrilla.js.Web.Models;
+﻿using scrilla.Data;
+using scrilla.js.Web.Models;
 using scrilla.Services;
 using scrilla.Services.Models;
 using System;
@@ -13,17 +14,28 @@ namespace scrilla.js.Web.Controllers
 	public partial class AccountApiController : ApiController
 	{
 		private readonly IAccountService _accountService;
+		private readonly ITransactionService _transactionService;
 
-		public AccountApiController(IAccountService accountService)
+		public AccountApiController(IAccountService accountService, ITransactionService transactionService)
 		{
 			_accountService = accountService;
+			_transactionService = transactionService;
 		}
 
-		[Route("api/accounts/balances")]
+		[Route("api/accounts/balances"), HttpGet]
 		public virtual HttpResponseMessage Accounts(DateTime? from = null, DateTime? to = null)
 		{
 			var dateRange = new DateRangeModel(from, to);
-			return Request.CreateResponse<AccountBalancesModel>(_accountService.GetAccountBalances(dateRange.From, dateRange.To));
+			var result = _accountService.GetAccountBalances(dateRange.From, dateRange.To);
+			return Request.CreateResponse<AccountBalancesModel>(result);
+		}
+
+		[Route("api/transactions"), HttpGet]
+		public virtual HttpResponseMessage Transactions(int? accountId = null, string vendorId = "", string categoryId = "", DateTime? from = null, DateTime? to = null)
+		{
+			var dateRange = new DateRangeModel(from, to);
+			var result = _transactionService.GetTransactions(new Filter<int?>(accountId), Filter<int?>.Parse(categoryId), Filter<int?>.Parse(vendorId), dateRange.From, dateRange.To);
+			return Request.CreateResponse<IEnumerable<Transaction>>(result);
 		}
 	}
 }

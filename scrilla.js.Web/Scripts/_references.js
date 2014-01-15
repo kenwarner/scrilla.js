@@ -28,4 +28,6 @@
 /// <reference path="../app/directives/daterangeslider.js" />
 /// <reference path="../app/services/daterangeservice.js" />
 /// <reference path="../app/directives/summary.js" />
+/// <reference path="../app/services/transactionservice.js" />
 /// <reference path="../lib/jqrangeslider-5.5.0/lib/jquery.mousewheel.js" />
+/// <reference path="../lib/ng-grid-2.0.7/ng-grid-flexible-height.js" />
