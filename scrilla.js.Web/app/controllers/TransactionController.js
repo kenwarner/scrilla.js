@@ -27,7 +27,7 @@
 		data: 'transactions',
 		plugins: [new ngGridFlexibleHeightPlugin()],
 		columnDefs: [
-			{ field: 'isReconciled', },
+			{ field: 'isReconciled', displayName: '' },
 			{ field: 'timestamp', displayName: 'Date', cellFilter: "date:'yyyy-MM-dd'" },
 			{ field: 'vendorId', displayName: 'Vendor' },
 			{ field: 'amount', displayName: 'Amount', cellFilter: 'parenlessCurrency' }
