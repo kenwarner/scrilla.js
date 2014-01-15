@@ -14,11 +14,11 @@ function ngGridFlexibleHeightPlugin (opts) {
             var naturalHeight = self.grid.$canvas.height() + 1;
             if (opts != null) {
                 if (opts.minHeight != null && (naturalHeight + extraHeight) < opts.minHeight) {
-                    naturalHeight = opts.minHeight - extraHeight - 2;
+                    naturalHeight = opts.minHeight - extraHeight - 3;
                 }
             }
 
-            var newViewportHeight = naturalHeight + 2;
+            var newViewportHeight = naturalHeight + 3;
             if (!self.scope.baseViewportHeight || self.scope.baseViewportHeight !== newViewportHeight) {
                 self.grid.$viewport.css('height', newViewportHeight + 'px');
                 self.grid.$root.css('height', (newViewportHeight + extraHeight) + 'px');
