@@ -23,5 +23,14 @@
 
 	};
 
-	$scope.gridOptions = { data: 'transactions', plugins: [new ngGridFlexibleHeightPlugin()] };
+	$scope.gridOptions = {
+		data: 'transactions',
+		plugins: [new ngGridFlexibleHeightPlugin()],
+		columnDefs: [
+			{ field: 'isReconciled', },
+			{ field: 'timestamp', displayName: 'Date', cellFilter: "date:'yyyy-MM-dd'" },
+			{ field: 'vendorId', displayName: 'Vendor' },
+			{ field: 'amount', displayName: 'Amount', cellFilter: 'parenlessCurrency' }
+		]
+	};
 }]);
