@@ -1,26 +1,22 @@
-﻿.ui-rangeSlider {
-    margin-top: 5px;
+.ui-rangeSlider {
+  margin-top: 5px;
 }
-
 .ui-rangeSlider .ui-ruler-tick-inner {
-    padding-top: 3px;
-    margin-left: -12px;
+  padding-top: 3px;
+  margin-left: -12px;
 }
-
 .ui-rangeSlider .ui-rangeSlider-container {
-    height: 6px;
+  height: 6px;
 }
-
 .ui-rangeSlider .ui-rangeSlider-innerBar {
-    height: 2px;
+  height: 2px;
 }
-
 .ui-rangeSlider .ui-rangeSlider-bar {
-    height: 0px;
+  height: 0px;
 }
-
 .ui-rangeSlider .ui-rangeSlider-handle {
-    height: 8px;
-    width: 10px;
-    margin-bottom: -4px;
+  height: 8px;
+  width: 10px;
+  margin-bottom: -4px;
 }
+/*# sourceMappingURL=jqRangeSlider.css.map */

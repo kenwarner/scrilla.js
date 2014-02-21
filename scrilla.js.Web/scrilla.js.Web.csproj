@@ -242,6 +242,15 @@
     <Content Include="lib\angularjs-1.2.4\angular.min.js.map" />
     <Content Include="app\styles\jqRangeSlider.less" />
     <Content Include="app\styles\ngGrid.less" />
+    <Content Include="app\styles\app.css.map">
+      <DependentUpon>app.css</DependentUpon>
+    </Content>
+    <Content Include="app\styles\bootstrap-theme.css.map">
+      <DependentUpon>bootstrap-theme.css</DependentUpon>
+    </Content>
+    <Content Include="app\styles\jqRangeSlider.css.map">
+      <DependentUpon>jqRangeSlider.css</DependentUpon>
+    </Content>
     <None Include="lib\jQRangeSlider-5.5.0\Readme.md" />
     <None Include="lib\jquery-2.0.3\jquery-2.0.3.intellisense.js" />
     <Content Include="app\app.js" />

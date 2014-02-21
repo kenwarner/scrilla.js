@@ -1,4 +1,4 @@
-﻿.nav > li > a {
+.nav > li > a {
   font-size: 18px;
 }
 .panel-group {
@@ -18,3 +18,4 @@
 .table-bordered > tfoot > tr > td.table-column-frozen {
   border-right-width: 2px;
 }
+/*# sourceMappingURL=bootstrap-theme.css.map */
