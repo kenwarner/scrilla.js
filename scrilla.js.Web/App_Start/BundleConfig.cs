@@ -68,7 +68,8 @@ namespace scrilla.js.Web
 				.Include(VirtualPathUtility.ToAppRelative(Links.lib.jquery_ui_1_10_3.js.jquery_ui_1_10_3_custom_js)));
 
 			bundles.Add(new ScriptBundle(Links.Bundles.Scripts.ngGrid)
-				.Include(VirtualPathUtility.ToAppRelative(Links.lib.ng_grid_2_0_7.ng_grid_2_0_7_debug_js)));
+				.Include(VirtualPathUtility.ToAppRelative(Links.lib.ng_grid_2_0_7.ng_grid_2_0_7_debug_js))
+				.Include(VirtualPathUtility.ToAppRelative(Links.lib.ng_grid_2_0_7.ng_grid_flexible_height_js)));
 
 			bundles.Add(new ScriptBundle(Links.Bundles.Scripts.underscore,
 				"//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.2/underscore-min.js") { CdnFallbackExpression = "window._" }
