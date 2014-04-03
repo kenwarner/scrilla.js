@@ -1,14 +1,17 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.20623.1 VSUPREVIEW
+VisualStudioVersion = 12.0.30110.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F2798F1B-676F-4217-BC66-935519E767F7}"
 	ProjectSection(SolutionItems) = preProject
 		.gitattributes = .gitattributes
 		.gitignore = .gitignore
+		scrilla.js.Web\bower.json = scrilla.js.Web\bower.json
 		CreateScrillaWebsite.bat = CreateScrillaWebsite.bat
 		GlobalAssemblyInfo.cs = GlobalAssemblyInfo.cs
+		scrilla.js.Web\Gruntfile.js = scrilla.js.Web\Gruntfile.js
+		scrilla.js.Web\package.json = scrilla.js.Web\package.json
 		README.md = README.md
 		TODO.md = TODO.md
 	EndProjectSection

@@ -1,0 +1,15 @@
+{
+  "name": "scrilla.js",
+  "homepage": "https://github.com/kenwarner/scrilla.js",
+  "authors": [
+    "Ken Warner"
+  ],
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
