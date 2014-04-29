@@ -2,6 +2,17 @@ module.exports = function(grunt) {
 
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
+
+    watch: {
+      bower: {
+        files: ['Gruntfile.js'],
+        tasks: ['bower:install'],
+        options: {
+          spawn: false
+        }
+      }
+    },
+
     bower: {
       install: {
         options: {
@@ -9,15 +20,16 @@ module.exports = function(grunt) {
           layout: 'byComponent',
           install: true,
           verbose: false,
-          cleanTargetDir: false,
+          cleanTargetDir: true,
           cleanBowerDir: false,
           bowerOptions: {}
         }
       }
     }
+
   });
 
   grunt.loadNpmTasks('grunt-bower-task');
-
-  grunt.registerTask('default', ['bower:install']);
+  grunt.loadNpmTasks('grunt-contrib-watch');
+  grunt.registerTask('default', ['bower']);
 };

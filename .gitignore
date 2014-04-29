@@ -53,5 +53,7 @@ _ReSharper*/
 packages/
 !packages/Microsoft.Bcl.Build*/tools/Microsoft.Bcl.Build.targets
 
+# built at dev-time
 node_modules
 bower_components
+bowerlib
