@@ -56,4 +56,4 @@ packages/
 # built at dev-time
 node_modules
 bower_components
-bowerlib
+/scrilla.js.Web/lib

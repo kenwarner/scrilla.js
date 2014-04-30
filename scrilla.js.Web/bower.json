@@ -15,7 +15,9 @@
   "dependencies": {
     "jquery": "~2.1.0",
     "jquery-ui": "~1.10.4",
-    "angular": "~1.2.15",
+    "angular": "~1.2.16",
+    "angular-resource": "~1.2.16",
+    "angular-route": "~1.2.16",
     "ng-grid": "~2.0.7",
     "chosen": "https://github.com/harvesthq/chosen/releases/download/v1.1.0/chosen_v1.1.0.zip",
     "bootstrap": "~3.1.1",
@@ -28,8 +30,13 @@
     },
     "jqrangeslider": {
       "": "dest/*.js",
-      "css": "dest/css",
+      "css": "dest/css/classic.css",
+      "css/icons-classic": "dest/css/icons-classic",
       "lib": "dest/lib"
+    },
+    "jquery-ui": {
+      "": ["ui/jquery.ui.core.js", "ui/jquery.ui.widget.js", "ui/jquery.ui.mouse.js"],
+      "css": "themes/smoothness/"
     }
   },
   "resolutions": {
