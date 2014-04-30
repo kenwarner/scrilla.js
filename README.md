@@ -11,6 +11,8 @@ It was also a good opportunity to explore a few technologies:
 - [Dapper](https://github.com/SamSaffron/dapper-dot-net)
 - [AngularJS](http://angularjs.org/)
 - [Bootstrap 3](http://getbootstrap.com/)
+- [Grunt](http://gruntjs.com/)
+- [Bower](http://bower.io/)
 
 To use locally:
 - Add `127.0.0.1  scrilla.js` to your C:\Windows\System32\drivers\etc\hosts file to enable local access from http://scrilla.js/
