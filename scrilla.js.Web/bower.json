@@ -28,6 +28,10 @@
     "chosen": {
       "": "chosen*.*"
     },
+    "ng-grid": {
+      "": "build/*.*",
+      "plugins": "plugins/ng-grid-flexible-height.js"
+    },
     "jqrangeslider": {
       "": "dest/*.js",
       "css": "dest/css/classic.css",
