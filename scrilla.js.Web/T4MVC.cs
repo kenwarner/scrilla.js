@@ -13,6 +13,7 @@ using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Hosting;
 using System.Web.Mvc;
@@ -22,7 +23,7 @@ using System.Web.Routing;
 using T4MVC;
 
 [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-public static class MVC
+public static partial class MVC
 {
     public static scrilla.js.Web.Controllers.ScrillaController Scrilla = new scrilla.js.Web.Controllers.T4MVC_ScrillaController();
     public static T4MVC.SharedController Shared = new T4MVC.SharedController();
@@ -182,7 +183,7 @@ internal static class T4MVCHelpers {
     private static string ProcessVirtualPathDefault(string virtualPath) {
         // The path that comes in starts with ~/ and must first be made absolute
         //string path = VirtualPathUtility.ToAbsolute(virtualPath);
-		string path = VirtualPathUtility.ToAppRelative(virtualPath);
+        string path = VirtualPathUtility.ToAppRelative(virtualPath);
         
         // Add your own modifications here before returning the path
         return path;
