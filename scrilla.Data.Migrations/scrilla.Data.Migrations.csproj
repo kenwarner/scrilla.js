@@ -46,7 +46,7 @@
   <ItemGroup>
     <Reference Include="FluentMigrator, Version=1.1.1.0, Culture=neutral, PublicKeyToken=aacfc7de5acabf05, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\FluentMigrator.1.1.1.0\lib\40\FluentMigrator.dll</HintPath>
+      <HintPath>..\packages\FluentMigrator.1.1.2.1\lib\40\FluentMigrator.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -77,6 +77,7 @@
     <Compile Include="_002\_014_SubtransactionMakeMemoAndNotesNullable.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="packages.config" />
     <None Include="tests\scratch.bat" />
     <None Include="dev\createdb.bat" />
     <None Include="dev\dropdb.bat" />
@@ -84,7 +85,6 @@
     <None Include="dev\rollback.bat" />
     <None Include="dev\scratch.bat" />
     <None Include="dev\seed.bat" />
-    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="tests\createDb.sql" />
