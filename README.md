@@ -1,6 +1,6 @@
 [![Build status](https://ci.appveyor.com/api/projects/status/d39crj6vuy1r4ohc)](https://ci.appveyor.com/project/kenwarner/scrilla-js)
 
-Scrilla.js is a fork of https://github.com/qntmfred/scrilla
+Scrilla.js is a fork of https://github.com/kenwarner/scrilla
 
 Scrilla is a web application I made to solve a problem I had:  
 - I love how mint.com pulls down (when it's working) all my financial transaction data  
