@@ -1,4 +1,4 @@
-body {
+﻿body {
   padding-top: 50px;
   font-family: "Segoe UI";
 }
@@ -30,4 +30,3 @@ a:hover {
 .amount-zero:hover {
   opacity: .8;
 }
-/*# sourceMappingURL=app.css.map */
