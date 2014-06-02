@@ -241,6 +241,8 @@
     <Content Include="app\styles\ngGrid.min.css">
       <DependentUpon>ngGrid.less</DependentUpon>
     </Content>
+    <Content Include="app\tests\karma.unit.conf.js" />
+    <Content Include="app\tests\unit\controllers\TestSpecSpecs.js" />
     <Content Include="app\views\vendors.html" />
     <Content Include="app\views\transactions.html" />
     <Content Include="app\views\accounts.html" />
@@ -314,7 +316,12 @@
     <Content Include="Views\Scrilla\App.cshtml" />
     <Content Include="Views\Scrilla\Accounts.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="app\tests\e2e\" />
+    <Folder Include="app\tests\unit\directives\" />
+    <Folder Include="app\tests\unit\filters\" />
+    <Folder Include="app\tests\unit\services\" />
+  </ItemGroup>
   <ItemGroup>
     <None Include="packages.config">
       <SubType>Designer</SubType>

@@ -37,13 +37,22 @@ module.exports = function (grunt) {
           }
         }
       }
-    }
+    },
+
+    karma: {
+      unit: {
+        configFile: 'app/tests/karma.unit.conf.js',
+        singleRun: true
+      }
+    },
 
   });
 
   grunt.loadNpmTasks('grunt-bower-task');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-dev-update');
+  grunt.loadNpmTasks('grunt-karma');
 
-  grunt.registerTask('default', ['bower', 'devUpdate']);
+  //grunt.registerTask('default', ['bower', 'devUpdate', 'karma:unit']);
+  grunt.registerTask('default', ['karma:unit']);
 };
