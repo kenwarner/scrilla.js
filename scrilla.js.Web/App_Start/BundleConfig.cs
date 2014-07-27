@@ -30,7 +30,11 @@ namespace scrilla.js.Web
 		private static void RegisterScriptBundles(BundleCollection bundles)
 		{
 			bundles.Add(new ScriptBundle(Links.Bundles.Scripts.app)
-				.IncludeDirectory(VirtualPathUtility.ToAppRelative(Links.app.Url()), "*.js", true));
+				.Include(VirtualPathUtility.ToAppRelative(Links.app.app_js))
+				.IncludeDirectory(VirtualPathUtility.ToAppRelative(Links.app.controllers.Url()), "*.js", true)
+				.IncludeDirectory(VirtualPathUtility.ToAppRelative(Links.app.directives.Url()), "*.js", true)
+				.IncludeDirectory(VirtualPathUtility.ToAppRelative(Links.app.filters.Url()), "*.js", true)
+				.IncludeDirectory(VirtualPathUtility.ToAppRelative(Links.app.services.Url()), "*.js", true));
 
 			bundles.Add(new ScriptBundle(Links.Bundles.Scripts.lib) {Orderer = new JQueryUIBundleOrderer()}
 				.IncludeDirectory("~/lib/", "*.js", true));
