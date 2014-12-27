@@ -1,6 +1,6 @@
 ﻿
 //Test suite
-describe('Tests functionality defined in the object obj', function () {
+describe('Account Controller', function () {
 
     //Setup
     beforeEach(function () {
