@@ -1,6 +1,5 @@
-﻿/// <autosync enabled="true" />
+﻿/// <autosync enabled="false" />
 /// <reference path="../app/app.js" />
-/// <reference path="../gruntfile.js" />
 /// <reference path="../app/controllers/accountcontroller.js" />
 /// <reference path="../app/controllers/transactioncontroller.js" />
 /// <reference path="../app/controllers/vendorcontroller.js" />
