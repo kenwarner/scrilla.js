@@ -41,12 +41,15 @@
     "ValidateStarSelector": true,
     "ValidateVendorSpecifics": true,
     "ValidateZeroUnit": true,
-    "ValidationLocation": "Messages"
+    "ValidationLocation": "Messages",
+    "ValidateDuplicateSelectors": true
   },
   "General": {
     "AllMessagesToOutputWindow": false,
     "KeepImportantComments": true,
-    "SvgPreviewPane": true
+    "SvgPreviewPane": true,
+    "ShowLogoWatermark": false,
+    "ShowWEIgnoreLogs": true
   },
   "Html": {
     "AutoMinify": false,
@@ -75,7 +78,12 @@
     ],
     "MakeMinified": false,
     "OutputDirectory": null,
-    "RunOnBuild": false
+    "RunOnBuild": false,
+    "AttributeQuotesRemovalMode": "KeepQuotes",
+    "CustomAngularDirectiveList": null,
+    "MinifyAngularBindingExpressions": false,
+    "MinifyKnockoutBindingExpressions": false,
+    "ProcessableScriptTypeList": null
   },
   "JavaScript": {
     "AutoMinify": true,
@@ -87,7 +95,10 @@
     "LintResultLocation": "Message",
     "MakeMinified": false,
     "OutputDirectory": null,
-    "RunOnBuild": false
+    "RunOnBuild": false,
+    "EvalTreatment": "MakeImmediateSafe",
+    "RootDirectory": "/Scripts/",
+    "TermSemicolons": true
   },
   "Less": {
     "CompileOnBuild": true,
@@ -143,7 +154,9 @@
     "RunOnBuild": false,
     "ScssOutputDirectory": null,
     "UseAbsoluteUrl": false,
-    "UseFullPathForIdentifierName": true
+    "UseFullPathForIdentifierName": true,
+    "Margin": 1,
+    "OutputDirectory": null
   },
   "SweetJs": {
     "CompileOnBuild": false,
