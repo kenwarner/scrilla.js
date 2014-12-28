@@ -24,7 +24,8 @@
     "karma-phantomjs-launcher": "~0.1.4",
     "grunt-karma": "~0.8.3",
     "grunt-xunit-runner": "~0.1.6",
-    "grunt-xunit": "~0.2.0"
+    "grunt-xunit": "~0.2.0",
+    "karma-vs-reporter": "~0.7.0"
   },
   "scripts": {
     "postinstall": "bower install && cd bower_components\\jqrangeslider && npm install && grunt"
