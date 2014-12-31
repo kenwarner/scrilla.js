@@ -31,10 +31,10 @@ namespace scrilla.js.Web.Controllers
 		}
 
 		[Route("api/transactions"), HttpGet]
-		public virtual HttpResponseMessage Transactions(int? accountId = null, string vendorId = "", string categoryId = "", DateTime? from = null, DateTime? to = null)
+		public virtual HttpResponseMessage Transactions(string accountId = "", string vendorId = "", string categoryId = "", DateTime? from = null, DateTime? to = null)
 		{
 			var dateRange = new DateRangeModel(from, to);
-			var result = _transactionService.GetTransactions(new Filter<int?>(accountId), Filter<int?>.Parse(categoryId), Filter<int?>.Parse(vendorId), dateRange.From, dateRange.To);
+			var result = _transactionService.GetTransactions(Filter<int?>.Parse(accountId), Filter<int?>.Parse(categoryId), Filter<int?>.Parse(vendorId), dateRange.From, dateRange.To);
 			return Request.CreateResponse<IEnumerable<Transaction>>(result);
 		}
 	}
