@@ -34,6 +34,9 @@ namespace scrilla.Services
 			builder.Append(@"
 FROM [Transaction] t
 JOIN Subtransaction st ON st.TransactionId = t.Id
+LEFT JOIN Account a on a.Id = t.AccountId
+LEFT JOIN Vendor v on v.Id = t.VendorId
+LEFT JOIN Category c on c.Id = st.CategoryId
 ");
 			var whereClauses = new List<string>();
 
@@ -125,8 +128,8 @@ JOIN Subtransaction st ON st.TransactionId = t.Id
 			// get transactions and subtransactions separately
 			var sql = builder.ToString();
 			object mergedParameters = MergeParameters(parameters);
-			var transactions = _db.Connection.Query<Transaction>("SELECT t.* " + sql, mergedParameters);
-			var subtransactions = _db.Connection.Query<Subtransaction>("SELECT st.* " + sql, mergedParameters);
+			var transactions = _db.Connection.Query<Transaction>("SELECT t.*, a.Name as AccountName, v.Name as VendorName " + sql, mergedParameters);
+            var subtransactions = _db.Connection.Query<Subtransaction>("SELECT st.*, c.Name as CategoryName " + sql, mergedParameters);
 
 			// stitch the subtransactions into the transactions
 			foreach (var t in transactions)

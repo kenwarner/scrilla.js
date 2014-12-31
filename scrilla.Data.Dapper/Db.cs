@@ -35,8 +35,20 @@ namespace scrilla.Data.Dapper
 	{
 		public TransactionMapper()
 		{
+			Map(x => x.AccountName).Ignore();
+			Map(x => x.VendorName).Ignore();
 			Map(x => x.Subtransactions).Ignore();
 			AutoMap();
 		}
 	}
+
+	public class SubtransactionMapper : ClassMapper<Subtransaction>
+	{
+		public SubtransactionMapper()
+		{
+			Map(x => x.CategoryName).Ignore();
+			AutoMap();
+		}
+	}
+
 }
