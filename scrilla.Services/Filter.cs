@@ -42,7 +42,15 @@ namespace scrilla.Services
 
 			// otherwise try to parse the string
 			object parsed = null;
-			switch (Type.GetTypeCode(typeof(T)))
+			var type = typeof (T);
+
+			// if it's a nullable type, let's get the underlying type instead
+			if (Nullable.GetUnderlyingType(type) != null)
+			{
+				type = Nullable.GetUnderlyingType(type);
+			}
+
+			switch (Type.GetTypeCode(type))
 			{
 				case TypeCode.Int32:
 					parsed = Int32.Parse(obj);
@@ -52,7 +60,7 @@ namespace scrilla.Services
 					break;
 			}
 
-			return new Filter<T>((T)Convert.ChangeType(parsed, typeof(T)));
+			return new Filter<T>((T)Convert.ChangeType(parsed, type));
 		}
 	}
 }
