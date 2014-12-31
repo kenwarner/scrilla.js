@@ -14,7 +14,6 @@
     "grunt-bower-task": "^0.4.0",
     "grunt-cli": "~0.1.13",
     "grunt-contrib-watch": "~0.6.1",
-    "grunt-dev-update": "^1.0.2",
     "grunt-karma": "^0.9.0",
     "grunt-ngdocs": "~0.2.2",
     "grunt-xunit": "~0.2.0",
@@ -28,6 +27,6 @@
     "phantomjs": "~1.9.7-8"
   },
   "scripts": {
-    "postinstall": "bower install && cd bower_components\\jqrangeslider && npm install && grunt"
+    "postinstall": "powershell .\\npm-postinstall.ps1"
   }
 }

@@ -14,24 +14,20 @@
   ],
   "dependencies": {
     "jquery": "~2.1.0",
-    "jquery-ui": "~1.10.4",
-    "angular": "~1.2.16",
-    "angular-mocks": "~1.2.16",
-    "angular-resource": "~1.2.16",
-    "angular-route": "~1.2.16",
-    "ng-grid": "~2.0.7",
-    "chosen": "https://github.com/harvesthq/chosen/releases/download/v1.1.0/chosen_v1.1.0.zip",
-    "bootstrap": "~3.1.1",
-    "underscore": "~1.6.0",
+    "jquery-ui": "~1.10.0",
+    "angular": "~1.3.0",
+    "angular-mocks": "~1.3.0",
+    "angular-resource": "~1.3.0",
+    "angular-route": "~1.3.0",
+    "angular-ui-grid": "~3.0.0-rc.16",
+    "bootstrap": "~3.3.0",
+    "underscore": "~1.7.0",
+    "chosen": "https://github.com/harvesthq/chosen/releases/download/v1.3.0/chosen_v1.3.0.zip",
     "jqrangeslider": "https://github.com/ghusse/jQRangeSlider/archive/5.7.0.zip"
   },
   "exportsOverride": {
     "chosen": {
       "": "chosen*.*"
-    },
-    "ng-grid": {
-      "": "build/*.*",
-      "plugins": "plugins/ng-grid-flexible-height.js"
     },
     "jqrangeslider": {
       "": "dest/*.js",
@@ -40,12 +36,16 @@
       "lib": "dest/lib"
     },
     "jquery-ui": {
-      "": ["ui/jquery.ui.core.js", "ui/jquery.ui.widget.js", "ui/jquery.ui.mouse.js"],
+      "": [
+        "ui/jquery.ui.core.js",
+        "ui/jquery.ui.widget.js",
+        "ui/jquery.ui.mouse.js"
+      ],
       "css": "themes/smoothness/"
     }
   },
   "resolutions": {
     "jquery": "~2.1.0",
-    "angular": "~1.2.16"
+    "angular": "~1.3.0"
   }
 }

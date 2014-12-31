@@ -27,18 +27,6 @@ module.exports = function (grunt) {
 			}
 		},
 
-		devUpdate: {
-			npm: {
-				options: {
-					updateType: 'report',
-					packages: {
-						devDependencies: true,
-						dependencies: true
-					}
-				}
-			}
-		},
-
 		karma: {
 			unit: {
 				configFile: 'app/tests/karma.unit.conf.js',
@@ -63,10 +51,10 @@ module.exports = function (grunt) {
 
 	grunt.loadNpmTasks('grunt-bower-task');
 	grunt.loadNpmTasks('grunt-contrib-watch');
-	grunt.loadNpmTasks('grunt-dev-update');
 	grunt.loadNpmTasks('grunt-karma');
 	grunt.loadNpmTasks('grunt-xunit-runner');
 
-	grunt.registerTask('default', ['bower', 'devUpdate', 'karma:unit']);
+	grunt.registerTask('install', ['bower']);
 	grunt.registerTask('tests', ['karma:unit']);
+	grunt.registerTask('default', ['install', 'tests']);
 };
