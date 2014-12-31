@@ -154,6 +154,57 @@ namespace Links
         }
     
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public static class tests {
+            private const string URLPATH = "~/app/tests";
+            public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
+            public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
+            [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+            public static class e2e {
+                private const string URLPATH = "~/app/tests/e2e";
+                public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
+                public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
+            }
+        
+            public static readonly string karma_unit_conf_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/karma.unit.conf.min.js") ? Url("karma.unit.conf.min.js") : Url("karma.unit.conf.js");
+            [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+            public static class unit {
+                private const string URLPATH = "~/app/tests/unit";
+                public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
+                public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
+                [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+                public static class controllers {
+                    private const string URLPATH = "~/app/tests/unit/controllers";
+                    public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
+                    public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
+                    public static readonly string AccountControllerSpec_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/AccountControllerSpec.min.js") ? Url("AccountControllerSpec.min.js") : Url("AccountControllerSpec.js");
+                }
+            
+                [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+                public static class directives {
+                    private const string URLPATH = "~/app/tests/unit/directives";
+                    public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
+                    public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
+                }
+            
+                [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+                public static class filters {
+                    private const string URLPATH = "~/app/tests/unit/filters";
+                    public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
+                    public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
+                }
+            
+                [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+                public static class services {
+                    private const string URLPATH = "~/app/tests/unit/services";
+                    public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
+                    public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
+                }
+            
+            }
+        
+        }
+    
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public static class views {
             private const string URLPATH = "~/app/views";
             public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
