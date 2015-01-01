@@ -177,45 +177,15 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="app\controllers\AccountController.min.js">
-      <DependentUpon>AccountController.js</DependentUpon>
-    </Content>
     <Content Include="app\controllers\TransactionController.js" />
-    <Content Include="app\controllers\TransactionController.min.js">
-      <DependentUpon>TransactionController.js</DependentUpon>
-    </Content>
     <Content Include="app\controllers\VendorController.js" />
-    <Content Include="app\controllers\VendorController.min.js">
-      <DependentUpon>VendorController.js</DependentUpon>
-    </Content>
     <Content Include="app\directives\dateRangeSlider.js" />
-    <Content Include="app\directives\dateRangeSlider.min.js">
-      <DependentUpon>dateRangeSlider.js</DependentUpon>
-    </Content>
     <Content Include="app\directives\summary.js" />
-    <Content Include="app\directives\summary.min.js">
-      <DependentUpon>summary.js</DependentUpon>
-    </Content>
     <Content Include="app\filters\duringMonthsFilter.js" />
-    <Content Include="app\filters\duringMonthsFilter.min.js">
-      <DependentUpon>duringMonthsFilter.js</DependentUpon>
-    </Content>
     <Content Include="app\filters\parenlessCurrencyFilter.js" />
-    <Content Include="app\filters\parenlessCurrencyFilter.min.js">
-      <DependentUpon>parenlessCurrencyFilter.js</DependentUpon>
-    </Content>
     <Content Include="app\services\AccountService.js" />
-    <Content Include="app\services\AccountService.min.js">
-      <DependentUpon>AccountService.js</DependentUpon>
-    </Content>
     <Content Include="app\services\DateRangeService.js" />
-    <Content Include="app\services\DateRangeService.min.js">
-      <DependentUpon>DateRangeService.js</DependentUpon>
-    </Content>
     <Content Include="app\services\TransactionService.js" />
-    <Content Include="app\services\TransactionService.min.js">
-      <DependentUpon>TransactionService.js</DependentUpon>
-    </Content>
     <Content Include="app\styles\app.css">
       <DependentUpon>app.less</DependentUpon>
     </Content>
@@ -260,36 +230,6 @@
     </Content>
     <Content Include="app\styles\jqRangeSlider.css.map">
       <DependentUpon>jqRangeSlider.css</DependentUpon>
-    </Content>
-    <Content Include="app\controllers\AccountController.min.js.map">
-      <DependentUpon>AccountController.min.js</DependentUpon>
-    </Content>
-    <Content Include="app\controllers\TransactionController.min.js.map">
-      <DependentUpon>TransactionController.min.js</DependentUpon>
-    </Content>
-    <Content Include="app\controllers\VendorController.min.js.map">
-      <DependentUpon>VendorController.min.js</DependentUpon>
-    </Content>
-    <Content Include="app\directives\dateRangeSlider.min.js.map">
-      <DependentUpon>dateRangeSlider.min.js</DependentUpon>
-    </Content>
-    <Content Include="app\directives\summary.min.js.map">
-      <DependentUpon>summary.min.js</DependentUpon>
-    </Content>
-    <Content Include="app\services\AccountService.min.js.map">
-      <DependentUpon>AccountService.min.js</DependentUpon>
-    </Content>
-    <Content Include="app\services\DateRangeService.min.js.map">
-      <DependentUpon>DateRangeService.min.js</DependentUpon>
-    </Content>
-    <Content Include="app\services\TransactionService.min.js.map">
-      <DependentUpon>TransactionService.min.js</DependentUpon>
-    </Content>
-    <Content Include="app\filters\duringMonthsFilter.min.js.map">
-      <DependentUpon>duringMonthsFilter.min.js</DependentUpon>
-    </Content>
-    <Content Include="app\filters\parenlessCurrencyFilter.min.js.map">
-      <DependentUpon>parenlessCurrencyFilter.min.js</DependentUpon>
     </Content>
     <Content Include="app\app.js" />
     <None Include="T4MVC.tt">
