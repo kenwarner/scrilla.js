@@ -6,6 +6,7 @@ angular.module('scrilla').controller('TransactionController', ['TransactionDataS
 			vm.gridOptions = {
 				data: data,
 				minRowsToShow: data.length,
+				enableFiltering: true,
 				enableVerticalScrollbar: false,
 				enableHorizontalScrollbar: false,
 				bindScrollHorizontal: false,
@@ -13,13 +14,14 @@ angular.module('scrilla').controller('TransactionController', ['TransactionDataS
 				enableRowSelection: true,
 				selectionRowHeaderWidth: 35,
 
+
 				//infiniteScroll: 5,//50 / data.length * 100,
 				columnDefs: [
-					{ name: 'Date', field: 'timestamp', cellFilter: 'date:"yyyy-MM-dd"', maxWidth: 1 },
+					{ name: 'Date', field: 'timestamp', cellFilter: 'date:"yyyy-MM-dd"', maxWidth: 1, enableFiltering: false },
 					{ name: 'Account', field: 'accountName', enableCellEdit: false },
 					{ name: 'Vendor', field: 'vendorName' },
 					{ name: 'Category', field: 'categoryName' },
-					{ field: 'amount', cellFilter: 'parenlessCurrency', maxWidth: 1, enableCellEdit: false }
+					{ field: 'amount', cellFilter: 'parenlessCurrency', maxWidth: 1, enableFiltering: false, enableCellEdit: false }
 				]
 			};
 		});
