@@ -1,41 +1,13 @@
-﻿var scrilla = scrilla || {};
-scrilla.directives = angular.module('scrilla.directives', []);
-scrilla.filters = angular.module('scrilla.filters', []);
-scrilla.controllers = angular.module('scrilla.controllers', ['ngRoute']);
-scrilla.services = angular.module('scrilla.services', ['ngResource']);
-scrilla.app = angular.module('scrillaApp', ['ngGrid', 'scrilla.directives', 'scrilla.filters', 'scrilla.controllers', 'scrilla.services']);
+﻿angular.module('scrilla', ['ui.router', 'ui.grid', 'ui.grid.cellNav', 'ui.grid.autoResize']);
 
-scrilla.app.config(['$locationProvider', '$routeProvider',
-	function ($locationProvider, $routeProvider) {
-		$locationProvider.html5Mode(true);
-
-		$routeProvider
-			.when('/', {
-				templateUrl: '/app/views/accounts.html',
-			})
-			.when('/transactions', {
-				templateUrl: '/app/views/transactions.html',
-			})
-			.when('/vendors', {
-				templateUrl: '/app/views/vendors.html',
-			});
-
-	}]);
-
-
-scrilla.app.run(['$rootScope', '$route', '$log', 'DateRangeService',
-	function ($rootScope, $route, $log, DateRangeService) {
-		$log.info('starting app');
-
-		$rootScope.isNaN = isNaN;
-		$rootScope.DateRangeService = DateRangeService;
-
-		DateRangeService.init();
-
-		$rootScope.$on('$routeChangeStart', function (ev, next, current) {
-			$log.info('route change: ' + next.originalPath);
-
-			DateRangeService.init();
+angular.module('scrilla').config(['$stateProvider', function ($stateProvider) {
+	$stateProvider
+		.state('scrilla', {
+			url: '?accountId&vendorId&categoryId&from&to',
+			template: '<ui-view></ui-view>'
+		})
+		.state('scrilla.transactions', {
+			url: '/transactions',
+			templateUrl: 'app/views/transactions.html'
 		});
-	}
-]);
+}]);
