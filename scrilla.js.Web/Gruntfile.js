@@ -6,7 +6,7 @@ module.exports = function (grunt) {
 		watch: {
 			bower: {
 				files: ['Gruntfile.js'],
-				tasks: ['bower:install'],
+				tasks: ['install'],
 				options: {
 					spawn: false
 				}

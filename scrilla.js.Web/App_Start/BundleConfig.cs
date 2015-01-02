@@ -11,7 +11,7 @@ namespace scrilla.js.Web
 		// For more information on Bundling, visit http://go.microsoft.com/fwlink/?LinkId=254725
 		public static void RegisterBundles(BundleCollection bundles)
 		{
-			bundles.UseCdn = true;
+			//bundles.UseCdn = true;
 
 			RegisterStyleBundles(bundles);
 			RegisterScriptBundles(bundles);
@@ -20,7 +20,7 @@ namespace scrilla.js.Web
 		private static void RegisterStyleBundles(BundleCollection bundles)
 		{
 			bundles.Add(new StyleBundle(Links.Bundles.Styles.app)
-				.IncludeDirectory(VirtualPathUtility.ToAppRelative(Links.app.styles.Url()), "*.css", false));
+				.IncludeDirectory(VirtualPathUtility.ToAppRelative(Links.app.styles.Url()), "*.less", false));
 
 			bundles.Add(new StyleBundle(Links.Bundles.Styles.lib) { Builder = new CssRewriteUrlBundleBuilder() }
 				.IncludeDirectory("~/lib/", "*.css", true));

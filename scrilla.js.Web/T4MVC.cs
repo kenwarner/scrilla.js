@@ -74,15 +74,7 @@ namespace Links
             private const string URLPATH = "~/app/controllers";
             public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
             public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-            public static readonly string AccountController_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/AccountController.min.js") ? Url("AccountController.min.js") : Url("AccountController.js");
-            public static readonly string AccountController_min_js = Url("AccountController.min.js");
-            public static readonly string AccountController_min_js_map = Url("AccountController.min.js.map");
             public static readonly string TransactionController_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/TransactionController.min.js") ? Url("TransactionController.min.js") : Url("TransactionController.js");
-            public static readonly string TransactionController_min_js = Url("TransactionController.min.js");
-            public static readonly string TransactionController_min_js_map = Url("TransactionController.min.js.map");
-            public static readonly string VendorController_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/VendorController.min.js") ? Url("VendorController.min.js") : Url("VendorController.js");
-            public static readonly string VendorController_min_js = Url("VendorController.min.js");
-            public static readonly string VendorController_min_js_map = Url("VendorController.min.js.map");
         }
     
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -90,12 +82,6 @@ namespace Links
             private const string URLPATH = "~/app/directives";
             public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
             public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-            public static readonly string dateRangeSlider_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/dateRangeSlider.min.js") ? Url("dateRangeSlider.min.js") : Url("dateRangeSlider.js");
-            public static readonly string dateRangeSlider_min_js = Url("dateRangeSlider.min.js");
-            public static readonly string dateRangeSlider_min_js_map = Url("dateRangeSlider.min.js.map");
-            public static readonly string summary_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/summary.min.js") ? Url("summary.min.js") : Url("summary.js");
-            public static readonly string summary_min_js = Url("summary.min.js");
-            public static readonly string summary_min_js_map = Url("summary.min.js.map");
         }
     
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -104,11 +90,7 @@ namespace Links
             public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
             public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
             public static readonly string duringMonthsFilter_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/duringMonthsFilter.min.js") ? Url("duringMonthsFilter.min.js") : Url("duringMonthsFilter.js");
-            public static readonly string duringMonthsFilter_min_js = Url("duringMonthsFilter.min.js");
-            public static readonly string duringMonthsFilter_min_js_map = Url("duringMonthsFilter.min.js.map");
             public static readonly string parenlessCurrencyFilter_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/parenlessCurrencyFilter.min.js") ? Url("parenlessCurrencyFilter.min.js") : Url("parenlessCurrencyFilter.js");
-            public static readonly string parenlessCurrencyFilter_min_js = Url("parenlessCurrencyFilter.min.js");
-            public static readonly string parenlessCurrencyFilter_min_js_map = Url("parenlessCurrencyFilter.min.js.map");
         }
     
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -116,15 +98,7 @@ namespace Links
             private const string URLPATH = "~/app/services";
             public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
             public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-            public static readonly string AccountService_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/AccountService.min.js") ? Url("AccountService.min.js") : Url("AccountService.js");
-            public static readonly string AccountService_min_js = Url("AccountService.min.js");
-            public static readonly string AccountService_min_js_map = Url("AccountService.min.js.map");
-            public static readonly string DateRangeService_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/DateRangeService.min.js") ? Url("DateRangeService.min.js") : Url("DateRangeService.js");
-            public static readonly string DateRangeService_min_js = Url("DateRangeService.min.js");
-            public static readonly string DateRangeService_min_js_map = Url("DateRangeService.min.js.map");
-            public static readonly string TransactionService_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/TransactionService.min.js") ? Url("TransactionService.min.js") : Url("TransactionService.js");
-            public static readonly string TransactionService_min_js = Url("TransactionService.min.js");
-            public static readonly string TransactionService_min_js_map = Url("TransactionService.min.js.map");
+            public static readonly string TransactionDataService_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/TransactionDataService.min.js") ? Url("TransactionDataService.min.js") : Url("TransactionDataService.js");
         }
     
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -133,24 +107,9 @@ namespace Links
             public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
             public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
             public static readonly string app_less = Url("app.less");
-            public static readonly string app_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/app.min.css") ? Url("app.min.css") : Url("app.css");
-                 
-            public static readonly string app_css_map = Url("app.css.map");
-            public static readonly string app_min_css = Url("app.min.css");
             public static readonly string bootstrap_theme_less = Url("bootstrap-theme.less");
-            public static readonly string bootstrap_theme_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/bootstrap-theme.min.css") ? Url("bootstrap-theme.min.css") : Url("bootstrap-theme.css");
-                 
-            public static readonly string bootstrap_theme_css_map = Url("bootstrap-theme.css.map");
-            public static readonly string bootstrap_theme_min_css = Url("bootstrap-theme.min.css");
             public static readonly string jqRangeSlider_less = Url("jqRangeSlider.less");
-            public static readonly string jqRangeSlider_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jqRangeSlider.min.css") ? Url("jqRangeSlider.min.css") : Url("jqRangeSlider.css");
-                 
-            public static readonly string jqRangeSlider_css_map = Url("jqRangeSlider.css.map");
-            public static readonly string jqRangeSlider_min_css = Url("jqRangeSlider.min.css");
             public static readonly string ngGrid_less = Url("ngGrid.less");
-            public static readonly string ngGrid_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/ngGrid.min.css") ? Url("ngGrid.min.css") : Url("ngGrid.css");
-                 
-            public static readonly string ngGrid_min_css = Url("ngGrid.min.css");
         }
     
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -209,9 +168,7 @@ namespace Links
             private const string URLPATH = "~/app/views";
             public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
             public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-            public static readonly string accounts_html = Url("accounts.html");
             public static readonly string transactions_html = Url("transactions.html");
-            public static readonly string vendors_html = Url("vendors.html");
         }
     
     }

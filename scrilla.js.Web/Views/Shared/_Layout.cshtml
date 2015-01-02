@@ -3,54 +3,33 @@
 <!DOCTYPE html>
 <html lang="en" ng-app="scrilla">
 <head>
-    @this.InitClientTimings()
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <base href="/" />
-    <title>@(ViewBag.Title ?? "Scrilla")</title>
-    @Styles.Render(Links.Bundles.Styles.lib)
-    @Styles.Render(Links.Bundles.Styles.app)
+  @this.InitClientTimings()
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <base href="/" />
+  <title>@(ViewBag.Title ?? "Scrilla")</title>
+  @Styles.Render(Links.Bundles.Styles.lib)
+  @Styles.Render(Links.Bundles.Styles.app)
 </head>
 <body>
-    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
-        <div>
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand hidden-md hidden-lg" href="/">Scrilla</a>
-            </div>
-            <div class="navbar-collapse collapse" style="height: 1px;">
-                <ul class="nav navbar-nav">
-                    <li><a href="/">Accounts</a></li>
-                    <li><a ui-sref="scrilla.transactions">Transactions</a></li>
-                    <li><a href="/vendors">Vendors</a></li>
-                    <li><a href="/categories">Categories</a></li>
-                    <li><a href="/bills">Bills</a></li>
-                    <li><a href="/budget">Budget</a></li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+  @{ Html.RenderPartial(MVC.Shared.Views._HeaderNavigation); }
 
-    @*<date-range-slider class="col-xs-12 col-lg-8"></date-range-slider>*@
-    <div class="container pull-left">
-        <div class="pull-left">
-            <h3 summary ng-bind="message"></h3>
-            <div class="col-xs-12" ui-view></div>
-            @RenderBody()
-        </div>
-    </div>
-
+  @*<date-range-slider class="col-xs-12 col-lg-8"></date-range-slider>*@
+  <div class="container-fluid">
     <div>
-        @System.Web.Optimization.Scripts.Render(Links.Bundles.Scripts.lib)
-        @System.Web.Optimization.Scripts.Render(Links.Bundles.Scripts.app)
-
-        @*@MiniProfiler.RenderIncludes(position: RenderPosition.Right, showTrivial: true, showTimeWithChildren: true, showControls: true, useExistingjQuery: true)*@
-
-        @RenderSection("scripts", required: false)
+      @*<h3 summary ng-bind="message"></h3>*@
+      <div class="col-xs-12" ui-view></div>
+      @RenderBody()
     </div>
+  </div>
+
+  <div>
+    @System.Web.Optimization.Scripts.Render(Links.Bundles.Scripts.lib)
+    @System.Web.Optimization.Scripts.Render(Links.Bundles.Scripts.app)
+
+    @*@MiniProfiler.RenderIncludes(position: RenderPosition.Right, showTrivial: true, showTimeWithChildren: true, showControls: true, useExistingjQuery: true)*@
+
+    @RenderSection("scripts", required: false)
+  </div>
 </body>
 </html>
