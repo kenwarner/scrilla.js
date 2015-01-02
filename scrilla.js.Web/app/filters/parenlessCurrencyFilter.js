@@ -1,4 +1,4 @@
-﻿scrilla.filters.filter('parenlessCurrency', ['currencyFilter', function (currencyFilter) {
+﻿angular.module('scrilla').filter('parenlessCurrency', ['currencyFilter', function (currencyFilter) {
 	return function (amount) {
 		var currency = currencyFilter(amount);
 		if (amount >= 0)
