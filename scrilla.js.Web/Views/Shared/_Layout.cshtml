@@ -1,7 +1,7 @@
 ﻿@using StackExchange.Profiling.Mvc
 
 <!DOCTYPE html>
-<html lang="en" ng-app="scrillaApp">
+<html lang="en" ng-app="scrilla">
 <head>
     @this.InitClientTimings()
     <meta charset="utf-8" />
@@ -25,7 +25,7 @@
             <div class="navbar-collapse collapse" style="height: 1px;">
                 <ul class="nav navbar-nav">
                     <li><a href="/">Accounts</a></li>
-                    <li><a href="/transactions">Transactions</a></li>
+                    <li><a ui-sref="scrilla.transactions">Transactions</a></li>
                     <li><a href="/vendors">Vendors</a></li>
                     <li><a href="/categories">Categories</a></li>
                     <li><a href="/bills">Bills</a></li>
@@ -35,11 +35,11 @@
         </div>
     </nav>
 
-    <date-range-slider class="col-xs-12 col-lg-8"></date-range-slider>
+    @*<date-range-slider class="col-xs-12 col-lg-8"></date-range-slider>*@
     <div class="container pull-left">
         <div class="pull-left">
             <h3 summary ng-bind="message"></h3>
-            <div ng-view></div>
+            <div class="col-xs-12" ui-view></div>
             @RenderBody()
         </div>
     </div>
