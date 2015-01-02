@@ -205,7 +205,7 @@
     <Content Include="app\styles\app.less" />
     <Content Include="app\styles\bootstrap-theme.less" />
     <Content Include="app\styles\jqRangeSlider.less" />
-    <Content Include="app\styles\ngGrid.less" />
+    <Content Include="app\styles\ui-grid-theme.less" />
     <Content Include="app\app.js" />
     <None Include="BundleTransformer.Configuration.xsd">
       <SubType>Designer</SubType>

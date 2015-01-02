@@ -109,7 +109,7 @@ namespace Links
             public static readonly string app_less = Url("app.less");
             public static readonly string bootstrap_theme_less = Url("bootstrap-theme.less");
             public static readonly string jqRangeSlider_less = Url("jqRangeSlider.less");
-            public static readonly string ngGrid_less = Url("ngGrid.less");
+            public static readonly string ui_grid_theme_less = Url("ui-grid-theme.less");
         }
     
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
