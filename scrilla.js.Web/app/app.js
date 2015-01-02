@@ -1,4 +1,4 @@
-﻿angular.module('scrilla', ['ui.router', 'ui.grid', 'ui.grid.cellNav', 'ui.grid.autoResize']);
+﻿angular.module('scrilla', ['ui.router', 'ui.grid', 'ui.grid.cellNav', 'ui.grid.autoResize', 'angular-loading-bar', 'ngAnimate']);
 
 angular.module('scrilla').config(['$stateProvider', function ($stateProvider) {
 	$stateProvider

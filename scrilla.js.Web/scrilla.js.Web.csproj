@@ -207,6 +207,7 @@
     <Content Include="app\styles\jqRangeSlider.less" />
     <Content Include="app\styles\ui-grid-theme.less" />
     <Content Include="app\app.js" />
+    <Content Include="app\styles\loading-bar-theme.less" />
     <None Include="BundleTransformer.Configuration.xsd">
       <SubType>Designer</SubType>
     </None>

@@ -12,11 +12,11 @@ angular.module('scrilla').controller('TransactionController', ['TransactionDataS
 				bindScrollVertical: false,
 				//infiniteScroll: 5,//50 / data.length * 100,
 				columnDefs: [
-					{ name: 'Date', field: 'timestamp', cellFilter: 'date:"yyyy-MM-dd"', maxWidth: 50 },
+					{ name: 'Date', field: 'timestamp', cellFilter: 'date:"yyyy-MM-dd"', maxWidth: 1 },
 					{ name: 'Account', field: 'accountName', enableCellEdit: false },
 					{ name: 'Vendor', field: 'vendorName' },
 					{ name: 'Category', field: 'categoryName' },
-					{ name: 'Amount', field: 'amount', cellFilter: 'parenlessCurrency', maxWidth: 50, enableCellEdit: false }
+					{ name: 'Amount', field: 'amount', cellFilter: 'parenlessCurrency', maxWidth: 1, enableCellEdit: false }
 				]
 			};
 		});
