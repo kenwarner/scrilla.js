@@ -3,7 +3,7 @@ angular.module('scrilla').controller('TransactionController', ['TransactionDataS
 
 	var vm = this;
 	vm.gridOptions = {
-		enableFiltering: true,
+		//enableFiltering: true,
 		enableVerticalScrollbar: false,
 		enableHorizontalScrollbar: false,
 		bindScrollHorizontal: false,
