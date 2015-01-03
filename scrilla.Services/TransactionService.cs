@@ -3,6 +3,7 @@ using DapperExtensions;
 using scrilla.Data;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlTypes;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -109,14 +110,14 @@ LEFT JOIN Category c on c.Id = st.CategoryId
 			if (from.HasValue)
 			{
 				whereClauses.Add("t.Timestamp >= @from");
-				parameters.Add(new { from = from.Value });
+				parameters.Add(new { from = new DateTime(Math.Max(SqlDateTime.MinValue.Value.Ticks, from.Value.Ticks)) });
 			}
 				
 
 			if (to.HasValue)
 			{
 				whereClauses.Add("t.Timestamp <= @to");
-				parameters.Add(new { to = to.Value });
+				parameters.Add(new { to = new DateTime(Math.Min(SqlDateTime.MaxValue.Value.Ticks, to.Value.Ticks)) });
 			}
 				
 			if (whereClauses.Any())

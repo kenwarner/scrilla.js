@@ -61,13 +61,15 @@ namespace scrilla.Services.Models
 
 		private DateTime DefaultFrom()
 		{
-			return DefaultTo().AddDays(1).AddMonths(-6);
+			//return DefaultTo().AddDays(1).AddMonths(-6);
+			return DateTime.MinValue;
 		}
 
 		private DateTime DefaultTo()
 		{
-			var now = DateTime.Now;
-			return new DateTime(now.Year, now.Month, 1).AddMonths(2).AddDays(-1);
+			//var now = DateTime.Now;
+			//return new DateTime(now.Year, now.Month, 1).AddMonths(2).AddDays(-1);
+			return DateTime.MaxValue;
 		}
 
 		public IEnumerable<DateTime> Months
