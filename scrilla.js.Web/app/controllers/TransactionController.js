@@ -39,11 +39,17 @@ angular.module('scrilla').controller('TransactionController', ['TransactionDataS
 
 	vm.getTransactions = function () {
 		TransactionDataService.getTransactions().success(function (data) {
-			//setGridData(data);
+			setGridData(data);
 		});
 	};
 
-	vm.getAllTransactions = function() {
+	vm.getRecentTransactions = function () {
+		TransactionDataService.getRecentTransactions().success(function (data) {
+			setGridData(data);
+		});
+	};
+
+	vm.getAllTransactions = function () {
 		TransactionDataService.getAllTransactions().success(function (data) {
 			allTransactions = data;
 			setGridData(data);
@@ -51,6 +57,7 @@ angular.module('scrilla').controller('TransactionController', ['TransactionDataS
 	};
 
 	// initialize Controller
-	vm.getTransactions();
-	vm.getAllTransactions();
+	//vm.getTransactions();
+	vm.getRecentTransactions();
+	//vm.getAllTransactions();
 }]);

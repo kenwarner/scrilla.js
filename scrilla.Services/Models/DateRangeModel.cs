@@ -8,6 +8,9 @@ namespace scrilla.Services.Models
 {
 	public class DateRangeModel
 	{
+		public DateRangeModel()
+			: this(DefaultFrom(), DefaultTo()) { }
+
 		public DateRangeModel(DateTime? from = null, DateTime? to = null)
 			: this(from.ToString(), to.ToString()) { }
 
@@ -59,17 +62,15 @@ namespace scrilla.Services.Models
 			}
 		}
 
-		private DateTime DefaultFrom()
+		private static DateTime DefaultFrom()
 		{
-			//return DefaultTo().AddDays(1).AddMonths(-6);
-			return DateTime.MinValue;
+			return DefaultTo().AddDays(1).AddMonths(-6);
 		}
 
-		private DateTime DefaultTo()
+		private static DateTime DefaultTo()
 		{
-			//var now = DateTime.Now;
-			//return new DateTime(now.Year, now.Month, 1).AddMonths(2).AddDays(-1);
-			return DateTime.MaxValue;
+			var now = DateTime.Now;
+			return new DateTime(now.Year, now.Month, 1).AddMonths(2).AddDays(-1);
 		}
 
 		public IEnumerable<DateTime> Months
