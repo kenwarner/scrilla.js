@@ -32,14 +32,14 @@ angular.module('scrilla').controller('TransactionController', ['TransactionDataS
 		vm.gridOptions.minRowsToShow = data.length;
 		vm.gridOptions.data = data;
 
-		if (angular.isDefined(vm.gridApi)) {
-			vm.gridApi.core.refresh();
-		}
+		//if (angular.isDefined(vm.gridApi)) {
+		//	vm.gridApi.core.refresh();
+		//}
 	};
 
 	vm.getTransactions = function () {
 		TransactionDataService.getTransactions().success(function (data) {
-			setGridData(data);
+			//setGridData(data);
 		});
 	};
 
