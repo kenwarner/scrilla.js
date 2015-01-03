@@ -41,7 +41,7 @@ namespace scrilla.js.Web.Controllers
 		[Route("api/transactions/recent"), HttpGet]
 		public virtual HttpResponseMessage RecentTransactions(string accountId = "", string vendorId = "", string categoryId = "")
 		{
-			var dateRange = new DateRangeModel(new DateTime(2012, 1, 1), new DateTime(2012, 6, 1));
+			var dateRange = new DateRangeModel(new DateTime(2012, 1, 1), new DateTime(2012, 2, 1));
 			var result = _transactionService.GetTransactions(Filter<int?>.Parse(accountId), Filter<int?>.Parse(categoryId), Filter<int?>.Parse(vendorId), dateRange.From, dateRange.To);
 			return Request.CreateResponse<IEnumerable<Transaction>>(result);
 		}

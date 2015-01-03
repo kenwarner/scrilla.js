@@ -11,3 +11,25 @@ angular.module('scrilla').config(['$stateProvider', function ($stateProvider) {
 			templateUrl: 'app/views/transactions.html'
 		});
 }]);
+
+// provide success() and error() for $q
+// http://stackoverflow.com/a/17889426/55948
+angular.module('scrilla').config(function ($provide) {
+	$provide.decorator('$q', function ($delegate) {
+		var defer = $delegate.defer;
+		$delegate.defer = function () {
+			var deferred = defer();
+			deferred.promise.success = function (fn) {
+				deferred.promise.then(fn);
+				return deferred.promise;
+			};
+			deferred.promise.error = function (fn) {
+				deferred.promise.then(null, fn);
+				return deferred.promise;
+			};
+			return deferred;
+		};
+		return $delegate;
+	});
+
+});
