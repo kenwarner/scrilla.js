@@ -9,6 +9,17 @@ angular.module('scrilla').directive('transactionCriteriaEditor', ['$state', '$st
 					$state.transitionTo($state.current, $stateParams, { notify: false });
 				}
 			});
+
+			scope.animals = [
+				{
+					name: 'cat',
+					email: 'test'
+				},
+				{
+					name: 'dog',
+					email: 'test2'
+				}
+			];
 		}
 	};
 }]);
