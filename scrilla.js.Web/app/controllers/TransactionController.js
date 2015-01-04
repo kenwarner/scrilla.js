@@ -20,6 +20,7 @@ angular.module('scrilla').controller('TransactionController', ['$scope', '$state
 			{
 				name: 'Date',
 				field: 'timestamp',
+				type: 'date',
 				enableColumnMenu: false,
 				enableFiltering: false,
 				filters: [
