@@ -3,7 +3,7 @@ angular.module('scrilla', ['ui.router', 'ui.grid', 'ui.grid.selection', 'ui.grid
 angular.module('scrilla').config(['$stateProvider', function ($stateProvider) {
 	$stateProvider
 		.state('scrilla', {
-			url: '?accountId&vendorId&categoryId&from&to',
+			url: '?from&to&accountId&vendorId&categoryId',
 			template: '<ui-view></ui-view>'
 		})
 		.state('scrilla.transactions', {
