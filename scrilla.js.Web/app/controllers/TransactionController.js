@@ -37,8 +37,9 @@ angular.module('scrilla').controller('TransactionController', ['$scope', '$state
 				maxWidth: 1
 			},
 			{
-				name: 'Account',
-				field: 'accountName',
+				name: 'Account Id',
+				field: 'accountId',
+				visible: false,
 				enableColumnMenu: false,
 				enableSorting: false,
 				enableCellEdit: false,
@@ -47,6 +48,14 @@ angular.module('scrilla').controller('TransactionController', ['$scope', '$state
 					condition: uiGridConstants.filter.CONTAINS,
 					term: $stateParams.accountId
 				}
+			},
+			{
+				name: 'Account',
+				field: 'accountName',
+				enableColumnMenu: false,
+				enableSorting: false,
+				enableCellEdit: false,
+				enableFiltering: false
 			},
 			{
 				name: 'Vendor',

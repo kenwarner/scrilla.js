@@ -9,27 +9,29 @@
       </span>
       <span>
         <label>Account: </label>
-        <!--           <input type="text" ng-model="$stateParams.accountId"> -->
-        <span ui-select multiple ng-model="selectedAnimal">
+        <span ui-select multiple ng-model="selectedAccounts.selected">
           <span ui-select-match placeholder="Select Account">{{$item.name}}</span>
-          <span ui-select-choices repeat="animal in animals | filter:$select.search">{{animal.name}}</span>
-        </span>
-      </span>
-      <span>
-        <label>Category: </label>
-        <!--           <input type="text" ng-model="$stateParams.categoryId"> -->
-        <span ui-select multiple ng-model="selectedAnimal">
-          <span ui-select-match placeholder="Select Category">{{$item.name}}</span>
-          <span ui-select-choices repeat="animal in animals | filter:$select.search">{{animal.name}}</span>
+          <span ui-select-choices repeat="account in accounts | filter:$select.search">{{account.name}}</span>
         </span>
       </span>
       <span>
         <label>Vendor: </label>
-        <span ui-select multiple ng-model="selectedAnimal">
+        <span ui-select multiple ng-model="selectedAccounts">
           <span ui-select-match placeholder="Select Vendor">{{$item.name}}</span>
-          <span ui-select-choices repeat="animal in animals | filter:$select.search">{{animal.name}}</span>
+          <span ui-select-choices repeat="account in accounts | filter:$select.search">{{account.name}}</span>
+        </span>
+      </span>
+      <span>
+        <label>Category: </label>
+        <span ui-select multiple ng-model="selectedAccounts">
+          <span ui-select-match placeholder="Select Category">{{$item.name}}</span>
+          <span ui-select-choices repeat="account in accounts | filter:$select.search">{{account.name}}</span>
         </span>
       </span>
     </span>
+  </div>
+
+  <div style="border:1px solid gray; background-color: #e2e2e2;">
+  Selected Accounts: {{selectedAccounts}}
   </div>
 </div>

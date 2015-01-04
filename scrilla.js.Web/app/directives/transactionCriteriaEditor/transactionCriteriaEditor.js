@@ -4,22 +4,34 @@ angular.module('scrilla').directive('transactionCriteriaEditor', ['$state', '$st
 		replace: true,
 		templateUrl: 'app/directives/transactionCriteriaEditor/transactionCriteriaEditor.html',
 		link: function (scope) {
-			scope.$watchGroup(['$stateParams.from', '$stateParams.to', '$stateParams.vendorId'], function (newValue, oldValue) {
+			scope.$watchGroup(['$stateParams.from', '$stateParams.to', '$stateParams.accountId', '$stateParams.vendorId', '$stateParams.categoryId'], function (newValue, oldValue) {
 				if (newValue !== oldValue && !$state.current.abstract) {
 					$state.transitionTo($state.current, $stateParams, { notify: false });
 				}
 			});
 
-			scope.animals = [
+			scope.accounts = [
 				{
-					name: 'cat',
-					email: 'test'
+					id: 13,
+					name: 'Wells Fargo Main'
 				},
 				{
-					name: 'dog',
-					email: 'test2'
+					id: 15,
+					name: 'Ken Blow'
 				}
 			];
+
+			scope.selectedAccounts = {};
+
+			scope.$watch('selectedAccounts.selected', function(newValue, oldValue) {
+				if (newValue !== oldValue) {
+					var accountIds = newValue.map(function(account) {
+					  return account.id;
+					});
+					
+					$stateParams.accountId = accountIds;
+				}
+			});
 		}
 	};
 }]);
