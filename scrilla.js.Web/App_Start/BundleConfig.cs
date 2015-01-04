@@ -16,11 +16,10 @@ namespace scrilla.js.Web
 			RegisterStyleBundles(bundles);
 			RegisterScriptBundles(bundles);
 		}
-
 		private static void RegisterStyleBundles(BundleCollection bundles)
 		{
 			bundles.Add(new StyleBundle(Links.Bundles.Styles.app)
-				.IncludeDirectory(VirtualPathUtility.ToAppRelative(Links.app.styles.Url()), "*.less", false));
+				.IncludeDirectory(VirtualPathUtility.ToAppRelative(Links.app.Url()), "*.less", true));
 
 			bundles.Add(new StyleBundle(Links.Bundles.Styles.lib) { Builder = new CssRewriteUrlBundleBuilder() }
 				.IncludeDirectory("~/lib/", "*.css", true));
