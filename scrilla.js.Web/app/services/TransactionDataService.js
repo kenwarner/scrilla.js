@@ -12,7 +12,7 @@ angular.module('scrilla').factory('TransactionDataService', ['$window', '$q', '$
 			deferred.resolve(data);
 		} else {
 			// if data is not in cache let's get it from the server
-			promise.success(function (response) {
+			promise().success(function (response) {
 				// put data in cache
 				$window.sessionStorage[cacheKey] = angular.toJson(response);
 				deferred.resolve(response);
@@ -23,15 +23,15 @@ angular.module('scrilla').factory('TransactionDataService', ['$window', '$q', '$
 	}
 
 	service.getTransactions = function () {
-		return cacheDecorator($http.get('/api/transactions', { params: $stateParams }), 'transactions-'+angular.toJson($stateParams));
+		return cacheDecorator(function() { $http.get('/api/transactions', { params: $stateParams }); }, 'transactions-'+angular.toJson($stateParams));
 	};
 
 	service.getRecentTransactions = function() {
-		return cacheDecorator($http.get('/api/transactions/recent'), 'recentTransactions');
+		return cacheDecorator(function() { $http.get('/api/transactions/recent'); }, 'recentTransactions');
 	};
 
 	service.getAllTransactions = function() {
-		return cacheDecorator($http.get('/api/transactions'), 'allTransactions');
+		return cacheDecorator(function() { $http.get('/api/transactions'); }, 'allTransactions');
 	};
 
 	return service;
