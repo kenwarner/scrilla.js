@@ -23,15 +23,15 @@ angular.module('scrilla').factory('TransactionDataService', ['$window', '$q', '$
 	}
 
 	service.getTransactions = function () {
-		return cacheDecorator(function() { $http.get('/api/transactions', { params: $stateParams }); }, 'transactions-'+angular.toJson($stateParams));
+		return cacheDecorator(function() { return $http.get('/api/transactions', { params: $stateParams }); }, 'transactions-'+angular.toJson($stateParams));
 	};
 
 	service.getRecentTransactions = function() {
-		return cacheDecorator(function() { $http.get('/api/transactions/recent'); }, 'recentTransactions');
+		return cacheDecorator(function() { return $http.get('/api/transactions/recent'); }, 'recentTransactions');
 	};
 
 	service.getAllTransactions = function() {
-		return cacheDecorator(function() { $http.get('/api/transactions'); }, 'allTransactions');
+		return cacheDecorator(function() { return $http.get('/api/transactions'); }, 'allTransactions');
 	};
 
 	return service;
