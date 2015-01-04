@@ -1,43 +1,35 @@
 <div class="transaction-criteria-editor">
   <div class="row">
-    <span class="criteria-date-range">
-      <div class="row">
-        <span class="col-md-12">
-          <span>
-            <label>From: </label><input ui-date ui-date-format="yy-mm-dd" ng-model="$stateParams.from" size="9">
-          </span>
-          <span>
-            <label>To: </label><input ui-date ui-date-format="yy-mm-dd" ng-model="$stateParams.to" size="9">
-          </span>
+    <span class="col-md-12">
+      <span>
+        <label>From: </label><input ui-date ui-date-format="yy-mm-dd" ng-model="$stateParams.from" size="9">
+      </span>
+      <span>
+        <label>To: </label><input ui-date ui-date-format="yy-mm-dd" ng-model="$stateParams.to" size="9">
+      </span>
+      <span>
+        <label>Account: </label>
+        <!--           <input type="text" ng-model="$stateParams.accountId"> -->
+        <span ui-select multiple ng-model="selectedAnimal">
+          <span ui-select-match placeholder="Select Account">{{$item.name}}</span>
+          <span ui-select-choices repeat="animal in animals | filter:$select.search">{{animal.name}}</span>
         </span>
-      </div>
-    </span>
-    <span class="col-md-12 criteria-etc">
-      <div class="row">
-        <span class="col-md-4">
-          <label>Account: </label>
-<!--           <input type="text" ng-model="$stateParams.accountId"> -->
-          <span ui-select multiple ng-model="selectedAnimal">
-            <span ui-select-match placeholder="Select Account">{{$item.name}}</span>
-            <span ui-select-choices repeat="animal in animals | filter:$select.search">{{animal.name}}</span>
-          </span>
+      </span>
+      <span>
+        <label>Category: </label>
+        <!--           <input type="text" ng-model="$stateParams.categoryId"> -->
+        <span ui-select multiple ng-model="selectedAnimal">
+          <span ui-select-match placeholder="Select Category">{{$item.name}}</span>
+          <span ui-select-choices repeat="animal in animals | filter:$select.search">{{animal.name}}</span>
         </span>
-        <span class="col-md-4">
-          <label>Category: </label>
-<!--           <input type="text" ng-model="$stateParams.categoryId"> -->
-          <span ui-select multiple ng-model="selectedAnimal">
-            <span ui-select-match placeholder="Select Category">{{$item.name}}</span>
-            <span ui-select-choices repeat="animal in animals | filter:$select.search">{{animal.name}}</span>
-          </span>
+      </span>
+      <span>
+        <label>Vendor: </label>
+        <span ui-select multiple ng-model="selectedAnimal">
+          <span ui-select-match placeholder="Select Vendor">{{$item.name}}</span>
+          <span ui-select-choices repeat="animal in animals | filter:$select.search">{{animal.name}}</span>
         </span>
-        <span class="col-md-4">
-          <label>Vendor: </label>
-          <span ui-select multiple ng-model="selectedAnimal">
-            <span ui-select-match placeholder="Select Vendor">{{$item.name}}</span>
-            <span ui-select-choices repeat="animal in animals | filter:$select.search">{{animal.name}}</span>
-          </span>
-        </span>
-      </div>
+      </span>
     </span>
   </div>
 </div>
