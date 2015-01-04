@@ -1,3 +1,4 @@
-﻿<div class="grid-container" ng-controller="TransactionController as transactionCtrl">
+<div class="grid-container" ng-controller="TransactionController as transactionCtrl">
+  <transaction-criteria-editor></transaction-criteria-editor>
   <div ng-if="transactionCtrl.gridOptions.data" ng-show="transactionCtrl.gridOptions.data" ui-grid="transactionCtrl.gridOptions" ui-grid-cellnav ui-grid-selection ui-grid-auto-resize></div>
 </div>
