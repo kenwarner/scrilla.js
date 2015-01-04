@@ -17,6 +17,10 @@ angular.module('scrilla').run(['$rootScope', '$state', '$stateParams', function 
 	$rootScope.$stateParams = $stateParams;
 }]);
 
+angular.module('scrilla').config(function(uiSelectConfig) {
+  uiSelectConfig.theme = 'bootstrap';
+});
+
 // provide success() and error() for $q
 // http://stackoverflow.com/a/17889426/55948
 angular.module('scrilla').config(function ($provide) {
