@@ -4,7 +4,7 @@ angular.module('scrilla').controller('TransactionController', ['$scope', '$state
 	var vm = this;
 	vm.gridOptions = {
 		enableFiltering: true,
-		enableVerticalScrollbar: false,
+		//enableVerticalScrollbar: false,
 		enableHorizontalScrollbar: false,
 		bindScrollHorizontal: false,
 		bindScrollVertical: false,
@@ -12,7 +12,7 @@ angular.module('scrilla').controller('TransactionController', ['$scope', '$state
 		enableColumnMenu: false,
 		selectionRowHeaderWidth: 35,
 
-		//minRowsToShow: data.length,
+		minRowsToShow: 15,
 		//data: data,
 
 		//infiniteScroll: 5,//50 / data.length * 100,
@@ -95,7 +95,7 @@ angular.module('scrilla').controller('TransactionController', ['$scope', '$state
 	};
 
 	var setGridData = function (data) {
-		vm.gridOptions.minRowsToShow = data.length;
+		//vm.gridOptions.minRowsToShow = data.length;
 		vm.gridOptions.data = data;
 
 		//if (angular.isDefined(vm.gridApi)) {
