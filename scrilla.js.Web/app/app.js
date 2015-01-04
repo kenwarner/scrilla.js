@@ -1,4 +1,4 @@
-﻿angular.module('scrilla', ['ui.router', 'ui.grid', 'ui.grid.selection', 'ui.grid.cellNav', 'ui.grid.autoResize', 'angular-loading-bar', 'ngAnimate']);
+angular.module('scrilla', ['ui.router', 'ui.grid', 'ui.grid.selection', 'ui.grid.cellNav', 'ui.grid.autoResize', 'angular-loading-bar', 'ngAnimate', 'ui.date']);
 
 angular.module('scrilla').config(['$stateProvider', function ($stateProvider) {
 	$stateProvider
@@ -10,6 +10,11 @@ angular.module('scrilla').config(['$stateProvider', function ($stateProvider) {
 			url: '/transactions',
 			templateUrl: 'app/views/transactions.html'
 		});
+}]);
+
+angular.module('scrilla').run(['$rootScope', '$state', '$stateParams', function ($rootScope, $state, $stateParams) {
+	$rootScope.$state = $state;
+	$rootScope.$stateParams = $stateParams;
 }]);
 
 // provide success() and error() for $q
