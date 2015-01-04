@@ -14,9 +14,29 @@
     </span>
     <span class="col-md-12 col-offset-250">
       <div class="row">
-        <span class="col-md-4" style="background-color:green;">first</span>
-        <span class="col-md-4" style="background-color:red;">second</span>
-        <span class="col-md-4" style="background-color:orange;">third</span>
+        <span class="col-md-4">
+          <label>Account: </label>
+<!--           <input type="text" ng-model="$stateParams.accountId"> -->
+          <span ui-select multiple ng-model="selectedAnimal">
+            <span ui-select-match placeholder="Select Account">{{$item.name}}</span>
+            <span ui-select-choices repeat="animal in animals | filter:$select.search">{{animal.name}}</span>
+          </span>
+        </span>
+        <span class="col-md-4">
+          <label>Category: </label>
+<!--           <input type="text" ng-model="$stateParams.categoryId"> -->
+          <span ui-select multiple ng-model="selectedAnimal">
+            <span ui-select-match placeholder="Select Category">{{$item.name}}</span>
+            <span ui-select-choices repeat="animal in animals | filter:$select.search">{{animal.name}}</span>
+          </span>
+        </span>
+        <span class="col-md-4">
+          <label>Vendor: </label>
+          <span ui-select multiple ng-model="selectedAnimal">
+            <span ui-select-match placeholder="Select Vendor">{{$item.name}}</span>
+            <span ui-select-choices repeat="animal in animals | filter:$select.search">{{animal.name}}</span>
+          </span>
+        </span>
       </div>
     </span>
   </div>
