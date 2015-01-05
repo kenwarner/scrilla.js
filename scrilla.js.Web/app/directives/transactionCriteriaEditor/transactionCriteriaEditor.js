@@ -10,6 +10,7 @@ angular.module('scrilla').directive('transactionCriteriaEditor', ['$state', '$st
 				}
 			});
 
+
 			scope.accounts = [
 				{
 					id: 13,
@@ -26,7 +27,7 @@ angular.module('scrilla').directive('transactionCriteriaEditor', ['$state', '$st
 			scope.$watch('selectedAccounts.selected', function(newValue, oldValue) {
 				if (newValue !== oldValue) {
 					var accountIds = newValue.map(function(account) {
-					  return account.id;
+					  return account.accountId;
 					});
 					
 					$stateParams.accountId = accountIds;

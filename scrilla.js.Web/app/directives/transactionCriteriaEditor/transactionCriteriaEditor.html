@@ -10,8 +10,8 @@
       <span>
         <label>Account: </label>
         <span ui-select multiple ng-model="selectedAccounts.selected">
-          <span ui-select-match placeholder="Select Account">{{$item.name}}</span>
-          <span ui-select-choices repeat="account in accounts | filter:$select.search">{{account.name}}</span>
+          <span ui-select-match placeholder="Select Account">{{$item.accountName}}</span>
+          <span ui-select-choices repeat="account in transactionCtrl.gridOptions.data | unique:'accountId' | filter:$select.search">{{account.accountName}}</span>
         </span>
       </span>
       <span>
@@ -29,9 +29,5 @@
         </span>
       </span>
     </span>
-  </div>
-
-  <div style="border:1px solid gray; background-color: #e2e2e2;">
-  Selected Accounts: {{selectedAccounts}}
   </div>
 </div>
