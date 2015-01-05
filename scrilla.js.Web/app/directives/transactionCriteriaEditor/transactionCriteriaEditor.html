@@ -9,23 +9,23 @@
       </span>
       <span>
         <label>Account: </label>
-        <span ui-select multiple ng-model="selectedAccounts.selected">
+        <span ui-select multiple ng-model="selectedAccounts.selected" on-select="$select.search=null">
           <span ui-select-match placeholder="Select Account">{{$item.accountName}}</span>
-          <span ui-select-choices repeat="account in transactionCtrl.gridOptions.data | unique:'accountId' | filter:$select.search">{{account.accountName}}</span>
+          <span ui-select-choices repeat="account in transactionCtrl.gridOptions.data | unique:'accountId' | orderBy:'accountName' | filter:$select.search">{{account.accountName}}</span>
         </span>
       </span>
       <span>
         <label>Vendor: </label>
-        <span ui-select multiple ng-model="selectedAccounts">
-          <span ui-select-match placeholder="Select Vendor">{{$item.name}}</span>
-          <span ui-select-choices repeat="account in accounts | filter:$select.search">{{account.name}}</span>
+        <span ui-select multiple ng-model="selectedVendors.selected" on-select="$select.search=null">
+          <span ui-select-match placeholder="Select Vendor">{{$item.vendorName}}</span>
+          <span ui-select-choices repeat="vendor in transactionCtrl.gridOptions.data | unique:'vendorId' | orderBy:'vendorName' | filter:$select.search">{{vendor.vendorName}}</span>
         </span>
       </span>
       <span>
         <label>Category: </label>
-        <span ui-select multiple ng-model="selectedAccounts">
-          <span ui-select-match placeholder="Select Category">{{$item.name}}</span>
-          <span ui-select-choices repeat="account in accounts | filter:$select.search">{{account.name}}</span>
+        <span ui-select multiple ng-model="selectedCategories.selected" on-select="$select.search=null">
+          <span ui-select-match placeholder="Select Category">{{$item.categoryName}}</span>
+          <span ui-select-choices repeat="category in transactionCtrl.gridOptions.data | unique:'categoryId' | orderBy:'categoryName' | filter:$select.search">{{category.categoryName}}</span>
         </span>
       </span>
     </span>

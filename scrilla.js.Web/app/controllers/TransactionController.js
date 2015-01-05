@@ -40,10 +40,6 @@ angular.module('scrilla').controller('TransactionController', ['$scope', '$state
 				name: 'Account Id',
 				field: 'accountId',
 				visible: false,
-				enableColumnMenu: false,
-				enableSorting: false,
-				enableCellEdit: false,
-				enableFiltering: false,
 				filter: {
 					condition: uiGridConstants.filter.CONTAINS,
 					term: $stateParams.accountId
@@ -58,26 +54,34 @@ angular.module('scrilla').controller('TransactionController', ['$scope', '$state
 				enableFiltering: false
 			},
 			{
-				name: 'Vendor',
-				field: 'vendorName',
-				enableColumnMenu: false,
-				enableSorting: false,
-				enableFiltering: false,
+				name: 'Vendor Id',
+				field: 'vendorId',
+				visible: false,
 				filter: {
 					condition: uiGridConstants.filter.CONTAINS,
 					term: $stateParams.vendorId
 				}
 			},
 			{
-				name: 'Category',
-				field: 'categoryName',
-				enableColumnMenu: false,
+				name: 'Vendor',
+				field: 'vendorName',
 				enableSorting: false,
-				enableFiltering: false,
+				enableFiltering: false
+			},
+			{
+				name: 'Category Id',
+				field: 'categoryId',
+				visible: false,
 				filter: {
 					condition: uiGridConstants.filter.CONTAINS,
 					term: $stateParams.categoryId
 				}
+			},
+			{
+				name: 'Category',
+				field: 'categoryName',
+				enableSorting: false,
+				enableFiltering: false,
 			},
 			{
 				field: 'amount',
@@ -141,7 +145,7 @@ angular.module('scrilla').controller('TransactionController', ['$scope', '$state
 
 	$scope.$watch('$stateParams.vendorId', function (newValue, oldValue) {
 		if (newValue !== oldValue && !$state.current.abstract) {
-			vm.gridOptions.columnDefs[2].filter.term = $stateParams.vendorId;
+			vm.gridOptions.columnDefs[3].filter.term = $stateParams.vendorId;
 			if (angular.isDefined(vm.gridApi)) {
 				vm.gridApi.core.refresh();
 			}
@@ -150,7 +154,7 @@ angular.module('scrilla').controller('TransactionController', ['$scope', '$state
 
 	$scope.$watch('$stateParams.categoryId', function (newValue, oldValue) {
 		if (newValue !== oldValue && !$state.current.abstract) {
-			vm.gridOptions.columnDefs[3].filter.term = $stateParams.categoryId;
+			vm.gridOptions.columnDefs[5].filter.term = $stateParams.categoryId;
 			if (angular.isDefined(vm.gridApi)) {
 				vm.gridApi.core.refresh();
 			}
